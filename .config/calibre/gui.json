@@ -524,6 +524,57 @@
       }
     }
   },
+  "geometry-of-scheduler_dialog_geometry": {
+    "frame_geometry": {
+      "height": 1030,
+      "width": 941,
+      "x": 1440,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1030,
+      "width": 941,
+      "x": 1440,
+      "y": 0
+    },
+    "maximized": true,
+    "normal_geometry": {
+      "height": 1054,
+      "width": 960,
+      "x": 1440,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAWgAAAAAAAACUwAAAQFAAAFoAAAAAAAAAlfAAAEHQAAAAECAAAAB4AAAAWgAAAAAAAACUwAAAQF"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1080,
+        "width": 1920,
+        "x": 1440,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "Dell Inc.",
+      "model": "DELL U3225QE",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1080,
+        "width": 1920
+      },
+      "virtual_geometry": {
+        "height": 1080,
+        "width": 3360,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "grid view visible": false,
   "jobs view column layout3": {
     "__class__": "bytearray",

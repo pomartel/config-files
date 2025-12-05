@@ -1,0 +1,3 @@
+fd_flags = ['--hidden', '--ignore-vcs', '--type', 'file', '--type', 'directory']
+
+# fd_flags = "--ignore-vcs --type file --type directory --hidden"
