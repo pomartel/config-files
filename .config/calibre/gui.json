@@ -169,35 +169,35 @@
   },
   "geometry-of-calibre_main_window_geometry": {
     "frame_geometry": {
-      "height": 616,
-      "width": 1133,
+      "height": 1030,
+      "width": 1896,
       "x": 1440,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 616,
-      "width": 1133,
+      "height": 1030,
+      "width": 1896,
       "x": 1440,
       "y": 0
     },
     "maximized": true,
     "normal_geometry": {
-      "height": 635,
-      "width": 576,
+      "height": 1054,
+      "width": 960,
       "x": 1440,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAWgAAAAAAAACgwAAAJnAAAFoAAAAAAAAAffAAACegAAAAECAAAACQAAAAWgAAAAAAAACgwAAAJn"
+      "__value__": "AdnQywADAAAAAAWgAAAAAAAADQcAAAQFAAAFoAAAAAAAAAlfAAAEHQAAAAECAAAAB4AAAAWgAAAAAAAADQcAAAQF"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1296,
-        "width": 2304,
+        "height": 1080,
+        "width": 1920,
         "x": 1440,
         "y": 0
       },
@@ -207,12 +207,12 @@
       "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1296,
-        "width": 2304
+        "height": 1080,
+        "width": 1920
       },
       "virtual_geometry": {
-        "height": 1296,
-        "width": 3744,
+        "height": 1080,
+        "width": 3360,
         "x": 0,
         "y": 0
       }
@@ -364,8 +364,8 @@
         "width": 1440
       },
       "virtual_geometry": {
-        "height": 1296,
-        "width": 3744,
+        "height": 1080,
+        "width": 3360,
         "x": 0,
         "y": 0
       }
@@ -581,7 +581,7 @@
     "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfQAAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AAAAAAAAAAAAA=="
   },
   "library_usage_stats": {
-    "/home/po/Dropbox/Calibre": 15
+    "/home/po/Dropbox/Calibre": 17
   },
   "main_window_central_widget_state": {
     "layout": "wide",
