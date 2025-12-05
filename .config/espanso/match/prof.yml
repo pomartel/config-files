@@ -1,0 +1,9 @@
+matches:
+  - trigger: ";g25"
+    replace: "https://serveur.prof/g25/"
+
+  - trigger: ";g03"
+    replace: "https://serveur.prof/g03/"
+
+  - trigger: ";kbd"
+    replace: "<kbd>$|$</kbd>"

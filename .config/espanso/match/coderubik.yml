@@ -1,0 +1,246 @@
+global_vars:
+  - name: website
+    type: echo
+    params:
+      echo: https://coderubik.com
+
+  - name: name
+    type: echo
+    params:
+      echo: Pierre Oliver Martel
+
+  - name: signature_en
+    type: echo
+    params:
+      echo: |
+        Best regards,
+
+        {{name}}
+        Software Engineer, Founder
+        {{website}}
+
+  - name: signature_fr
+    type: echo
+    params:
+      echo:  |
+        Salutations,
+
+        {{name}}
+        Ingénieur Logiciel, Fondateur
+        {{website}}
+
+  - name: signature_es
+    type: echo
+    params:
+      echo: |
+        Saludos cordiales,
+
+        {{name}}
+        Ingeniero de Software, Fundador
+        {{website}}
+
+  - name: signature_de
+    type: echo
+    params:
+      echo: |
+        Mit freundlichen Grüßen
+
+        {{name}}
+        Software-Ingenieur, Gründe
+        {{website}}
+
+  - name: signature_pt
+    type: echo
+    params:
+      echo: |
+        Atenciosamente,
+
+        {{name}}
+        Engenheiro de Software, Fundador
+        {{website}}
+
+  - name: aide
+    type: echo
+    params:
+      echo: "N’hésitez pas si je peux vous aider avec quoi que ce soit d'autre."
+
+  - name: ayuda
+    type: echo
+    params:
+      echo: "Hazme saber si puedo ayudarte con algo más."
+
+  - name: help
+    type: echo
+    params:
+      echo: "Let me know if I can help you with anything else."
+
+  - name: subdomains
+    type: echo
+    params:
+      echo: |
+        poll
+        survey
+        contest
+        qz
+        sondage
+        concours
+        encuesta
+        concurso
+        enquete
+        promo
+        umfrage
+        spiel
+
+
+matches:
+  - trigger: ";aide"
+    replace: "{{aide}}"
+
+  - trigger: ";ayuda"
+    replace: "{{ayuda}}"
+
+  - trigger: ";help"
+    replace: "{{help}}"
+
+  - trigger: ";concours"
+    replace: "https://concours.app.do/"
+
+  - trigger: ";concurso"
+    replace: "https://concurso.app.do/"
+
+  - trigger: ";contest"
+    replace: "https://contest.app.do/"
+
+  - trigger: ";encuesta"
+    replace: "https://encuesta.app.do/"
+
+  - trigger: ";enquete"
+    replace: "https://enquete.app.do/"
+
+  - trigger: ";spiel"
+    replace: "https://spiel.app.do/"
+
+  - trigger: ";poll"
+    replace: "https://poll.app.do/"
+
+  - trigger: ";promo"
+    replace: "https://promo.app.do/"
+
+  - trigger: ";qz"
+    replace: "https://qz.app.do/"
+
+  - trigger: ";sondage"
+    replace: "https://sondage.app.ps/"
+
+  - trigger: ";survey"
+    replace: "https://survey.app.do/"
+
+  - trigger: ";umfrage"
+    replace: "https://umfrage.app.do/"
+
+  - trigger: "sigde"
+    replace: "{{signature_de}}"
+
+  - trigger: "sigen"
+    replace: "{{signature_en}}"
+
+  - trigger: "siges"
+    replace: "{{signature_es}}"
+
+  - trigger: "sigfr"
+    replace: "{{signature_fr}}"
+
+  - trigger: "sigpt"
+    replace: "{{signature_pt}}"
+
+  - trigger: ";german"
+    replace: "I’m sorry I can’t reply in German."
+
+  - trigger: ";port"
+    replace: "I’m sorry I can’t reply in Portuguese."
+
+  - trigger: ";renew"
+    replace: |
+      Hi $|$,
+
+      I made sure that the account will not auto-renew.
+
+      {{help}}
+
+      {{signature_en}}
+
+  - trigger: ";deref"
+    replace: |
+      Kein Problem, ich habe die Transaktion eben rückgängig gemacht. In den nächsten Tagen erscheint Sie auf Ihrem Kreditkartenauszug.
+
+      {{signature_de}}
+
+  - trigger: ";ptref"
+    replace: |
+      Não se preocupe, acabei de fazer o reembolso da transação e ele aparecerá na fatura do seu cartão de crédito nos próximos dias.
+
+      {{signature_pt}}
+
+  - trigger: ";reemb"
+    replace: |
+      No te preocupes, ya te reembolsamos la transacción y dentro de los próximos días lo verás reflejado en el estado de cuenta de tu tarjeta de crédito.
+
+      {{ayuda}}
+
+      {{signature_es}}
+
+  - trigger: ";ref"
+    replace: |
+      Hi $|$,
+
+      I just refunded the purchase and it will show up on your credit card statement within the next 10 days. I also made sure no other payment will be taken.
+
+      {{help}}
+
+      {{signature_en}}
+
+  - trigger: ";remb"
+    replace: |
+      Bonjour $|$,
+
+      Je viens tout juste d'effectuer le remboursement sur votre carte de crédit et celui-ci apparaîtra sur votre relevé d'ici les 10 prochains jours. Je me suis aussi assuré qu'aucun autre paiement ne sera prelevé.
+
+      {{aide}}
+
+      {{signature_fr}}
+
+  - trigger: ";site"
+    replace: "https://{{site}}"
+    vars:
+      - name: site
+        type: choice
+        params:
+          values:
+            - poll-app.com
+            - survey-app.co
+            - contest-app.co
+            - quiz-app.co
+            - sondage-app.com
+            - concours-app.com
+            - encuesta-app.com
+            - concurso-app.com
+            - enquete-app.com
+            - promocao-app.com
+            - umfrage-app.com
+            - gewinnspiel-app.co
+
+  - trigger: ";app"
+    replace: "https://{{subdmain}}.app.do/"
+    vars:
+      - name: subdmain
+        type: choice
+        params:
+          values: "{{subdomains}}"
+
+  - trigger: ";discount"
+    replace: "https://{{subdmain}}.app.do/subscription/new?offer=code25"
+    vars:
+      - name: subdmain
+        type: choice
+        params:
+          values:  "{{subdomains}}"
