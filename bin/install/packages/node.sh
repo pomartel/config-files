@@ -1,3 +1,6 @@
+#!/bin/bash
+echo "Installing Node.js development environment..."
+
 omarchy-install-dev-env node
 
 npm install -g @marp-team/marp-cli
