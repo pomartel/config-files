@@ -1,0 +1,79 @@
+{
+  "geometry-of-main_window_geometry": {
+    "frame_geometry": {
+      "height": 850,
+      "width": 701,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 850,
+      "width": 701,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": true,
+    "normal_geometry": {
+      "height": 874,
+      "width": 720,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAAArwAAANRAAAAAAAAAAAAAALPAAADaQAAAAACAAAABaAAAAAAAAAAAAAAArwAAANR"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 900,
+        "width": 1440,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Samsung Display Corp.",
+      "model": "0x419D",
+      "name": "eDP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 900,
+        "width": 1440
+      },
+      "virtual_geometry": {
+        "height": 900,
+        "width": 1440,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "main_window_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAH9AAAAAgAAAAAAAAAAAAAAAPwCAAAAAvsAAAAQAHQAbwBjAC0AZABvAGMAawAAAAAA/////wAAAIUA////+wAAABYAcwBlAGEAcgBjAGgALQBkAG8AYwBrAAAAAAD/////AAAAkQD///8AAAABAAAAAAAAAAD8AgAAAAT7AAAAFgBsAG8AbwBrAHUAcAAtAGQAbwBjAGsAAAAAAP////8AAACUAP////sAAAAcAGIAbwBvAGsAbQBhAHIAawBzAC0AZABvAGMAawAAAAAA/////wAAAOIA////+wAAABwAaQBuAHMAcABlAGMAdABvAHIALQBkAG8AYwBrAAAAAAD/////AAAAEQD////7AAAAHgBoAGkAZwBoAGwAaQBnAGgAdABzAC0AZABvAGMAawAAAAAA/////wAAAMwA////AAACvQAAA1IAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAAAAAAAAQAAAB4AYQBjAHQAaQBvAG4AcwBfAHQAbwBvAGwAYgBhAHICAAAAAP////8AAAAAAAAAAA=="
+  },
+  "old_prefs_migrated": true,
+  "session_data": {
+    "controls_help_shown_count": 1,
+    "standalone_font_settings": {},
+    "standalone_misc_settings": {
+      "remember_last_read": true,
+      "remember_window_geometry": false,
+      "save_annotations_in_ebook": true,
+      "singleinstance": false
+    },
+    "standalone_recently_opened": [
+      {
+        "authors": [
+          "HERBERT GEORGE WELLS"
+        ],
+        "key": "/home/po/Calibre Library/HERBERT GEORGE WELLS/La Guerre des mondes (6)/La Guerre des mondes - HERBERT GEORGE WELLS.epub",
+        "pathtoebook": "/home/po/Calibre Library/HERBERT GEORGE WELLS/La Guerre des mondes (6)/La Guerre des mondes - HERBERT GEORGE WELLS.epub",
+        "timestamp": "2025-11-14T17:39:05.029Z",
+        "title": "La Guerre des mondes"
+      }
+    ]
+  }
+}

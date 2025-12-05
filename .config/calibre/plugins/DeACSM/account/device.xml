@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<adept:deviceInfo xmlns:adept="http://ns.adobe.com/adept">
+  <adept:deviceType>standalone</adept:deviceType>
+  <adept:deviceClass>Desktop</adept:deviceClass>
+  <adept:deviceSerial>fc259e1216d7a9109073f7f6f7ec579c84ee7295</adept:deviceSerial>
+  <adept:deviceName>omarchy</adept:deviceName>
+  <adept:version name="hobbes" value="9.3.58046"/>
+  <adept:version name="clientOS" value="Windows Vista"/>
+  <adept:version name="clientLocale" value="en"/>
+  <adept:fingerprint>IzTXCy5WDcgYSTTXmgVRiOffOl8=</adept:fingerprint>
+</adept:deviceInfo>
