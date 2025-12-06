@@ -6,16 +6,16 @@
 # All conflicting local files will be discarded.
 #
 # Usage:
-#   init-yadm <repo_url>
+#   init-yadm [repo_url]
 
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: init-yadm <repo_url>" >&2
-  exit 1
+if [[ $# -eq 1 ]]; then
+  REPO_URL="$1"
+else
+  REPO_URL="git@github.com:pomartel/config-files.git"
+  echo "No repo provided — using default: $REPO_URL"
 fi
-
-REPO_URL="$1"
 
 if ! command -v yadm >/dev/null 2>&1; then
   echo "ERROR: yadm is not installed." >&2
