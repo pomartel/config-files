@@ -1,6 +1,3 @@
 #!/bin/bash
-pkg="yarn"
-if omarchy-pkg-missing $pkg; then
-    echo "Installing Yarn package manager..."
-    sudo pacman -S --noconfirm $pkg
-fi
+source ./install-helper.sh
+install-pkg "yarn" "Yarn package manager"

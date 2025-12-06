@@ -1,9 +1,3 @@
 #!/bin/bash
-pkg="keyd"
-if omarchy-pkg-missing $pkg; then
-    echo "Installing keyd keyboard remapper..."
-    sudo pacman -S --noconfirm $pkg
-    sudo rm /etc/keyd/default.conf
-    sudo ln -s ~/.config/keyd/default.conf /etc/keyd/default.conf
-    sudo systemctl enable --now keyd
-fi
+source ./install-helper.sh
+install-pkg "keyd" "keyd keyboard remapper" "sudo systemctl enable --now keyd"

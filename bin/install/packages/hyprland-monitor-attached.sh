@@ -1,6 +1,3 @@
 #!/bin/bash
-pkg="hyprland-monitor-attached"
-if omarchy-pkg-missing $pkg; then
-    echo "Installing Hyprland monitor attached..."
-    yay -S --noconfirm $pkg
-fi
+source ./install-helper.sh
+install-pkg-yay "hyprland-monitor-attached" "Hyprland monitor attached"

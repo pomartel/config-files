@@ -1,7 +1,3 @@
 #!/bin/bash
-pkg="nginx mailcap"
-if omarchy-pkg-missing $pkg; then
-    echo "Installing Nginx web server..."
-    sudo pacman -S --noconfirm $pkg
-    sudo systemctl enable --now nginx
-fi
+source ./install-helper.sh
+install-pkg "nginx mailcap" "Nginx web server" "sudo systemctl enable --now nginx"
