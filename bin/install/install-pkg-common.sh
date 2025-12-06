@@ -4,6 +4,7 @@
 ./packages/espanso.sh
 ./packages/hyprland-monitor-attached.sh
 ./packages/keyd.sh
+./packages/man-pages-fr.sh
 ./packages/node.sh
 ./packages/pandoc.sh
 ./packages/rsync.sh
