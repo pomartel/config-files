@@ -1,6 +1,8 @@
 #!/bin/bash
-echo "Installing Espanso text expander..."
-
-yay -S --noconfirm espanso-wayland
-espanso service register
-espanso start
+pkg="espanso-wayland"
+if omarchy-pkg-missing $pkg; then
+    echo "Installing Espanso text expander..."
+    yay -S --noconfirm $pkg
+    espanso service register
+    espanso start
+fi

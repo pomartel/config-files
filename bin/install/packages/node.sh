@@ -1,8 +1,14 @@
 #!/bin/bash
-echo "Installing Node.js development environment..."
-
 omarchy-install-dev-env node
 
-npm install -g @marp-team/marp-cli
-npm install -g chokidar-cli
-npm install -g heroku
+if ! npm list -g @marp-team/marp-cli >/dev/null 2>&1; then
+    npm install -g @marp-team/marp-cli
+fi
+
+if ! npm list -g chokidar-cli >/dev/null 2>&1; then
+    npm install -g chokidar-cli
+fi
+
+if ! npm list -g heroku >/dev/null 2>&1; then
+    npm install -g heroku
+fi

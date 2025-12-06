@@ -1,0 +1,12 @@
+#!/bin/bash
+./packages/brave.sh
+./packages/dropbox.sh
+./packages/espanso.sh
+./packages/hyprland-monitor-attached.sh
+./packages/keyd.sh
+./packages/node.sh
+./packages/pandoc.sh
+./packages/rsync.sh
+./packages/vscode.sh
+./packages/yadm.sh
+./packages/yazi.sh

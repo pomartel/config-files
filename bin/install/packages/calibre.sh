@@ -1,4 +1,6 @@
 #!/bin/bash
-echo "Installing Calibre eBook management software..."
-
-yay -S --noconfirm calibre-bin
+pkg="calibre-bin"
+if omarchy-pkg-missing $pkg; then
+    echo "Installing Calibre eBook management software..."
+    yay -S --noconfirm $pkg
+fi
