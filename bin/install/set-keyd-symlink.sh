@@ -10,6 +10,7 @@ if [ ! -f "$HOME/.config/keyd/default.conf" ]; then
 fi
 
 echo "Setting up symlink for keyd config..."
+
 sudo rm /etc/keyd/default.conf
 sudo ln -sfn "$HOME/.config/keyd/default.conf" /etc/keyd/default.conf
 sudo systemctl restart keyd
