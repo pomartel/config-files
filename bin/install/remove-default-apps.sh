@@ -1,0 +1,10 @@
+omarchy-webapp-remove "HEY"
+omarchy-webapp-remove "Basecamp"
+omarchy-webapp-remove "Google Photos"
+omarchy-webapp-remove "Google Messages"
+omarchy-webapp-remove "X"
+omarchy-webapp-remove "Figma"
+omarchy-webapp-remove "Discord"
+omarchy-webapp-remove "Zoom"
+
+sudo pacman -Rns --noconfirm signal-desktop

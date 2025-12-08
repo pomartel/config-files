@@ -24,6 +24,7 @@ echo "Installation target set to: $INSTALL_TARGET"
 ./init-postgresql.sh
 ./set-keyd-symlink.sh
 ./clone-git-projects.sh
+./remove-default-apps.sh
 
 echo "All install scripts completed."
 
