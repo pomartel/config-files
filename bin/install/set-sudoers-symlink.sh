@@ -8,6 +8,7 @@ if [ ! -f "$SUDOERS_CONFIG_FILE" ]; then
     exit 1
 fi
 
-echo "Setting up symlink for sudoers rules..."
-
-sudo ln -sfn "$SUDOERS_CONFIG_FILE" "$SUDOERS_CONFIG_SYMLINK"
+if sudo [ ! -L "$SUDOERS_CONFIG_SYMLINK" ]; then
+    echo "Setting up symlink for sudoers rules..."
+    sudo ln -sfn "$SUDOERS_CONFIG_FILE" "$SUDOERS_CONFIG_SYMLINK"
+fi

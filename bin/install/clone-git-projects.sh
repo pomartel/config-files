@@ -12,9 +12,7 @@ clone_if_missing() {
 
     local path="$BASE/$dir"
 
-    if [ -d "$path" ]; then
-        echo "Skipping $path (already exists)"
-    else
+    if [ ! -d "$path" ]; then
         git clone "$repo" "$path"
     fi
 }

@@ -12,7 +12,7 @@ install-pkg() {
     local description="${2:-Package}"
     local post_install="${3:-}"
 
-    if omarchy-pkg-missing "$pkg"; then
+    if omarchy-pkg-missing $pkg; then
         echo "Installing $description..."
         sudo pacman -S --noconfirm $pkg
 
@@ -29,7 +29,7 @@ install-pkg-yay() {
     local description="${2:-Package}"
     local post_install="${3:-}"
 
-    if omarchy-pkg-missing "$pkg"; then
+    if omarchy-pkg-missing $pkg; then
         echo "Installing $description..."
         sudo yay -S --noconfirm $pkg
 
@@ -37,4 +37,10 @@ install-pkg-yay() {
             eval "$post_install"
         fi
     fi
+}
+
+webapp-missing() {
+    local app_name="$1"
+    local app_dir="$HOME/.local/share/applications/$app_name.desktop"
+    [ ! -e "$app_dir" ]
 }

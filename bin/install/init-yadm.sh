@@ -18,6 +18,4 @@ if [[ ! -d "$REPO_DIR" ]]; then
   yadm reset --hard
 
   echo "Done. Local dotfiles now exactly match the yadm repo."
-else
-  echo "Yadm repository already exists at $REPO_DIR. Skipping clone."
 fi
