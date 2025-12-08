@@ -4,13 +4,15 @@ if omarchy-pkg-missing keyd; then
     exit 1
 fi
 
-if [ ! -f "$HOME/.config/keyd/default.conf" ]; then
-    echo "keyd config $HOME/.config/keyd/default.conf not found; cannot set up symlink." >&2
+KEYD_CONFIG_FILE="$HOME/.config/keyd/default.conf"
+KEYD_CONFIG_SYMLINK="/etc/keyd/default.conf"
+
+if [ ! -f "$KEYD_CONFIG_FILE" ]; then
+    echo "keyd config $KEYD_CONFIG_FILE not found; cannot set up symlink." >&2
     exit 1
 fi
 
 echo "Setting up symlink for keyd config..."
 
-sudo rm /etc/keyd/default.conf
-sudo ln -sfn "$HOME/.config/keyd/default.conf" /etc/keyd/default.conf
-sudo systemctl restart keyd
+sudo rm "$KEYD_CONFIG_SYMLINK"
+sudo ln -sfn "$KEYD_CONFIG_FILE" "$KEYD_CONFIG_SYMLINK"

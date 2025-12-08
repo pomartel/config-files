@@ -1,7 +1,16 @@
 #!/bin/bash
 
 if ! omarchy-pkg-missing "postgresql"; then
-    echo "Initializing PostgreSQL database and creating superuser 'po'..."
-    sudo -iu postgres initdb -D /var/lib/postgres/data
-    sudo -iu postgres createuser --superuser po
+    # check if the database is already initialized
+    if sudo [ ! -d /var/lib/postgres/data/base ]; then
+        echo "Initializing PostgreSQL database..."
+        sudo -iu postgres initdb -D /var/lib/postgres/data
+    fi
+    # check if the postgres user already exists
+    if ! sudo -iu postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='po'" | grep -q 1; then
+        echo "Creating PostgreSQL superuser 'po'..."
+        sudo -iu postgres createuser --superuser po
+    fi
+else
+    echo "PostgreSQL is not installed; skipping initialization." >&2
 fi

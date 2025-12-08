@@ -8,4 +8,4 @@ omarchy-webapp-remove "Discord"
 omarchy-webapp-remove "Zoom"
 omarchy-webapp-remove "Fizzy"
 
-omarchy-pkg-remove "signal-desktop"
+omarchy-pkg-drop "signal-desktop"
