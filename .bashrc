@@ -13,9 +13,11 @@ source ~/.local/share/omarchy/default/bash/rc
 # Show current running process in tab title
 trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
 
+alias reload="source $HOME/.bashrc"
 
 # Work
-alias po="cd $HOME/Work/poll-app/"
+export POLL_PATH="$HOME/Work/poll-app"
+alias po="cd $POLL_PATH"
 alias site="cd $HOME/Work/poll-app.com/"
 alias cr="cd $HOME/Work/coderubik.com/"
 
@@ -29,36 +31,34 @@ export COURS_PATH="$HOME/Cours"
 alias cours="cd $COURS_PATH"
 alias sp="cd $COURS_PATH/serveur-prof"
 alias md="cd $HOME/Work/markdown"
-alias watchmd="$HOME/Work/markdown/scripts/watch_changes"
+alias watchmd="md; npm run --silent watch_changes -- "
 
 alias sshp="ssh po@serveurprof.com -p 143"
 alias sshu="ssh u1234567@serveurprof.com -p 143"
 
-
 deploy() {
-    for t in "$@"; do
-        echo "---- Deploying to $t ----"
-        git push $t +HEAD:master
-    done
+  for t in "$@"; do
+    echo "---- Deploying to $t ----"
+    git push $t +HEAD:master
+  done
 }
 
 mmbuild() {
-    case $1 in
-    cr) targets=(coderubik) ;;
-    en) targets=(poll survey contest quiz) ;;
-    fr) targets=(sondage concours) ;;
-    es) targets=(encuesta concurso) ;;
-    pt) targets=(enquete promocao) ;;
-    de) targets=(umfrage gewinnspiel) ;;
-    all) targets=(poll survey contest quiz sondage concours encuesta concurso enquete promocao umfrage gewinnspiel) ;;
-    *) targets=($1) ;;
-    esac
+  case $1 in
+  cr) targets=(coderubik) ;;
+  en) targets=(poll survey contest quiz) ;;
+  fr) targets=(sondage concours) ;;
+  es) targets=(encuesta concurso) ;;
+  pt) targets=(enquete promocao) ;;
+  de) targets=(umfrage gewinnspiel) ;;
+  all) targets=(poll survey contest quiz sondage concours encuesta concurso enquete promocao umfrage gewinnspiel) ;;
+  *) targets=($1) ;;
+  esac
 
-    for t in "${targets[@]}"; do
-        echo "Deploying Middleman site for $t"
-        target=$t bundle exec middleman build
-        target=$t bundle exec middleman s3_sync
-        target=$t bundle exec middleman invalidate
-    done
+  for t in "${targets[@]}"; do
+    echo "Deploying Middleman site for $t"
+    target=$t bundle exec middleman build
+    target=$t bundle exec middleman s3_sync
+    target=$t bundle exec middleman invalidate
+  done
 }
-
