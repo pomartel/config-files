@@ -6,5 +6,6 @@ omarchy-webapp-remove "X"
 omarchy-webapp-remove "Figma"
 omarchy-webapp-remove "Discord"
 omarchy-webapp-remove "Zoom"
+omarchy-webapp-remove "Fizzy"
 
-sudo pacman -Rns --noconfirm signal-desktop
+omarchy-pkg-remove "signal-desktop"
