@@ -1,0 +1,2 @@
+Defaults:po timestamp_timeout=30
+po ALL=(ALL) NOPASSWD: /usr/bin/pacman, /usr/bin/systemctl
