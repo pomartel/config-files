@@ -31,7 +31,7 @@ export COURS_PATH="$HOME/Cours"
 alias cours="cd $COURS_PATH"
 alias sp="cd $COURS_PATH/serveur-prof"
 alias md="cd $HOME/Work/markdown"
-alias watchmd="md; npm run --silent watch_changes -- "
+alias watchmd="$HOME/Work/markdown/scripts/watch_changes"
 
 alias sshp="ssh po@serveurprof.com -p 143"
 alias sshu="ssh u1234567@serveurprof.com -p 143"
