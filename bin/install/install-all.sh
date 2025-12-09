@@ -28,5 +28,6 @@ fi
 ./set-sudoers-symlink.sh
 ./clone-git-projects.sh
 ./remove-default-apps.sh
+./set-theme-and-font.sh
 
 echo "All install scripts completed."
