@@ -10,5 +10,6 @@ fi
 
 if sudo [ ! -L "$SUDOERS_CONFIG_SYMLINK" ]; then
     echo "Setting up symlink for sudoers rules..."
+    chown root:root "$SUDOERS_CONFIG_FILE"
     sudo ln -sfn "$SUDOERS_CONFIG_FILE" "$SUDOERS_CONFIG_SYMLINK"
 fi
