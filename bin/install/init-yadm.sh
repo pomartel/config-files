@@ -10,7 +10,8 @@ REPO_DIR="$HOME/.local/share/yadm/repo.git"
 
 # Only clone if the repo directory doesn't already exist
 echo "Cloning yadm repository: $REPO_URL"
-yadm clone "$REPO_URL"
+
+yadm clone -f "$REPO_URL"
 
 echo "Force-resetting work-tree (discarding local conflicting files)..."
 yadm reset --hard
