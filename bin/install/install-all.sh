@@ -23,7 +23,6 @@ fi
 
 ./set-locale.sh
 ./install-packages.sh
-./init-yadm.sh
 ./init-postgresql.sh
 ./set-keyd-symlink.sh
 ./set-sudoers-symlink.sh
@@ -31,4 +30,3 @@ fi
 ./remove-default-apps.sh
 
 echo "All install scripts completed."
-
