@@ -16,4 +16,5 @@ if [ ! -L "$KEYD_CONFIG_SYMLINK" ]; then
     echo "Setting up symlink for keyd config..."
     sudo rm "$KEYD_CONFIG_SYMLINK"
     sudo ln -sfn "$KEYD_CONFIG_FILE" "$KEYD_CONFIG_SYMLINK"
+    sudo systemctl restart keyd
 fi
