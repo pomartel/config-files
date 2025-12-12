@@ -14,6 +14,7 @@ source ~/.local/share/omarchy/default/bash/rc
 trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
 
 alias reload="source $HOME/.bashrc"
+alias y=yadm
 
 # Work
 export POLL_PATH="$HOME/Work/poll-app"
