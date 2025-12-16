@@ -29,7 +29,7 @@ fi
 ./clone-git-projects.sh
 ./remove-default-apps.sh
 ./set-theme-and-font.sh
-./set-power-profile-rule.sh
+./configure-tlp.sh
 
 ./configure-hibernation-swap-file.sh
 ./configure-hibernation-rules.sh

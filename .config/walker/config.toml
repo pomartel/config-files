@@ -44,3 +44,7 @@ provider = "clipboard"
 [[providers.prefixes]]
 prefix = "!"
 provider = "runner"
+
+[[emergencies]]
+text = "Restart Walker"
+command = "omarchy-restart-walker"
