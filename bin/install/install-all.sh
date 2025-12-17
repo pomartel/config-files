@@ -30,6 +30,7 @@ fi
 ./remove-default-apps.sh
 ./set-theme-and-font.sh
 ./configure-tlp.sh
+./configure-networking.sh
 
 ./configure-hibernation-swap-file.sh
 ./configure-hibernation-rules.sh
