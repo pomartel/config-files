@@ -1,0 +1,43 @@
+# =========================
+# Display & Interface
+# =========================
+
+set linenumbers
+set constantshow
+set softwrap
+set tabsize 4
+set trimblanks
+set nowrap
+
+# =========================
+# Editing
+# =========================
+
+set autoindent
+set cutfromcursor
+set atblanks
+set mouse
+set multibuffer
+set historylog
+
+# =========================
+# Safety
+# =========================
+
+set saveonexit
+set locking
+set unix
+
+# =========================
+# Search
+# =========================
+
+set regexp
+set casesensitive
+
+# =========================
+# Syntax highlighting
+# =========================
+
+include /usr/share/nano/*.nanorc
+
