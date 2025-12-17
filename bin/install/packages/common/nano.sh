@@ -1,4 +1,3 @@
 #!/bin/bash
 source ./install-helper.sh
-install-pkg "nano" "Nano Editor"
-
+install-pkg "nano nano-syntax-highlighting" "Nano Editor"

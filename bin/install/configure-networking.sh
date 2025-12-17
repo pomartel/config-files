@@ -11,3 +11,9 @@ if systemctl is-active --quiet systemd-networkd; then
     echo "Disabling systemd-networkd to avoid conflicts with NetworkManager..."
     systemctl disable --now systemd-networkd
 fi
+
+nmaplet_autostart_file="/etc/xdg/autostart/nm-applet.desktop"
+if [ ! -f "$nmaplet_autostart_file" ]; then
+	echo "Removing nm-applet from autostart..."
+	rm "$nmaplet_autostart_file"
+fi

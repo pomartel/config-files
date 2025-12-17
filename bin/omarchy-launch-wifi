@@ -1,4 +1,4 @@
 #!/bin/bash
 
 rfkill unblock wifi
-omarchy-launch-or-focus-tui nmtui
+omarchy-launch-or-focus-tui nmtui-connect
