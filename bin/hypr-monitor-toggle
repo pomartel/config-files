@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+ext="DP-1"
+
+if hyprctl monitors | grep -q "^Monitor $ext"; then
+    notify-send "Display connected: $ext"
+    for w in {1..10}; do
+        hyprctl dispatch moveworkspacetomonitor $w $ext
+        hyprctl keyword "workspace $w, gapsout:10, gapsin:5"
+    done
+else
+    notify-send "Display disconnected: DP-1"
+    for w in {1..10}; do
+        hyprctl keyword "workspace $w, gapsout:3, gapsin:1"
+    done
+fi
+
+# Projector mode: if in mirror mode, set laptop monitor to 1080p60
+if hyprctl monitors | grep -q "monitor mirrors"; then
+    hyprctl keyword monitor "eDP-1,1920x1080@60,auto,2"
+fi
