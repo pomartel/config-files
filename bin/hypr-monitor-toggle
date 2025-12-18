@@ -3,13 +3,10 @@
 ext="DP-1"
 
 if hyprctl monitors | grep -q "^Monitor $ext"; then
-    notify-send "Display connected: $ext"
     for w in {1..10}; do
-        hyprctl dispatch moveworkspacetomonitor $w $ext
         hyprctl keyword "workspace $w, gapsout:10, gapsin:5"
-    done
+     done
 else
-    notify-send "Display disconnected: DP-1"
     for w in {1..10}; do
         hyprctl keyword "workspace $w, gapsout:3, gapsin:1"
     done
