@@ -1,0 +1,18 @@
+# Maximum percentage for volume sliders
+max_volume_percent = 80.0
+
+# Whether to prevent increasing volume past max_volume
+enforce_max_volume = true
+
+# Initial tab
+tab = "output"
+
+
+keybindings = [
+ # Open a dropdown for the selected item or chose an item in the dropdown
+ { key = { Char = "d" }, action = "ActivateDropdown" },
+ # Make the selected item in Input/Output Devices the default endpoint
+ { key = "Enter", action = "SetDefault" },
+ { key = { Char = " " }, action = "SetDefault" },
+]
+

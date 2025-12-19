@@ -25,7 +25,7 @@ fi
 ./copy-sudoers-rules.sh
 ./clone-git-projects.sh
 ./remove-default-apps.sh
-./set-theme-and-font.sh
+./set-default-font.sh
 ./configure-tlp.sh
 ./configure-networking.sh
 
