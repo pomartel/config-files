@@ -188,6 +188,7 @@
   "tray": {
     "show-passive-items": false,
     "icon-size": 12,
-    "spacing": 17
-  },
+    "spacing": 17,
+    "reverse-direction": true,
+  }
 }

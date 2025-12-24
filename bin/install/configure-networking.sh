@@ -13,7 +13,7 @@ if systemctl is-active --quiet systemd-networkd; then
 fi
 
 nmaplet_autostart_file="/etc/xdg/autostart/nm-applet.desktop"
-if [ ! -f "$nmaplet_autostart_file" ]; then
-	echo "Removing nm-applet from autostart..."
-	rm "$nmaplet_autostart_file"
+if [ -f "$nmaplet_autostart_file" ]; then
+    echo "Removing nm-applet from autostart..."
+    rm "$nmaplet_autostart_file"
 fi
