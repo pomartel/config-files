@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SAFE_SSID=$1
+SSID="$(iw dev wlan0 link 2>/dev/null | sed -n 's/^.*SSID: //p')"
+
+if [[ "$SSID" == "$SAFE_SSID" ]]; then
+    echo "On a safe network. No need to lock!"
+else
+    loginctl lock-session
+fi
