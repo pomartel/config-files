@@ -2,7 +2,7 @@
 if systemctl is-enabled power-profiles-daemon.service &>/dev/null; then
     sudo systemctl stop power-profiles-daemon.service
     sudo systemctl disable power-profiles-daemon.service
-    omarchy-pkg-drop power-profiles-daemon
+    omarchy-pkg-drop power-profiles-deamon
 fi
 
 # Check if the systemd-rfkill service and socket are already masked

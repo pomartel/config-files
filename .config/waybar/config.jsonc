@@ -150,11 +150,10 @@
     "scroll-step": 5,
     "format-muted": "",
     "format-icons": {
-      "headphones": "",
-      "handsfree": "",
-      "headset": "",
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
       "phone": "",
-      "phone-muted": "",
       "portable": "",
       "car": "",
       "default": [
