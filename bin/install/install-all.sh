@@ -27,6 +27,7 @@ fi
 ./remove-default-apps.sh
 ./set-default-font.sh
 ./configure-tlp.sh
+
 ./configure-networking.sh
 
 ./configure-hibernation-swap-file.sh
