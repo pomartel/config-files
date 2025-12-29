@@ -15,5 +15,5 @@ fi
 nmaplet_autostart_file="/etc/xdg/autostart/nm-applet.desktop"
 if [ -f "$nmaplet_autostart_file" ]; then
     echo "Removing nm-applet from autostart..."
-    rm "$nmaplet_autostart_file"
+    sudo rm "$nmaplet_autostart_file"
 fi
