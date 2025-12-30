@@ -28,6 +28,7 @@ fi
 ./remove-default-apps.sh
 ./set-default-font.sh
 ./configure-tlp.sh
+./setup-acpi-wakeup-disable.sh
 
 ./configure-networking.sh
 
