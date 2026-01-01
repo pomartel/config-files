@@ -7,7 +7,7 @@ general {
 
 listener {
     timeout = 60 # 1min
-    on-timeout = brightnessctl -sd intel_backlight set 30 # set monitor backlight to minimum, avoid 0 on OLED monitor.
+    on-timeout = brightnessctl -sd intel_backlight set 10 # set monitor backlight to minimum, avoid 0 on OLED monitor.
     on-resume = brightnessctl -rd intel_backlight # monitor backlight restore.
 }
 
