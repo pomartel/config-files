@@ -17,13 +17,13 @@ listener {
     on-resume = brightnessctl -rd tpacpi::kbd_backlight # turn on keyboard backlight
 }
 
-# listener {
-#     timeout = 300 # 5min
-#     on-timeout = pidof hyprlock || omarchy-launch-screensaver # start screensaver (if we haven't locked already)
-#  }
+listener {
+    timeout = 180 # 3min (screensaver resets hyprilde timer)
+    on-timeout = run-on-ac omarchy-launch-screensaver # start screensaver (if we haven't locked already)
+ }
 
 listener {
-    timeout = 600 # 10min
+    timeout = 420 # 10min
     on-timeout = hyprctl dispatch dpms off # screen off when timeout has passed
     on-resume = hyprctl dispatch dpms on && brightnessctl -r # screen on when activity is detected
 }
