@@ -10,14 +10,12 @@ source ~/.local/share/omarchy/default/bash/rc
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 
-# Add ~/bin to PATH
-export PATH="$HOME/bin:$PATH"
-
 # Show current running process in tab title
 trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
 
 alias reload="source $HOME/.bashrc"
 alias y=yadm
+alias z=zeditor
 # Work
 export POLL_PATH="$HOME/Work/poll-app"
 alias po="cd $POLL_PATH"
