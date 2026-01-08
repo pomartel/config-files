@@ -5,7 +5,8 @@ ext="DP-1"
 if hyprctl monitors | grep -q "^Monitor $ext"; then
     for w in {1..10}; do
         hyprctl keyword "workspace $w, gapsout:10, gapsin:5"
-     done
+        [ $w -ne 5 ] && hyprctl dispatch moveworkspacetomonitor $w $ext
+    done
 else
     for w in {1..10}; do
         hyprctl keyword "workspace $w, gapsout:3, gapsin:1"
