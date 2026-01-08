@@ -36,3 +36,7 @@ copy-on-select = clipboard
 
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 0.95
+
+# Keep ghostty running after last window is closed
+quit-after-last-window-closed = false
+

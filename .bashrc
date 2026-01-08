@@ -11,7 +11,7 @@ source ~/.local/share/omarchy/default/bash/rc
 # alias p='python'
 
 # Show current running process in tab title
-trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
+# trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
 
 alias reload="source $HOME/.bashrc"
 alias y=yadm
@@ -26,6 +26,10 @@ alias mm="target=poll bundle exec middleman"
 alias rdb="rails db:migrate"
 alias rdbr="rails db:rollback"
 alias rs="./bin/dev"
+
+# Blog
+alias jk="bundle exec jekyll serve --livereload"
+alias bg="cd $HOME/Work/blog/"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"
