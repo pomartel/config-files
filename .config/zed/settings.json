@@ -8,30 +8,33 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
+  "session": {
+    "trust_all_worktrees": true,
+  },
   "git": {
     "inline_blame": {
-      "enabled": false
-    }
+      "enabled": false,
+    },
   },
   "vim_mode": false,
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "base_keymap": "VSCode",
   "preview_tabs": {
-    "enabled": false
+    "enabled": false,
   },
   "minimap": {
-    "show": "never"
+    "show": "never",
   },
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
-    }
+      "milliseconds": 1000,
+    },
   },
   "file_types": {
-    "markdown": ["*.marp"]
+    "markdown": ["*.marp"],
   },
   "auto_indent_on_paste": true,
   "soft_wrap": "editor_width",
@@ -41,6 +44,6 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Catppuccin Macchiato"
-  }
+    "dark": "Catppuccin Macchiato",
+  },
 }
