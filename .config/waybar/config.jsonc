@@ -11,6 +11,7 @@
   "modules-center": [
     "clock",
     "custom/update",
+    "custom/voxtype",
     "custom/screenrecording-indicator"
   ],
   "modules-right": [
@@ -196,6 +197,6 @@
     "show-passive-items": false,
     "icon-size": 12,
     "spacing": 17,
-    "reverse-direction": true,
+    "reverse-direction": true
   }
 }

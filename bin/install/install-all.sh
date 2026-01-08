@@ -28,6 +28,7 @@ fi
 ./remove-default-apps.sh
 ./set-default-font.sh
 ./configure-tlp.sh
+./configure-voxtype.sh
 
 ./configure-networking.sh
 
