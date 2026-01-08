@@ -19,7 +19,7 @@ listener {
 
 listener {
     timeout = 180 # 3min (screensaver resets hyprilde timer)
-    on-timeout = run-on-ac omarchy-launch-screensaver # start screensaver (if we haven't locked already)
+    on-timeout = pidof hyprlock || run-on-ac omarchy-launch-screensaver # start screensaver (if we haven't locked already)
  }
 
 listener {
