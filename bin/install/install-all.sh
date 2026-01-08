@@ -29,10 +29,9 @@ fi
 ./set-default-font.sh
 ./configure-tlp.sh
 ./configure-voxtype.sh
-
+./add-suspend-to-system-menu.sh
 ./configure-networking.sh
 
-./configure-hibernation-swap-file.sh
-./configure-hibernation-rules.sh
+./configure-hibernation.sh
 
 echo "All install scripts completed."
