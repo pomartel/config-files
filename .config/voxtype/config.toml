@@ -11,8 +11,10 @@
 state_file = "auto"
 
 [hotkey]
-# Hotkey is configured in Hyprland. Default is Super + Ctrl + X
-enabled = false
+enabled = true
+key = "RIGHTALT"
+mode = "push_to_talk"
+
 
 [audio]
 # Audio input device ("default" uses system default)

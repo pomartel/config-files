@@ -21,6 +21,7 @@ if [ "$INSTALL_TARGET" = "home" ]; then
     clone_if_missing "git@github.com:pomartel/poll-app.git"
     clone_if_missing "git@github.com:pomartel/fbpoll.co.git" "poll-app.com"
     clone_if_missing "git@github.com:pomartel/coderubik.com.git"
+    clone_if_missing "git@github.com:pomartel/pomartel.github.io.git" "blog"
 fi
 
 clone_if_missing "git@git.dti.crosemont.quebec:pmartel/markdown-export.git" "markdown"
