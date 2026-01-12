@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "memcached" "Memcached"
+# Memcached
+omarchy-pkg-add memcached

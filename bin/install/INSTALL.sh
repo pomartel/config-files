@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # If the computer name is omarchy-home, set the INSTALL_TARGET to home. if set to omarchy-school, set to school. Otherwise, exit with an error.
 if [ "$HOSTNAME" == "home-omarchy" ]; then
@@ -20,18 +20,11 @@ if [ ${#ssh_keys[@]} -eq 0 ]; then
 fi
 
 ./set-locale.sh
-./install-packages.sh
-./init-postgresql.sh
-./set-keyd-symlink.sh
-./copy-sudoers-rules.sh
+./add-packages.sh
 ./clone-git-projects.sh
 ./remove-default-apps.sh
 ./set-default-font.sh
-./configure-tlp.sh
-./configure-voxtype.sh
 ./add-suspend-to-system-menu.sh
-./configure-networking.sh
-
 ./configure-hibernation.sh
 
 echo "All install scripts completed."

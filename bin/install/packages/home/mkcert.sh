@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "mkcert nss" "mkcert for local SSL certificate generation"
+# mkcert for local SSL certificate generation
+omarchy-pkg-add mkcert nss

@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "nano nano-syntax-highlighting" "Nano Editor"
+# Nano Editor
+omarchy-pkg-add nano nano-syntax-highlighting

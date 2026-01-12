@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "man-pages-fr" "Man Pages French translation"
+# Man Pages French translation
+omarchy-pkg-add man-pages-fr

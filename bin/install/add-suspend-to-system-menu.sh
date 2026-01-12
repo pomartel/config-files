@@ -1,3 +1,5 @@
+#!/bin/bash
+
 STATE_FILE=~/.local/state/omarchy/toggles/suspend-on
 
 if [[ ! -f $STATE_FILE ]]; then

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Check if hibernation is already configured
 MKINITCPIO_CONF="/etc/mkinitcpio.conf.d/omarchy_resume.conf"
 if [ -f "$MKINITCPIO_CONF" ] && grep -q "^HOOKS+=(resume)$" "$MKINITCPIO_CONF"; then

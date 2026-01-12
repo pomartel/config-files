@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "yarn" "Yarn package manager"
+# Yarn package manager
+omarchy-pkg-add yarn

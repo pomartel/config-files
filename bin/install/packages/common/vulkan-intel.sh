@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "vulkan-intel" "Intel Vulkan Driver for OpenGL Applications"
+# Intel Vulkan Driver for OpenGL Applications
+omarchy-pkg-add vulkan-intel

@@ -1,4 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg-yay "brave-bin" "Brave browser"
-
+# Brave browser
+omarchy-pkg-aur-add brave-bin

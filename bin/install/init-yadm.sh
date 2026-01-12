@@ -1,4 +1,6 @@
-#!/usr/bin/bash
+#!/bin/bash
+
+# THIS SCRIPT MUST BE EXECUTED FIRST
 
 REPO_URL="git@github.com:pomartel/config-files.git"
 

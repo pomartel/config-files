@@ -1,5 +1,4 @@
-#!/bin/bash
-if omarchy-pkg-missing "dropbox"; then
+if omarchy-pkg-missing dropbox; then
 	echo "Installing Dropbox..."
 	omarchy-install-dropbox
 fi

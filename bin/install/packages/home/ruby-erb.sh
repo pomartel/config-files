@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "ruby-erb" "Ruby ERB"
+# Ruby ERB
+omarchy-pkg-add ruby-erb

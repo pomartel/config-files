@@ -1,3 +1,7 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg-yay "espanso-wayland" "Espanso text expander" "espanso service register && espanso start"
+# Espanso text expander
+omarchy-pkg-aur-add espanso-wayland
+
+if ! systemctl is-active --user --quiet espanso; then
+    espanso service register
+    espanso start
+fi

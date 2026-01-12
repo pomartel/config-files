@@ -1,3 +1,2 @@
-#!/bin/bash
-source ./install-helper.sh
-install-pkg "pandoc" "Pandoc document converter"
+# Pandoc document converter
+omarchy-pkg-add pandoc
