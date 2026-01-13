@@ -1,7 +1,7 @@
 general {
     lock_cmd = omarchy-lock-screen                # lock screen and 1password
     # before_sleep_cmd = loginctl lock-session      # lock before suspend.
-    after_sleep_cmd = sleep 2; lock-unless-ssid pouding # to avoid having to press a key twice to turn on the display.
+    after_sleep_cmd = sleep 2; lock-unless-ssid pouding chalet432 # to avoid having to press a key twice to turn on the display.
     inhibit_sleep = 3                             # wait until screen is locked
 }
 
@@ -13,7 +13,7 @@ listener {
 
 listener {
     timeout = 90 # 1.5min
-    on-timeout = run-on-bat brightnessctl -sd tpacpi::kbd_backlight set 0 # turn off keyboard backlight
+    on-timeout = brightnessctl -sd tpacpi::kbd_backlight set 0 # turn off keyboard backlight
     on-resume = brightnessctl -rd tpacpi::kbd_backlight # turn on keyboard backlight
 }
 

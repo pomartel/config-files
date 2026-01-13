@@ -16,6 +16,9 @@ source ~/.local/share/omarchy/default/bash/rc
 alias reload="source $HOME/.bashrc"
 alias y=yadm
 alias z=zeditor
+alias lg=lazygit
+alias timestamp="date +%s"
+
 # Work
 export POLL_PATH="$HOME/Work/poll-app"
 alias po="cd $POLL_PATH"
@@ -29,7 +32,7 @@ alias rs="./bin/dev"
 
 # Blog
 alias jk="bundle exec jekyll serve --livereload"
-alias bg="cd $HOME/Work/blog/"
+alias bg="cd $HOME/Work/sudomarchy/"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"

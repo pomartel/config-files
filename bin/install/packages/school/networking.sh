@@ -7,18 +7,22 @@ if [ ! -f "$wifi_backend_conf" ]; then
     printf "[device]\nwifi.backend=wpa_supplicant\n" | sudo tee "$wifi_backend_conf" >/dev/null
 fi
 
-if ! systemctl is-active --quiet NetworkManager.service; then
-    sudo systemctl enable --now NetworkManager.service
-fi
-
 if systemctl is-active --quiet iwd; then
     echo "Disabling iwd to avoid conflicts with NetworkManager..."
     systemctl disable --now iwd
 fi
 
+if ! systemctl is-active --quiet wpa_supplicant; then
+    sudo systemctl enable --now wpa_supplicant
+fi
+
 if systemctl is-active --quiet systemd-networkd; then
     echo "Disabling systemd-networkd to avoid conflicts with NetworkManager..."
     systemctl disable --now systemd-networkd
+fi
+
+if ! systemctl is-active --quiet NetworkManager; then
+    sudo systemctl enable --now NetworkManager
 fi
 
 nmaplet_autostart_file="/etc/xdg/autostart/nm-applet.desktop"
