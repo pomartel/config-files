@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [[ "$(voxtype status)" == "recording" ]]; then
-  voxtype record stop
-else
-  voxtype record start
-fi
-

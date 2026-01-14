@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "format_on_save": "off",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
   "session": {
     "trust_all_worktrees": true,
@@ -37,10 +38,10 @@
     "markdown": ["*.marp"],
   },
   "auto_indent_on_paste": true,
-  "soft_wrap": "preferred_line_length",
-  "preferred_line_length": 120,
+  "soft_wrap": "editor_width",
+  "preferred_line_length": 100,
   "icon_theme": "Colored Zed Icons Theme Dark",
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": "Kanagawa",
+  "theme": "Tokyo Night",
 }
