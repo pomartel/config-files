@@ -18,18 +18,6 @@ matches:
   - trigger: ":espanso"
     replace: "Hi there!"
 
-  - trigger: ";pkg"
-    replace: |
-      #!/bin/bash
-      source ./install-helper.sh
-      install-pkg "$|$" "Name"
-
-  - trigger: ";ypkg"
-    replace: |
-      #!/bin/bash
-      source ./install-helper.sh
-      install-pkg-yay "$|$" "Name"
-
   # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
   # But matches can also be dynamic:
 
@@ -52,4 +40,3 @@ matches:
           cmd: "echo 'Hello from your shell'"
 
   # And much more! For more information, visit the docs: https://espanso.org/docs/
-

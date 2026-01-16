@@ -18,6 +18,7 @@ alias y=yadm
 alias z=zeditor
 alias lg=lazygit
 alias timestamp="date +%s"
+alias rm='trash'
 
 # Work
 export POLL_PATH="$HOME/Work/poll-app"
@@ -31,7 +32,6 @@ alias rdbr="rails db:rollback"
 alias rs="./bin/dev"
 
 # Blog
-alias jk="bundle exec jekyll serve --livereload"
 alias bg="cd $HOME/Work/sudomarchy/"
 
 # Teaching
