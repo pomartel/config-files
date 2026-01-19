@@ -1,2 +1,2 @@
 # Trash CLI to replace rm
-omarchy-pkg-add shfmt
+omarchy-pkg-add trash-cli
