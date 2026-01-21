@@ -3,3 +3,4 @@ sync_dir="~/Dropbox/Cours/"
 # Exclude all _build directories at any depth
 skip_file = "~*|.~*|*.tmp|*.swp|*.lock|*.DS_Store|desktop.ini|Thumbs.db|*/_build/**"
 
+use_recycle_bin = "true"
