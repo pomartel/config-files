@@ -4,3 +4,7 @@ sync_dir="~/Dropbox/Cours/"
 skip_file = "~*|.~*|*.tmp|*.swp|*.lock|*.DS_Store|desktop.ini|Thumbs.db|*/_build/**"
 
 use_recycle_bin = "true"
+
+download_only = "true"
+bypass_data_preservation = "true"
+
