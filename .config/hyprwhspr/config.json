@@ -37,7 +37,7 @@
   "onnx_asr_model": "nemo-parakeet-tdt-0.6b-v3",
   "onnx_asr_quantization": "int8",
   "onnx_asr_use_vad": true,
-  "mic_osd_enabled": true,
+  "mic_osd_enabled": false,
   "mute_detection": true,
   "audio_ducking": true,
   "audio_ducking_percent": 50,

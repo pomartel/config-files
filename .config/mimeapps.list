@@ -52,6 +52,7 @@ application/x-extension-xhtml=userapp-Firefox-DUHGF3.desktop
 application/x-extension-xht=userapp-Firefox-DUHGF3.desktop
 x-scheme-handler/webcal=brave-browser.desktop
 x-scheme-handler/aether=aether-protocol-handler.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-DUHGF3.desktop;
@@ -64,3 +65,4 @@ application/x-extension-shtml=userapp-Firefox-DUHGF3.desktop;
 application/xhtml+xml=userapp-Firefox-DUHGF3.desktop;
 application/x-extension-xhtml=userapp-Firefox-DUHGF3.desktop;
 application/x-extension-xht=userapp-Firefox-DUHGF3.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
