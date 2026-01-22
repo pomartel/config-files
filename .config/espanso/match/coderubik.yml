@@ -22,7 +22,7 @@ global_vars:
   - name: signature_fr
     type: echo
     params:
-      echo:  |
+      echo: |
         Salutations,
 
         {{name}}
@@ -62,7 +62,7 @@ global_vars:
   - name: aide
     type: echo
     params:
-      echo: "N’hésitez pas si je peux vous aider avec quoi que ce soit d'autre."
+      echo: "N'hésitez pas si je peux vous aider avec quoi que ce soit d'autre."
 
   - name: ayuda
     type: echo
@@ -90,7 +90,6 @@ global_vars:
         promo
         umfrage
         spiel
-
 
 matches:
   - trigger: ";aide"
@@ -243,4 +242,4 @@ matches:
       - name: subdmain
         type: choice
         params:
-          values:  "{{subdomains}}"
+          values: "{{subdomains}}"
