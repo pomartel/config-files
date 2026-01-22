@@ -3,7 +3,7 @@
 keyboard_layout:
   layout: "ca"
 
-search_shortcut: None
+search_shortcut: META+CTRL+O
 
 show_notifications: false
 
@@ -37,9 +37,9 @@ backend: clipboard
 paste_shortcut: META+V
 
 # --- Auto-restart
-
 # Enable/disable the config auto-reload after a file change is detected.
-auto_restart: true
+# auto_restart: true
+
 # --- Clipboard threshold
 
 # Because injecting long texts char-by-char is a slow operation, espanso automatically

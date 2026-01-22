@@ -40,10 +40,9 @@ matches:
           cmd: "echo 'Hello from your shell'"
 
   - trigger: ";timestamp"
-    replace: "{{output}}"
+    replace: "{{timestamp}}"
     vars:
-      - name: output
-        type: shell
+      - name: timestamp
+        type: date
         params:
-          cmd: "date +%s"
-  # And much more! For more information, visit the docs: https://espanso.org/docs/
+          format: "%s"
