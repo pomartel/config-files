@@ -34,7 +34,7 @@ max_duration_secs = 60
 enabled = true
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
-theme = "default"
+theme = "mechanical"
 #
 # Volume level (0.0 to 1.0)
 volume = 0.7
@@ -58,9 +58,6 @@ remote_model = "gpt-4o-mini-transcribe"
 
 # Request timeout in seconds (increase for large files or slow networks)
 remote_timeout_secs = 20
-
-# Optional: API key (not needed for whisper.cpp, required for OpenAI)
-# remote_api_key = "${OPEN_AI_API_KEY}"
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
