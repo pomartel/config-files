@@ -12,7 +12,9 @@ state_file = "auto"
 
 [hotkey]
 enabled = true
+
 key = "F13"
+
 mode = "push_to_talk"
 
 
@@ -29,13 +31,13 @@ max_duration_secs = 60
 
 # [audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
-# enabled = true
+enabled = true
 #
 # Sound theme: "default", "subtle", "mechanical", or path to custom theme directory
-# theme = "default"
+theme = "default"
 #
 # Volume level (0.0 to 1.0)
-# volume = 0.7
+volume = 0.7
 
 [whisper]
 # Model to use for transcription
@@ -44,6 +46,21 @@ max_duration_secs = 60
 # large-v3-turbo is faster than large-v3 with minimal accuracy loss (recommended for GPU)
 # Or provide absolute path to a custom .bin model file
 model = "small"
+
+# Switch to remote backend
+backend = "remote"
+
+# Your whisper.cpp server address
+remote_endpoint = "https://api.openai.com"
+
+# Model name sent to server (whisper.cpp ignores this, but OpenAI requires it)
+remote_model = "gpt-4o-mini-transcribe"
+
+# Request timeout in seconds (increase for large files or slow networks)
+remote_timeout_secs = 20
+
+# Optional: API key (not needed for whisper.cpp, required for OpenAI)
+# remote_api_key = "${OPEN_AI_API_KEY}"
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection

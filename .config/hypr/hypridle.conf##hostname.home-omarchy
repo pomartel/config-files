@@ -18,12 +18,12 @@ listener {
 }
 
 listener {
-    timeout = 180 # 3min (screensaver resets hyprilde timer)
+    timeout = 300 # 5min (screensaver resets hyprilde timer)
     on-timeout = pidof hyprlock || run-on-ac omarchy-launch-screensaver # start screensaver (if we haven't locked already)
  }
 
 listener {
-    timeout = 420 # 10min
+    timeout = 600 # 15min
     on-timeout = hyprctl dispatch dpms off # screen off when timeout has passed
     on-resume = hyprctl dispatch dpms on && brightnessctl -r # screen on when activity is detected
 }
