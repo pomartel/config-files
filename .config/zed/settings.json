@@ -7,14 +7,24 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ensure_final_newline_on_save": false,
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
   "agent": {
+    "inline_assistant_model": {
+      "provider": "openai",
+      "model": "gpt-5.2"
+    },
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "openai",
+      "model": "gpt-4o"
     },
     "model_parameters": []
   },
-  "format_on_save": "off",
+  "format_on_save": "on",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
   "session": {
     "trust_all_worktrees": true,

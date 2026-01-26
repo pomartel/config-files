@@ -1,0 +1,101 @@
+matches:
+  - trigger: :bisou
+    replace: 😘
+  - trigger: :bisou
+    replace: 😗
+  - trigger: :chaud
+    replace: 🥵
+  - trigger: :clin
+    replace: 😉
+  - trigger: :coeur
+    replace: ❤️
+  - trigger: :coeur
+    replace: 😍
+  - trigger: :coeur
+    replace: 🥰
+  - trigger: :coeur
+    replace: 💕
+  - trigger: :coeur
+    replace: 💖
+  - trigger: :coeur
+    replace: 💗
+  - trigger: :coeur
+    replace: 💑
+  - trigger: :coeur
+    replace: 💔
+  - trigger: :confus
+    replace: 😕
+  - trigger: :cool
+    replace: 😎
+  - trigger: :fache
+    replace: 😡
+  - trigger: :fache
+    replace: 😠
+  - trigger: :fache
+    replace: 😤
+  - trigger: :fete
+    replace: 🎉
+  - trigger: :fete
+    replace: 🥳
+  - trigger: :froid
+    replace: 🥶
+  - trigger: :main
+    replace: 👋
+  - trigger: :main
+    replace: 👏
+  - trigger: :main
+    replace: 🙏
+  - trigger: :main
+    replace: 🤞
+  - trigger: :main
+    replace: 🤝
+  - trigger: :main
+    replace: 🤙
+  - trigger: :main
+    replace: 🤛
+  - trigger: :neige
+    replace: 🌨
+  - trigger: :neige
+    replace: ☃
+  - trigger: :neige
+    replace: ❄
+  - trigger: :nerveux
+    replace: 😬
+  - trigger: :ok
+    replace: 👌
+  - trigger: :pensif
+    replace: 🤔
+  - trigger: :pluie
+    replace: 🌧️
+  - trigger: :pluie
+    replace: ☔
+  - trigger: :rire
+    replace: 😂
+  - trigger: :rire
+    replace: 🤣
+  - trigger: :rire
+    replace: 😆
+  - trigger: :rire
+    replace: 😄
+  - trigger: :singe
+    replace: 🙈
+  - trigger: :singe
+    replace: 🙉
+  - trigger: :singe
+    replace: 🙊
+  - trigger: :soleil
+    replace: ☀️
+  - trigger: :soleil
+    replace: 😎
+  - trigger: :sommeil
+    replace: 😴
+  - trigger: :soupir
+    replace: 😌
+  - triggers: [":sourire", ":content"]
+    replace: 😊
+  - trigger: :surpris
+    replace: 😮
+  - trigger: :triste
+    replace: 😢
+  - trigger: :vent
+    replace: 🌬

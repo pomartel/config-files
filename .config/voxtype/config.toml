@@ -17,7 +17,6 @@ key = "F13"
 
 mode = "push_to_talk"
 
-
 [audio]
 # Audio input device ("default" uses system default)
 # List devices with: pactl list sources short
@@ -29,7 +28,7 @@ sample_rate = 16000
 # Maximum recording duration in seconds (safety limit)
 max_duration_secs = 60
 
-# [audio.feedback]
+[audio.feedback]
 # Enable audio feedback sounds (beeps when recording starts/stops)
 enabled = true
 #
@@ -74,7 +73,9 @@ translate = false
 # Primary output mode: "type" or "clipboard"
 # - type: Simulates keyboard input at cursor position (requires ydotool)
 # - clipboard: Copies text to clipboard (requires wl-copy)
-mode = "type"
+mode = "paste"
+
+paste_keys = "shift+insert"  # or "ctrl+v" (default), "ctrl+shift+v"
 
 # Fall back to clipboard if typing fails
 fallback_to_clipboard = true
