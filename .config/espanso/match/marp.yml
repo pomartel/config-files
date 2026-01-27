@@ -30,7 +30,7 @@ matches:
 
       ---
 
-  - trigger: ";imgfull"
+  - trigger: ";imgf"
     replace: |
       <!-- _class: fullscreen -->
 
@@ -38,7 +38,7 @@ matches:
 
       ---
 
-  - trigger: ";imgcenter"
+  - trigger: ";imgc"
     replace: |
       <!-- _class: center -->
 
@@ -48,5 +48,5 @@ matches:
 
       ---
 
-  - trigger: ";imgright"
-    replace: "![right width:300px](./assets/$|$)"
+  - trigger: ";imgr"
+    replace: "![right width:600px](./assets/$|$)"
