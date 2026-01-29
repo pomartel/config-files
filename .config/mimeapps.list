@@ -53,6 +53,7 @@ application/x-extension-xht=userapp-Firefox-DUHGF3.desktop
 x-scheme-handler/webcal=brave-browser.desktop
 x-scheme-handler/aether=aether-protocol-handler.desktop
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+inode/directory=org.gnome.Nautilus.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-DUHGF3.desktop;
