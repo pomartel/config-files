@@ -10,30 +10,28 @@
   "agent_servers": {
     "opencode": {
       "type": "extension",
-      "favorite_models": [
-        "openai/gpt-5.2",
-        "openai/gpt-5.2-codex"
-      ],
+      "favorite_models": ["openai/gpt-5.2", "openai/gpt-5.2-codex"],
+      "default_model": "openai/gpt-5.2-codex",
       "default_config_options": {},
-      "favorite_config_option_values": {}
-    }
+      "favorite_config_option_values": {},
+    },
   },
   "ensure_final_newline_on_save": false,
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
-    }
+      "milliseconds": 1000,
+    },
   },
   "agent": {
     "inline_assistant_model": {
       "provider": "openai",
-      "model": "gpt-5.2"
+      "model": "gpt-5.2",
     },
     "default_model": {
       "provider": "openai",
-      "model": "gpt-4o"
+      "model": "gpt-4o",
     },
-    "model_parameters": []
+    "model_parameters": [],
   },
   "format_on_save": "on",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
@@ -71,5 +69,5 @@
   "icon_theme": "Colored Zed Icons Theme Dark",
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": "Matte Black",
+  "theme": "Ristretto",
 }

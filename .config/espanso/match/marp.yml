@@ -12,7 +12,7 @@ matches:
 
       # {{form.title}}
 
-      Objectif:
+      Objectif: $|$
 
       ---
     vars:
@@ -42,7 +42,7 @@ matches:
     replace: |
       <!-- _class: center -->
 
-      #
+      # $|$
 
       ![etc-passwd h:600px](./assets/)
 

@@ -31,8 +31,9 @@ alias rdb="rails db:migrate"
 alias rdbr="rails db:rollback"
 alias rs="./bin/dev"
 
-# Blog
+# Omarchy Development
 alias bg="cd $HOME/Work/sudomarchy/"
+alias om="cd $HOME/Work/omarchy/"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"

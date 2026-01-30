@@ -12,7 +12,7 @@ global_vars:
   - name: signature_en
     type: echo
     params:
-      echo: |
+      echo: |-
         Best regards,
 
         {{name}}
@@ -22,7 +22,7 @@ global_vars:
   - name: signature_fr
     type: echo
     params:
-      echo: |
+      echo: |-
         Salutations,
 
         {{name}}
@@ -32,7 +32,7 @@ global_vars:
   - name: signature_es
     type: echo
     params:
-      echo: |
+      echo: |-
         Saludos cordiales,
 
         {{name}}
@@ -42,7 +42,7 @@ global_vars:
   - name: signature_de
     type: echo
     params:
-      echo: |
+      echo: |-
         Mit freundlichen Grüßen
 
         {{name}}
@@ -52,7 +52,7 @@ global_vars:
   - name: signature_pt
     type: echo
     params:
-      echo: |
+      echo: |-
         Atenciosamente,
 
         {{name}}
@@ -159,7 +159,7 @@ matches:
     replace: "I’m sorry I can’t reply in Portuguese."
 
   - trigger: ";renew"
-    replace: |
+    replace: |-
       Hi $|$,
 
       I made sure that the account will not auto-renew.
@@ -189,7 +189,7 @@ matches:
       {{signature_es}}
 
   - trigger: ";ref"
-    replace: |
+    replace: |-
       Hi $|$,
 
       I just refunded the purchase and it will show up on your credit card statement within the next 10 days. I also made sure no other payment will be taken.
@@ -199,7 +199,7 @@ matches:
       {{signature_en}}
 
   - trigger: ";remb"
-    replace: |
+    replace: |-
       Bonjour $|$,
 
       Je viens tout juste d'effectuer le remboursement sur votre carte de crédit et celui-ci apparaîtra sur votre relevé d'ici les 10 prochains jours. Je me suis aussi assuré qu'aucun autre paiement ne sera prelevé.
