@@ -4,7 +4,7 @@
 export TERMINAL=xdg-terminal-exec
 
 # Use code for VSCode
-export EDITOR=z
+export EDITOR=nvim
 
 # Use a custom directory for screenshots (remember to make the directory!)
 # export OMARCHY_SCREENSHOT_DIR="$HOME/Pictures/Screenshots"

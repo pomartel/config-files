@@ -29,3 +29,5 @@
 [user]
 	name = Pierre Olivier Martel
 	email = pomartel@coderubik.com
+[core]
+	editor = nvim

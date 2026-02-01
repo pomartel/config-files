@@ -16,3 +16,5 @@ keybindings = [
  { key = { Char = " " }, action = "SetDefault" },
 ]
 
+[char_sets.default]
+default_device = "⮞"
