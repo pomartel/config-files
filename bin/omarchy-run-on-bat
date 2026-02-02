@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cmd=$1
+
+if [ -z "$cmd" ]; then
+  echo "Usage: omarchy-run-on-bat <command> [args...]"
+  exit 1
+fi
+
+if omarchy-cmd-missing "$cmd"; then
+  echo "Error: \"$cmd\" not found."
+  exit 2
+fi
+
+shift
+
+# Execute the command if on battery
+if omarchy-battery-discharging; then
+  "$cmd" "$@"
+fi
