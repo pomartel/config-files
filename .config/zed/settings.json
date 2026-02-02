@@ -7,6 +7,19 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "languages": {
+    "Shell Script": {
+      "ensure_final_newline_on_save": true,
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "shfmt",
+          // Change `--indent 2` to match your preferred tab_size
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"],
+        },
+      },
+    },
+  },
   "agent_servers": {
     "opencode": {
       "type": "extension",
@@ -21,6 +34,18 @@
     "after_delay": {
       "milliseconds": 1000,
     },
+  },
+  "auto_install_extensions": {
+    "astro": true,
+    "basher": true,
+    "colored-zed-icons-theme": true,
+    "html": true,
+    "lua": true,
+    "opencode": true,
+    "ruby": true,
+    "scss": true,
+    "toml": true,
+    "vscode-great-icons": true,
   },
   "agent": {
     "inline_assistant_model": {

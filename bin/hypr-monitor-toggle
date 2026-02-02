@@ -2,16 +2,14 @@
 
 ext="DP-1"
 
-if hyprctl monitors | grep -q "^Monitor $ext"; then
-  for w in {1..10}; do
+for w in {1..10}; do
+  if hyprctl monitors | grep -q "^Monitor $ext"; then
     hyprctl keyword "workspace $w, gapsout:10, gapsin:5"
     [ $w -ne 5 ] && hyprctl dispatch moveworkspacetomonitor $w $ext
-  done
-else
-  for w in {1..10}; do
+  else
     hyprctl keyword "workspace $w, gapsout:3, gapsin:1"
-  done
-fi
+  fi
+done
 
 # Projector mode: if in mirror mode, set laptop monitor to 1080p60
 if hyprctl monitors | grep -q "monitor mirrors"; then
