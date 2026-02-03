@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Pulling yadm..."
+cd ~
+yadm pull
+
+echo "Pulling Install..."
+cd ~/Install/
+git pull
+
+echo "Pulling markdown..."
+cd ~/Work/markdown/
+git pull
