@@ -68,7 +68,7 @@
       "enabled": false,
     },
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
