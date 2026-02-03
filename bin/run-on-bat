@@ -3,7 +3,7 @@
 cmd=$1
 
 if [ -z "$cmd" ]; then
-  echo "Usage: omarchy-run-on-ac <command> [args...]"
+  echo "Usage: run-on-bat <command> [args...]"
   exit 1
 fi
 
@@ -14,7 +14,7 @@ fi
 
 shift
 
-# Execute the command if on AC power
-if ! omarchy-battery-discharging; then
+# Execute the command if on battery
+if battery-discharging; then
   "$cmd" "$@"
 fi

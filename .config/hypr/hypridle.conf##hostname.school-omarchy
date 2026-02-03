@@ -7,7 +7,7 @@ general {
 
 listener {
     timeout = 90 # 1.5min
-    on-timeout = omarchy-run-on-bat brightnessctl -sd intel_backlight set 10 # set monitor backlight to minimum, avoid 0 on OLED monitor.
+    on-timeout = run-on-bat brightnessctl -sd intel_backlight set 10 # set monitor backlight to minimum, avoid 0 on OLED monitor.
     on-resume = brightnessctl -rd intel_backlight # monitor backlight restore.
 }
 
