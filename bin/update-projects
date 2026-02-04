@@ -1,13 +1,14 @@
 #!/bin/bash
 
 echo "Pulling yadm..."
-cd ~
+cd ~ || exit
 yadm pull
 
-echo "Pulling Install..."
-cd ~/Install/
+echo "Pulling markdown..."
+cd ~/Work/markdown/ || exit
 git pull
 
-echo "Pulling markdown..."
-cd ~/Work/markdown/
+echo "Pulling Install..."
+cd ~/Install/ || exit
 git pull
+source INSTALL.sh
