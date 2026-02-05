@@ -72,7 +72,7 @@ backend = "remote"
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # Or provide absolute path to a custom .bin model file
-model = "tiny.en"
+model = "gpt-4o-mini-transcribe"
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
