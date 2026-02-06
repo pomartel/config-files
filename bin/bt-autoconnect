@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Connect to any *paired + trusted* device that is currently disconnected.
+# Works best when bluetoothd is running and your adapter is powered on.
+
+# Ensure adapter is on (harmless if already on)
+bluetoothctl power on >/dev/null 2>&1
+
+# Get paired device MACs
+mapfile -t macs < <(bluetoothctl devices Paired | awk '{print $2}')
+
+for mac in "${macs[@]}"; do
+  info="$(bluetoothctl info "$mac" 2>/dev/null)"
+
+  # Only attempt for trusted devices
+  if ! grep -q 'Trusted: yes' <<<"$info"; then
+    continue
+  fi
+
+  # Skip already connected
+  if grep -q 'Connected: yes' <<<"$info"; then
+    continue
+  fi
+
+  # Skip non-audio devices
+  if ! grep -Eq 'Audio Sink|Audio Source|Handsfree|Headset' <<<"$info"; then
+    continue
+  fi
+
+  # Attempt connect (will fail fast if not in range / not connectable right now)
+  bluetoothctl connect "$mac" 2>/dev/null &
+done
