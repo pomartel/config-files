@@ -40,3 +40,6 @@ mouse-scroll-multiplier = 0.95
 # Keep ghostty running after last window is closed
 quit-after-last-window-closed = false
 
+
+# Fix general slowness on hyprland (https://github.com/ghostty-org/ghostty/discussions/3224)
+async-backend = epoll
