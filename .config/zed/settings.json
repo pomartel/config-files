@@ -54,7 +54,7 @@
     },
     "default_model": {
       "provider": "openai",
-      "model": "gpt-4o",
+      "model": "gpt-5-codex",
     },
     "model_parameters": [],
   },
@@ -68,7 +68,7 @@
       "enabled": false,
     },
   },
-  "vim_mode": true,
+  "vim_mode": false,
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
