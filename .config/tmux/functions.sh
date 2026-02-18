@@ -14,58 +14,78 @@ function tmux-cours {
 	fi
 
 	if [[ -z $TMUX ]]; then
-		tmux new-session "bash -ic 'source ~/.config/tmux/functions.sh; tmux-cours \"$cours\"; exec bash'"
+		tmux new-session -c "$cours_dir" "bash -ic 'tmux-cours \"$cours\"; exec bash'"
 		return
 	fi
 
-	local main_pane right_top_pane right_bottom_pane
+	local ai_pane bash_pane md_pane
 
-	main_pane=$(tmux display-message -p '#{pane_id}')
+	ai_pane=$(tmux display-message -p '#{pane_id}')
 
 	tmux split-window -h -p 30 -c "$cours_dir"
-	right_top_pane=$(tmux display-message -p '#{pane_id}')
+	bash_pane=$(tmux display-message -p '#{pane_id}')
 
-	tmux select-pane -t "$right_top_pane"
+	tmux select-pane -t "$bash_pane"
 	tmux split-window -v -p 50 -c "$cours_dir"
-	right_bottom_pane=$(tmux display-message -p '#{pane_id}')
+	md_pane=$(tmux display-message -p '#{pane_id}')
 
-	tmux send-keys -t "$right_bottom_pane" "watchmd $cours" C-m
-	tmux send-keys -t "$main_pane" "cd \"$cours_dir\" && c ." C-m
+	tmux send-keys -t "$md_pane" "watchmd $cours" C-m
+	tmux send-keys -t "$ai_pane" "c ." C-m
 
-	tmux select-pane -t "$main_pane"
+	tmux select-pane -t "$ai_pane"
 }
 
 function tmux-blog {
 	local work_dir="$HOME/Work/sudomarchy"
 
-	if [[ ! -d "$work_dir" ]]; then
-		echo "Directory not found: $work_dir"
-		return 1
-	fi
-
 	if [[ -z $TMUX ]]; then
-		tmux new-session "bash -ic 'source ~/.config/tmux/functions.sh; tmux-blog; exec bash'"
+		tmux new-session -c "$work_dir" "bash -ic 'tmux-blog; exec bash'"
 		return
 	fi
 
-	local top_left_pane bottom_left_pane top_right_pane bottom_right_pane
+	local ai_pane bash_pane git_pane npm_pane
 
-	top_left_pane=$(tmux display-message -p '#{pane_id}')
+	ai_pane=$(tmux display-message -p '#{pane_id}')
 
 	tmux split-window -v -p 15 -c "$work_dir"
-	bottom_left_pane=$(tmux display-message -p '#{pane_id}')
+	bash_pane=$(tmux display-message -p '#{pane_id}')
 
-	tmux select-pane -t "$top_left_pane"
-	tmux split-window -h -p 30 -c "$work_dir"
-	top_right_pane=$(tmux display-message -p '#{pane_id}')
+	tmux select-pane -t "$ai_pane"
+	tmux split-window -h -p 50 -c "$work_dir"
+	git_pane=$(tmux display-message -p '#{pane_id}')
 
-	tmux select-pane -t "$bottom_left_pane"
-	tmux split-window -h -p 30 -c "$work_dir"
-	bottom_right_pane=$(tmux display-message -p '#{pane_id}')
+	tmux select-pane -t "$bash_pane"
+	tmux split-window -h -p 50 -c "$work_dir"
+	npm_pane=$(tmux display-message -p '#{pane_id}')
 
-	tmux send-keys -t "$top_left_pane" "cd \"$work_dir\" && nvim ." C-m
-	tmux send-keys -t "$top_right_pane" "cd \"$work_dir\" && opencode" C-m
-	tmux send-keys -t "$bottom_right_pane" "cd \"$work_dir\" && npm run dev" C-m
+	tmux send-keys -t "$ai_pane" "opencode" C-m
+	tmux send-keys -t "$git_pane" "lazygit" C-m
+	tmux send-keys -t "$npm_pane" "npm run dev" C-m
 
-	tmux select-pane -t "$top_left_pane"
+	tmux select-pane -t "$ai_pane"
+}
+
+function nic() {
+	if [[ -z $TMUX ]]; then
+		tmux new-session "bash -ic 'nic; exec bash'"
+		return
+	fi
+
+	local current_dir="${PWD}"
+	local editor_pane ai_pane
+
+	editor_pane=$(tmux display-message -p '#{pane_id}')
+
+	tmux split-window -v -p 15 -c "$current_dir"
+
+	tmux select-pane -t "$editor_pane"
+	tmux split-window -h -p 30 -c "$current_dir"
+
+	tmux send-keys -t "$editor_pane" "$EDITOR ." C-m
+
+	ai_pane=$(tmux display-message -p '#{pane_id}')
+	tmux send-keys -t "$ai_pane" "opencode" C-m
+
+	sleep 2
+	tmux select-pane -t "$editor_pane"
 }
