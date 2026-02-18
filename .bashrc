@@ -71,3 +71,7 @@ mmbuild() {
     target=$t bundle exec middleman invalidate
   done
 }
+
+if [[ -f "$HOME/.config/tmux/functions.sh" ]]; then
+  source "$HOME/.config/tmux/functions.sh"
+fi
