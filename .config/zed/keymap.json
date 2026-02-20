@@ -18,4 +18,9 @@
       // "j k": "vim::NormalBefore"
     },
   },
+  {
+    "bindings": {
+      "ctrl-alt-t": "terminal_panel::ToggleFocus"
+    }
+  }
 ]
