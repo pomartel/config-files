@@ -17,8 +17,10 @@ alias reload="source $HOME/.bashrc"
 alias y=yadm
 alias z=zeditor
 alias lg=lazygit
-alias timestamp="date +%s"
 alias rm='trash'
+
+export CODEX_HOME="/home/po/.config/codex"
+alias c='codex --dangerously-bypass-approvals-and-sandbox'
 
 # Work
 export POLL_PATH="$HOME/Work/poll-app"
