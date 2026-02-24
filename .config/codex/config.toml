@@ -2,3 +2,6 @@
 [[skills.config]]
 path = "/home/po/.config/codex/skills/.system/skill-creator/SKILL.md"
 enabled = false
+
+[projects."/home/po/Install"]
+trust_level = "trusted"
