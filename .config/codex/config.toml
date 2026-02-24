@@ -5,3 +5,9 @@ enabled = false
 
 [projects."/home/po/Install"]
 trust_level = "trusted"
+
+[projects."/home/po/Work/omarchy"]
+trust_level = "trusted"
+
+[tui]
+notification_method = "osc9"

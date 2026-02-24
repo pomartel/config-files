@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "terminal": {
+    "copy_on_select": true
+  },
   "agent_servers": {
     "codex": {
       "favorite_config_option_values": {
@@ -18,6 +21,7 @@
   },
   "languages": {
     "Shell Script": {
+      "tab_size": 2,
       "ensure_final_newline_on_save": true,
       "format_on_save": "on",
       "formatter": {

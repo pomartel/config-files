@@ -22,5 +22,11 @@
     "bindings": {
       "ctrl-alt-t": "terminal_panel::ToggleFocus"
     }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-t": "workspace::NewTerminal"
+    }
   }
 ]
