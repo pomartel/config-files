@@ -67,11 +67,11 @@ install_ubuntu_server() {
   mkdir -p "$HOME/.config/ubuntu-server-vm"
   mkdir -p "$HOME/UbuntuServer"
 
-  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/ubuntu-server-vm.desktop" > /dev/null
+  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/ubuntu-vm.desktop" > /dev/null
 [Desktop Entry]
-Name=Ubuntu Server VM
-Comment=Start Ubuntu Server VM and open web console
-Exec=uwsm app -- omarchy-ubuntu-server-vm launch
+Name=Ubuntu VM
+Comment=Start Ubuntu VM and open web console
+Exec=uwsm app -- omarchy-ubuntu-vm launch
 Icon=utilities-terminal
 Terminal=false
 Type=Application
@@ -232,7 +232,7 @@ EOF_COMPOSE
   echo ""
   echo "Installation runs in the background."
   echo "Complete Ubuntu Server install in the web console, then connect via SSH."
-  echo "To stop the VM: omarchy-ubuntu-server-vm stop"
+  echo "To stop the VM: omarchy-ubuntu-vm stop"
 }
 
 remove_ubuntu_server() {
@@ -242,6 +242,7 @@ remove_ubuntu_server() {
   docker rmi "$IMAGE_NAME" 2>/dev/null || echo "Image already removed or not found"
 
   rm -f "$HOME/.local/share/applications/ubuntu-server-vm.desktop"
+  rm -f "$HOME/.local/share/applications/ubuntu-vm.desktop"
   rm -rf "$HOME/.config/ubuntu-server-vm"
   rm -rf "$HOME/.ubuntu-server"
 
@@ -251,7 +252,7 @@ remove_ubuntu_server() {
 
 launch_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-server-vm install"
+    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-vm install"
     exit 1
   fi
 
@@ -267,7 +268,7 @@ launch_ubuntu_server() {
 
     if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
       echo "Failed to start Ubuntu Server VM!"
-      echo "  Try checking: omarchy-ubuntu-server-vm status"
+      echo "  Try checking: omarchy-ubuntu-vm status"
       echo "  View logs: docker logs $CONTAINER_NAME"
       notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
       exit 1
@@ -294,7 +295,7 @@ launch_ubuntu_server() {
 
 ssh_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-server-vm install"
+    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-vm install"
     exit 1
   fi
 
@@ -325,7 +326,7 @@ stop_ubuntu_server() {
 status_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
     echo "Ubuntu Server VM not configured."
-    echo "To set up: omarchy-ubuntu-server-vm install"
+    echo "To set up: omarchy-ubuntu-vm install"
     exit 1
   fi
 
@@ -337,7 +338,7 @@ status_ubuntu_server() {
 
   if [ -z "$CONTAINER_STATUS" ]; then
     echo "Ubuntu Server VM container not found."
-    echo "To start: omarchy-ubuntu-server-vm launch"
+    echo "To start: omarchy-ubuntu-vm launch"
   elif [ "$CONTAINER_STATUS" = "running" ]; then
     gum style \
       --border normal \
@@ -349,20 +350,20 @@ status_ubuntu_server() {
       "Web console: http://127.0.0.1:8006" \
       "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1" \
       "" \
-      "To open console: omarchy-ubuntu-server-vm launch" \
-      "To stop:         omarchy-ubuntu-server-vm stop"
+      "To open console: omarchy-ubuntu-vm launch" \
+      "To stop:         omarchy-ubuntu-vm stop"
   else
     echo "Ubuntu Server VM is stopped (status: $CONTAINER_STATUS)"
-    echo "To start: omarchy-ubuntu-server-vm launch"
+    echo "To start: omarchy-ubuntu-vm launch"
   fi
 }
 
 show_usage() {
-  echo "Usage: omarchy-ubuntu-server-vm [command]"
+  echo "Usage: omarchy-ubuntu-vm [command]"
   echo ""
   echo "Commands:"
-  echo "  install              Install and configure Ubuntu Server VM"
-  echo "  remove               Remove Ubuntu Server VM and its local config"
+  echo "  install              Install and configure Ubuntu VM"
+  echo "  remove               Remove Ubuntu VM and its local config"
   echo "  launch|start         Start VM (if needed) and open web console"
   echo "  ssh [user]           SSH into the VM (default user: ubuntu)"
   echo "  stop|down            Stop the running VM"
@@ -370,10 +371,10 @@ show_usage() {
   echo "  help                 Show this help message"
   echo ""
   echo "Examples:"
-  echo "  omarchy-ubuntu-server-vm install"
-  echo "  omarchy-ubuntu-server-vm launch"
-  echo "  omarchy-ubuntu-server-vm ssh ubuntu"
-  echo "  omarchy-ubuntu-server-vm stop"
+  echo "  omarchy-ubuntu-vm install"
+  echo "  omarchy-ubuntu-vm launch"
+  echo "  omarchy-ubuntu-vm ssh ubuntu"
+  echo "  omarchy-ubuntu-vm stop"
 }
 
 case "$1" in
