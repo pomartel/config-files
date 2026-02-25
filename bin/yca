@@ -3,25 +3,25 @@
 if [ -n "$1" ]; then
   msg="$*"
 else
-  diff_content=$(yadm diff --cached)
-
-  if [ -z "$diff_content" ]; then
-    echo "No staged changes."
-    exit 1
-  fi
+  diff_content=$(yadm diff)
 
   msg=$(printf "%s" "$diff_content" |
     openai api chat.completions.create \
       -m gpt-5-nano \
-      -g system "Generate a concise conventional commit message." \
+      -g system "Return ONLY a single-line conventional commit message. No preamble, no punctuation beyond the message." \
       -g user -)
+
+  msg=${msg%%$'\n'*}
+  msg=$(printf "%s" "$msg" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
   if [ -z "${msg//[[:space:]]/}" ]; then
     echo "Empty commit message from OpenAI."
     exit 1
+  else
+    echo "$msg"
   fi
 fi
 
-if yadm commit -am "$msg" && yadm push; then
-  echo "$msg"
+if yadm commit -am "$msg"; then
+  yadm push
 fi
