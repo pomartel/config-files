@@ -19,6 +19,11 @@ alias z=zeditor
 alias lg=lazygit
 alias rm='trash'
 
+yca() {
+  msg="${*:-config changes}"
+  yadm commit -am "$msg" && yadm push
+}
+
 export CODEX_HOME="/home/po/.config/codex"
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
 
