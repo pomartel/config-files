@@ -28,5 +28,49 @@
     "bindings": {
       "ctrl-shift-t": "workspace::NewTerminal"
     }
+  },
+  {
+    "bindings": {
+      "ctrl-alt-up": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-alt-down": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-alt-left": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-alt-right": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "!Editor",
+      "bindings": {
+      "ctrl-alt-shift-up": "vim::ResizePaneUp"
+    }
+  },
+  {
+    "context": "!Editor",
+      "bindings": {
+      "ctrl-alt-shift-right": "vim::ResizePaneLeft"
+    }
+  },
+  {
+    "context": "!Editor",
+      "bindings": {
+      "ctrl-alt-shift-down": "vim::ResizePaneDown"
+    }
+  },
+  {
+    "context": "!Editor",
+      "bindings": {
+      "ctrl-alt-shift-left": "vim::ResizePaneRight"
+    }
   }
 ]

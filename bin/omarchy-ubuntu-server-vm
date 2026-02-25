@@ -1,0 +1,407 @@
+#!/bin/bash
+COMPOSE_FILE="$HOME/.config/ubuntu-server-vm/docker-compose.yml"
+CONTAINER_NAME="omarchy-ubuntu-server"
+IMAGE_NAME="qemux/qemu"
+
+check_prerequisites() {
+  local DISK_SIZE_GB=${1:-32}
+  local REQUIRED_SPACE=$((DISK_SIZE_GB + 6))  # Add overhead for Ubuntu Server ISO and temp files
+
+  if [ ! -e /dev/kvm ]; then
+    gum style \
+      --border normal \
+      --padding "1 2" \
+      --margin "1" \
+      "KVM virtualization not available!" \
+      "" \
+      "Please enable virtualization in BIOS or run:" \
+      "  sudo modprobe kvm-intel  # for Intel CPUs" \
+      "  sudo modprobe kvm-amd    # for AMD CPUs"
+    exit 1
+  fi
+
+  local AVAILABLE_SPACE
+  AVAILABLE_SPACE=$(df "$HOME" | awk 'NR==2 {print int($4/1024/1024)}')
+
+  if [ "$AVAILABLE_SPACE" -lt "$REQUIRED_SPACE" ]; then
+    echo "Insufficient disk space!"
+    echo "  Available: ${AVAILABLE_SPACE}GB"
+    echo "  Required: ${REQUIRED_SPACE}GB (${DISK_SIZE_GB}GB disk + 6GB overhead)"
+    exit 1
+  fi
+}
+
+wait_for_port() {
+  local PORT="$1"
+  local TIMEOUT="${2:-120}"
+  local ELAPSED=0
+
+  while ! nc -z 127.0.0.1 "$PORT" >/dev/null 2>&1; do
+    sleep 2
+    ELAPSED=$((ELAPSED + 2))
+    if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
+      return 1
+    fi
+  done
+
+  return 0
+}
+
+get_ssh_port() {
+  local port
+  port=$(grep -E '^[[:space:]]*-[[:space:]]*[0-9]+:22$' "$COMPOSE_FILE" | sed -E 's/.*- *([0-9]+):22/\1/' | head -n1)
+  if [ -z "$port" ]; then
+    port=2222
+  fi
+  echo "$port"
+}
+
+install_ubuntu_server() {
+  trap "echo ''; echo 'Installation cancelled by user'; exit 1" INT
+
+  check_prerequisites
+
+  omarchy-pkg-add gum openbsd-netcat
+
+  mkdir -p "$HOME/.ubuntu-server"
+  mkdir -p "$HOME/.config/ubuntu-server-vm"
+  mkdir -p "$HOME/UbuntuServer"
+
+  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/ubuntu-server-vm.desktop" > /dev/null
+[Desktop Entry]
+Name=Ubuntu Server VM
+Comment=Start Ubuntu Server VM and open web console
+Exec=uwsm app -- omarchy-ubuntu-server-vm launch
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=System;Virtualization;
+EOF_DESKTOP
+
+  local TOTAL_RAM
+  local TOTAL_RAM_GB
+  local TOTAL_CORES
+  TOTAL_RAM=$(free -h | awk 'NR==2 {print $2}')
+  TOTAL_RAM_GB=$(awk 'NR==1 {printf "%d", $2/1024/1024}' /proc/meminfo)
+  TOTAL_CORES=$(nproc)
+
+  echo ""
+  echo "System Resources Detected:"
+  echo "  Total RAM: $TOTAL_RAM"
+  echo "  Total CPU Cores: $TOTAL_CORES"
+  echo ""
+
+  local RAM_OPTIONS=""
+  for size in 1 2 4 8 16 32 64; do
+    if [ "$size" -le "$TOTAL_RAM_GB" ]; then
+      RAM_OPTIONS="$RAM_OPTIONS ${size}G"
+    fi
+  done
+
+  local SELECTED_RAM
+  SELECTED_RAM=$(echo "$RAM_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="2G" --header="How much RAM would you like to allocate to Ubuntu Server VM?")
+  if [ -z "$SELECTED_RAM" ]; then
+    echo "Installation cancelled by user"
+    exit 1
+  fi
+
+  local SELECTED_CORES
+  SELECTED_CORES=$(gum input --placeholder="Number of CPU cores (1-$TOTAL_CORES)" --value="2" --header="How many CPU cores would you like to allocate?" --char-limit=2)
+  if [ -z "$SELECTED_CORES" ]; then
+    echo "Installation cancelled by user"
+    exit 1
+  fi
+
+  if ! [[ "$SELECTED_CORES" =~ ^[0-9]+$ ]] || [ "$SELECTED_CORES" -lt 1 ] || [ "$SELECTED_CORES" -gt "$TOTAL_CORES" ]; then
+    echo "Invalid input. Using default: 2 cores"
+    SELECTED_CORES=2
+  fi
+
+  local AVAILABLE_SPACE
+  AVAILABLE_SPACE=$(df "$HOME" | awk 'NR==2 {print int($4/1024/1024)}')
+  local MAX_DISK_GB=$((AVAILABLE_SPACE - 6))
+
+  if [ "$MAX_DISK_GB" -lt 16 ]; then
+    echo "Insufficient disk space for Ubuntu Server VM!"
+    echo "  Available: ${AVAILABLE_SPACE}GB"
+    echo "  Minimum required: 22GB (16GB disk + 6GB overhead)"
+    exit 1
+  fi
+
+  local DISK_OPTIONS=""
+  for size in 16 32 64 128 256 512; do
+    if [ "$size" -le "$MAX_DISK_GB" ]; then
+      DISK_OPTIONS="$DISK_OPTIONS ${size}G"
+    fi
+  done
+
+  local DEFAULT_DISK="32G"
+  if ! echo "$DISK_OPTIONS" | grep -q "32G"; then
+    DEFAULT_DISK="16G"
+  fi
+
+  local SELECTED_DISK
+  SELECTED_DISK=$(echo "$DISK_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="$DEFAULT_DISK" --header="How much disk space would you like to give Ubuntu Server VM?")
+  if [ -z "$SELECTED_DISK" ]; then
+    echo "Installation cancelled by user"
+    exit 1
+  fi
+
+  local SSH_PORT
+  SSH_PORT=$(gum input --placeholder="Host SSH port (1024-65535)" --value="2222" --header="Choose a host port to forward to VM SSH (port 22):" --char-limit=5)
+  if [ -z "$SSH_PORT" ]; then
+    echo "Installation cancelled by user"
+    exit 1
+  fi
+
+  if ! [[ "$SSH_PORT" =~ ^[0-9]+$ ]] || [ "$SSH_PORT" -lt 1024 ] || [ "$SSH_PORT" -gt 65535 ]; then
+    echo "Invalid input. Using default SSH port: 2222"
+    SSH_PORT=2222
+  fi
+
+  local DISK_SIZE_NUM
+  DISK_SIZE_NUM=$(echo "$SELECTED_DISK" | sed 's/G//')
+  check_prerequisites "$DISK_SIZE_NUM"
+
+  gum style \
+    --border normal \
+    --padding "1 2" \
+    --margin "1" \
+    --align left \
+    --bold \
+    "Ubuntu Server VM Configuration" \
+    "" \
+    "RAM:        $SELECTED_RAM" \
+    "CPU:        $SELECTED_CORES cores" \
+    "Disk:       $SELECTED_DISK" \
+    "SSH Port:   $SSH_PORT -> 22"
+
+  echo ""
+  if ! gum confirm "Proceed with this configuration?"; then
+    echo "Installation cancelled by user"
+    exit 1
+  fi
+
+  cat << EOF_COMPOSE | tee "$COMPOSE_FILE" > /dev/null
+services:
+  ubuntu-server:
+    image: $IMAGE_NAME
+    container_name: $CONTAINER_NAME
+    environment:
+      BOOT: "ubuntus"
+      RAM_SIZE: "$SELECTED_RAM"
+      CPU_CORES: "$SELECTED_CORES"
+      DISK_SIZE: "$SELECTED_DISK"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+      - ${SSH_PORT}:22
+    volumes:
+      - $HOME/.ubuntu-server:/storage
+      - $HOME/UbuntuServer:/shared
+    restart: always
+    stop_grace_period: 2m
+EOF_COMPOSE
+
+  echo ""
+  echo "Starting Ubuntu Server VM installation..."
+  echo "This will download the Ubuntu Server image (may take several minutes)."
+  echo ""
+
+  if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
+    echo "Failed to start Ubuntu Server VM!"
+    echo "  Common issues:"
+    echo "  - Docker daemon not running: sudo systemctl start docker"
+    echo "  - Ports already in use (8006 or $SSH_PORT)"
+    echo "  - Permission issues: make sure you're in the docker group"
+    exit 1
+  fi
+
+  echo "Ubuntu Server VM is starting up."
+  echo "Web console: http://127.0.0.1:8006"
+  echo "SSH tunnel:  ssh -p $SSH_PORT <user>@127.0.0.1"
+  echo ""
+  echo "Opening web console..."
+  sleep 3
+  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
+
+  echo ""
+  echo "Installation runs in the background."
+  echo "Complete Ubuntu Server install in the web console, then connect via SSH."
+  echo "To stop the VM: omarchy-ubuntu-server-vm stop"
+}
+
+remove_ubuntu_server() {
+  echo "Removing Ubuntu Server VM..."
+
+  docker-compose -f "$COMPOSE_FILE" down 2>/dev/null || true
+  docker rmi "$IMAGE_NAME" 2>/dev/null || echo "Image already removed or not found"
+
+  rm -f "$HOME/.local/share/applications/ubuntu-server-vm.desktop"
+  rm -rf "$HOME/.config/ubuntu-server-vm"
+  rm -rf "$HOME/.ubuntu-server"
+
+  echo ""
+  echo "Ubuntu Server VM removal completed!"
+}
+
+launch_ubuntu_server() {
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-server-vm install"
+    exit 1
+  fi
+
+  local SSH_PORT
+  SSH_PORT=$(get_ssh_port)
+
+  local CONTAINER_STATUS
+  CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
+
+  if [ "$CONTAINER_STATUS" != "running" ]; then
+    echo "Starting Ubuntu Server VM..."
+    notify-send "Ubuntu Server VM" "Starting VM (15-30 seconds)" -t 15000
+
+    if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
+      echo "Failed to start Ubuntu Server VM!"
+      echo "  Try checking: omarchy-ubuntu-server-vm status"
+      echo "  View logs: docker logs $CONTAINER_NAME"
+      notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
+      exit 1
+    fi
+  fi
+
+  if ! wait_for_port 8006 120; then
+    echo "Timed out waiting for web console on port 8006"
+    exit 1
+  fi
+
+  gum style \
+    --border normal \
+    --padding "1 2" \
+    --margin "1" \
+    --align center \
+    "Ubuntu Server VM Running" \
+    "" \
+    "Web console: http://127.0.0.1:8006" \
+    "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1"
+
+  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
+}
+
+ssh_ubuntu_server() {
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-server-vm install"
+    exit 1
+  fi
+
+  local SSH_PORT
+  SSH_PORT=$(get_ssh_port)
+
+  local SSH_USER
+  SSH_USER="${2:-ubuntu}"
+
+  local SSH_TERM
+  SSH_TERM="${OMARCHY_VM_SSH_TERM:-xterm-256color}"
+
+  echo "Connecting over SSH on port $SSH_PORT as user '$SSH_USER' (TERM=$SSH_TERM)..."
+  TERM="$SSH_TERM" ssh -p "$SSH_PORT" "$SSH_USER"@127.0.0.1
+}
+
+stop_ubuntu_server() {
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "Ubuntu Server VM not configured."
+    exit 1
+  fi
+
+  echo "Stopping Ubuntu Server VM..."
+  docker-compose -f "$COMPOSE_FILE" down
+  echo "Ubuntu Server VM stopped."
+}
+
+status_ubuntu_server() {
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "Ubuntu Server VM not configured."
+    echo "To set up: omarchy-ubuntu-server-vm install"
+    exit 1
+  fi
+
+  local SSH_PORT
+  SSH_PORT=$(get_ssh_port)
+
+  local CONTAINER_STATUS
+  CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
+
+  if [ -z "$CONTAINER_STATUS" ]; then
+    echo "Ubuntu Server VM container not found."
+    echo "To start: omarchy-ubuntu-server-vm launch"
+  elif [ "$CONTAINER_STATUS" = "running" ]; then
+    gum style \
+      --border normal \
+      --padding "1 2" \
+      --margin "1" \
+      --align left \
+      "Ubuntu Server VM Status: RUNNING" \
+      "" \
+      "Web console: http://127.0.0.1:8006" \
+      "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1" \
+      "" \
+      "To open console: omarchy-ubuntu-server-vm launch" \
+      "To stop:         omarchy-ubuntu-server-vm stop"
+  else
+    echo "Ubuntu Server VM is stopped (status: $CONTAINER_STATUS)"
+    echo "To start: omarchy-ubuntu-server-vm launch"
+  fi
+}
+
+show_usage() {
+  echo "Usage: omarchy-ubuntu-server-vm [command]"
+  echo ""
+  echo "Commands:"
+  echo "  install              Install and configure Ubuntu Server VM"
+  echo "  remove               Remove Ubuntu Server VM and its local config"
+  echo "  launch|start         Start VM (if needed) and open web console"
+  echo "  ssh [user]           SSH into the VM (default user: ubuntu)"
+  echo "  stop|down            Stop the running VM"
+  echo "  status               Show current VM status"
+  echo "  help                 Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  omarchy-ubuntu-server-vm install"
+  echo "  omarchy-ubuntu-server-vm launch"
+  echo "  omarchy-ubuntu-server-vm ssh ubuntu"
+  echo "  omarchy-ubuntu-server-vm stop"
+}
+
+case "$1" in
+  install)
+    install_ubuntu_server
+    ;;
+  remove)
+    remove_ubuntu_server
+    ;;
+  launch|start)
+    launch_ubuntu_server
+    ;;
+  ssh)
+    ssh_ubuntu_server "$@"
+    ;;
+  stop|down)
+    stop_ubuntu_server
+    ;;
+  status)
+    status_ubuntu_server
+    ;;
+  help|--help|-h|"")
+    show_usage
+    ;;
+  *)
+    echo "Unknown command: $1" >&2
+    echo "" >&2
+    show_usage >&2
+    exit 1
+    ;;
+esac

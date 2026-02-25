@@ -7,38 +7,21 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "terminal": {
-    "copy_on_select": true
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "model": "gpt-5.3-codex",
+      "provider": "openai",
+    },
   },
   "agent_servers": {
     "codex": {
       "favorite_config_option_values": {
-        "model": [
-          "gpt-5.3-codex"
-        ]
-      }
-    }
-  },
-  "languages": {
-    "Shell Script": {
-      "tab_size": 2,
-      "ensure_final_newline_on_save": true,
-      "format_on_save": "on",
-      "formatter": {
-        "external": {
-          "command": "shfmt",
-          // Change `--indent 2` to match your preferred tab_size
-          "arguments": ["--filename", "{buffer_path}", "--indent", "2"],
-        },
+        "model": ["gpt-5.3-codex"],
       },
     },
   },
-  "ensure_final_newline_on_save": false,
-  "autosave": {
-    "after_delay": {
-      "milliseconds": 1000,
-    },
-  },
+  "auto_indent_on_paste": true,
   "auto_install_extensions": {
     "astro": true,
     "basher": true,
@@ -50,52 +33,57 @@
     "toml": true,
     "vscode-great-icons": true,
   },
-  "agent": {
-    "inline_assistant_model": {
-      "provider": "openai",
-      "model": "gpt-5.3-codex",
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000,
     },
-    "default_model": {
-      "provider": "openai",
-      "model": "gpt-5.3-codex",
-    },
-    "model_parameters": [],
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
+  "buffer_font_size": 15,
+  "ensure_final_newline_on_save": false,
+  "file_types": {
+    "markdown": ["*.marp"],
   },
   "format_on_save": "on",
-  "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
-  "session": {
-    "trust_all_worktrees": true,
-  },
   "git": {
     "inline_blame": {
       "enabled": false,
     },
   },
-  "vim_mode": false,
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false,
-  },
-  "base_keymap": "VSCode",
-  "preview_tabs": {
-    "enabled": false,
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "languages": {
+    "Shell Script": {
+      "ensure_final_newline_on_save": true,
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "arguments": ["--filename", "{buffer_path}", "--indent", "2"],
+          // Change `--indent 2` to match your preferred tab_size
+          "command": "shfmt",
+        },
+      },
+      "tab_size": 2,
+    },
   },
   "minimap": {
     "show": "never",
   },
-  // "autosave": {
-  //   "after_delay": {
-  //     "milliseconds": 1000,
-  //   },
-  // },
-  "file_types": {
-    "markdown": ["*.marp"],
-  },
-  "auto_indent_on_paste": true,
-  "soft_wrap": "editor_width",
   "preferred_line_length": 100,
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "preview_tabs": {
+    "enabled": false,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "soft_wrap": "editor_width",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "terminal": {
+    "copy_on_select": true,
+  },
+  "theme": "Gruvbox",
   "ui_font_size": 16,
-  "buffer_font_size": 15,
-  "theme": "Omazed",
 }
