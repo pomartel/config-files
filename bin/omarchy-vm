@@ -1,11 +1,11 @@
 #!/bin/bash
-COMPOSE_FILE="$HOME/.config/ubuntu-server-vm/docker-compose.yml"
-CONTAINER_NAME="omarchy-ubuntu-server"
+COMPOSE_FILE="$HOME/.config/omarchy-vm/docker-compose.yml"
+CONTAINER_NAME="omarchy-vm"
 IMAGE_NAME="qemux/qemu"
 
 check_prerequisites() {
   local DISK_SIZE_GB=${1:-32}
-  local REQUIRED_SPACE=$((DISK_SIZE_GB + 6))  # Add overhead for Ubuntu Server ISO and temp files
+  local REQUIRED_SPACE=$((DISK_SIZE_GB + 8))  # Add overhead for Omarchy ISO and temp files
 
   if [ ! -e /dev/kvm ]; then
     gum style \
@@ -56,22 +56,35 @@ get_ssh_port() {
   echo "$port"
 }
 
-install_ubuntu_server() {
+get_latest_omarchy_iso_url() {
+  local iso_url
+  iso_url=$(curl -fsSL https://github.com/basecamp/omarchy/releases \
+    | grep -Eo 'https://iso\\.omarchy\\.org/omarchy-[0-9.]+\\.iso' \
+    | head -n1)
+
+  if [ -z "$iso_url" ]; then
+    iso_url="https://iso.omarchy.org/omarchy-3.3.2.iso"
+  fi
+
+  echo "$iso_url"
+}
+
+install_omarchy_vm() {
   trap "echo ''; echo 'Installation cancelled by user'; exit 1" INT
 
   check_prerequisites
 
-  omarchy-pkg-add gum openbsd-netcat
+  omarchy-pkg-add gum openbsd-netcat curl
 
-  mkdir -p "$HOME/.ubuntu-server"
-  mkdir -p "$HOME/.config/ubuntu-server-vm"
-  mkdir -p "$HOME/UbuntuServer"
+  mkdir -p "$HOME/.omarchy-vm"
+  mkdir -p "$HOME/.config/omarchy-vm"
+  mkdir -p "$HOME/Omarchy"
 
-  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/ubuntu-vm.desktop" > /dev/null
+  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/omarchy-vm.desktop" > /dev/null
 [Desktop Entry]
-Name=Ubuntu VM
-Comment=Start Ubuntu VM and open web console
-Exec=uwsm app -- omarchy-ubuntu-vm launch
+Name=Omarchy VM
+Comment=Start Omarchy VM and open web console
+Exec=uwsm app -- omarchy-vm launch
 Icon=utilities-terminal
 Terminal=false
 Type=Application
@@ -99,7 +112,7 @@ EOF_DESKTOP
   done
 
   local SELECTED_RAM
-  SELECTED_RAM=$(echo "$RAM_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="2G" --header="How much RAM would you like to allocate to Ubuntu Server VM?")
+  SELECTED_RAM=$(echo "$RAM_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="2G" --header="How much RAM would you like to allocate to Omarchy VM?")
   if [ -z "$SELECTED_RAM" ]; then
     echo "Installation cancelled by user"
     exit 1
@@ -119,12 +132,12 @@ EOF_DESKTOP
 
   local AVAILABLE_SPACE
   AVAILABLE_SPACE=$(df "$HOME" | awk 'NR==2 {print int($4/1024/1024)}')
-  local MAX_DISK_GB=$((AVAILABLE_SPACE - 6))
+  local MAX_DISK_GB=$((AVAILABLE_SPACE - 8))
 
   if [ "$MAX_DISK_GB" -lt 16 ]; then
-    echo "Insufficient disk space for Ubuntu Server VM!"
+    echo "Insufficient disk space for Omarchy VM!"
     echo "  Available: ${AVAILABLE_SPACE}GB"
-    echo "  Minimum required: 22GB (16GB disk + 6GB overhead)"
+    echo "  Minimum required: 24GB (16GB disk + 8GB overhead)"
     exit 1
   fi
 
@@ -141,7 +154,7 @@ EOF_DESKTOP
   fi
 
   local SELECTED_DISK
-  SELECTED_DISK=$(echo "$DISK_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="$DEFAULT_DISK" --header="How much disk space would you like to give Ubuntu Server VM?")
+  SELECTED_DISK=$(echo "$DISK_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="$DEFAULT_DISK" --header="How much disk space would you like to give Omarchy VM?")
   if [ -z "$SELECTED_DISK" ]; then
     echo "Installation cancelled by user"
     exit 1
@@ -163,18 +176,28 @@ EOF_DESKTOP
   DISK_SIZE_NUM=$(echo "$SELECTED_DISK" | sed 's/G//')
   check_prerequisites "$DISK_SIZE_NUM"
 
+  local OMARCHY_ISO_URL
+  OMARCHY_ISO_URL=$(get_latest_omarchy_iso_url)
+
+  if [ -z "$OMARCHY_ISO_URL" ]; then
+    echo "Failed to determine the latest Omarchy ISO URL."
+    exit 1
+  fi
+
   gum style \
     --border normal \
     --padding "1 2" \
     --margin "1" \
     --align left \
     --bold \
-    "Ubuntu Server VM Configuration" \
+    "Omarchy VM Configuration" \
     "" \
     "RAM:        $SELECTED_RAM" \
     "CPU:        $SELECTED_CORES cores" \
     "Disk:       $SELECTED_DISK" \
-    "SSH Port:   $SSH_PORT -> 22"
+    "SSH Port:   $SSH_PORT -> 22" \
+    "" \
+    "ISO:        $OMARCHY_ISO_URL"
 
   echo ""
   if ! gum confirm "Proceed with this configuration?"; then
@@ -184,11 +207,12 @@ EOF_DESKTOP
 
   cat << EOF_COMPOSE | tee "$COMPOSE_FILE" > /dev/null
 services:
-  ubuntu-server:
+  omarchy:
     image: $IMAGE_NAME
     container_name: $CONTAINER_NAME
     environment:
-      BOOT: "ubuntus"
+      BOOT: "$OMARCHY_ISO_URL"
+      BOOT_MODE: "legacy"
       RAM_SIZE: "$SELECTED_RAM"
       CPU_CORES: "$SELECTED_CORES"
       DISK_SIZE: "$SELECTED_DISK"
@@ -201,19 +225,19 @@ services:
       - 8006:8006
       - ${SSH_PORT}:22
     volumes:
-      - $HOME/.ubuntu-server:/storage
-      - $HOME/UbuntuServer:/shared
+      - $HOME/.omarchy-vm:/storage
+      - $HOME/Omarchy:/shared
     restart: always
     stop_grace_period: 2m
 EOF_COMPOSE
 
   echo ""
-  echo "Starting Ubuntu Server VM installation..."
-  echo "This will download the Ubuntu Server image (may take several minutes)."
+  echo "Starting Omarchy VM installation..."
+  echo "This will download the Omarchy Linux ISO (may take several minutes)."
   echo ""
 
   if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
-    echo "Failed to start Ubuntu Server VM!"
+    echo "Failed to start Omarchy VM!"
     echo "  Common issues:"
     echo "  - Docker daemon not running: sudo systemctl start docker"
     echo "  - Ports already in use (8006 or $SSH_PORT)"
@@ -221,7 +245,7 @@ EOF_COMPOSE
     exit 1
   fi
 
-  echo "Ubuntu Server VM is starting up."
+  echo "Omarchy VM is starting up."
   echo "Web console: http://127.0.0.1:8006"
   echo "SSH tunnel:  ssh -p $SSH_PORT <user>@127.0.0.1"
   echo ""
@@ -231,28 +255,27 @@ EOF_COMPOSE
 
   echo ""
   echo "Installation runs in the background."
-  echo "Complete Ubuntu Server install in the web console, then connect via SSH."
-  echo "To stop the VM: omarchy-ubuntu-vm stop"
+  echo "Complete the Omarchy install in the web console, then connect via SSH."
+  echo "To stop the VM: omarchy-vm stop"
 }
 
-remove_ubuntu_server() {
-  echo "Removing Ubuntu Server VM..."
+remove_omarchy_vm() {
+  echo "Removing Omarchy VM..."
 
   docker-compose -f "$COMPOSE_FILE" down 2>/dev/null || true
   docker rmi "$IMAGE_NAME" 2>/dev/null || echo "Image already removed or not found"
 
-  rm -f "$HOME/.local/share/applications/ubuntu-server-vm.desktop"
-  rm -f "$HOME/.local/share/applications/ubuntu-vm.desktop"
-  rm -rf "$HOME/.config/ubuntu-server-vm"
-  rm -rf "$HOME/.ubuntu-server"
+  rm -f "$HOME/.local/share/applications/omarchy-vm.desktop"
+  rm -rf "$HOME/.config/omarchy-vm"
+  rm -rf "$HOME/.omarchy-vm"
 
   echo ""
-  echo "Ubuntu Server VM removal completed!"
+  echo "Omarchy VM removal completed!"
 }
 
-launch_ubuntu_server() {
+launch_omarchy_vm() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-vm install"
+    echo "Omarchy VM not configured. Please run: omarchy-vm install"
     exit 1
   fi
 
@@ -263,14 +286,14 @@ launch_ubuntu_server() {
   CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
 
   if [ "$CONTAINER_STATUS" != "running" ]; then
-    echo "Starting Ubuntu Server VM..."
-    notify-send "Ubuntu Server VM" "Starting VM (15-30 seconds)" -t 15000
+    echo "Starting Omarchy VM..."
+    notify-send "Omarchy VM" "Starting VM (15-30 seconds)" -t 15000
 
     if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
-      echo "Failed to start Ubuntu Server VM!"
-      echo "  Try checking: omarchy-ubuntu-vm status"
+      echo "Failed to start Omarchy VM!"
+      echo "  Try checking: omarchy-vm status"
       echo "  View logs: docker logs $CONTAINER_NAME"
-      notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
+      notify-send -u critical "Omarchy VM" "Failed to start VM"
       exit 1
     fi
   fi
@@ -285,7 +308,7 @@ launch_ubuntu_server() {
     --padding "1 2" \
     --margin "1" \
     --align center \
-    "Ubuntu Server VM Running" \
+    "Omarchy VM Running" \
     "" \
     "Web console: http://127.0.0.1:8006" \
     "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1"
@@ -293,9 +316,9 @@ launch_ubuntu_server() {
   xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
 }
 
-ssh_ubuntu_server() {
+ssh_omarchy_vm() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: omarchy-ubuntu-vm install"
+    echo "Omarchy VM not configured. Please run: omarchy-vm install"
     exit 1
   fi
 
@@ -303,7 +326,7 @@ ssh_ubuntu_server() {
   SSH_PORT=$(get_ssh_port)
 
   local SSH_USER
-  SSH_USER="${2:-ubuntu}"
+  SSH_USER="${2:-omarchy}"
 
   local SSH_TERM
   SSH_TERM="${OMARCHY_VM_SSH_TERM:-xterm-256color}"
@@ -312,21 +335,21 @@ ssh_ubuntu_server() {
   TERM="$SSH_TERM" ssh -p "$SSH_PORT" "$SSH_USER"@127.0.0.1
 }
 
-stop_ubuntu_server() {
+stop_omarchy_vm() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured."
+    echo "Omarchy VM not configured."
     exit 1
   fi
 
-  echo "Stopping Ubuntu Server VM..."
+  echo "Stopping Omarchy VM..."
   docker-compose -f "$COMPOSE_FILE" down
-  echo "Ubuntu Server VM stopped."
+  echo "Omarchy VM stopped."
 }
 
-status_ubuntu_server() {
+status_omarchy_vm() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured."
-    echo "To set up: omarchy-ubuntu-vm install"
+    echo "Omarchy VM not configured."
+    echo "To set up: omarchy-vm install"
     exit 1
   fi
 
@@ -337,64 +360,64 @@ status_ubuntu_server() {
   CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
 
   if [ -z "$CONTAINER_STATUS" ]; then
-    echo "Ubuntu Server VM container not found."
-    echo "To start: omarchy-ubuntu-vm launch"
+    echo "Omarchy VM container not found."
+    echo "To start: omarchy-vm launch"
   elif [ "$CONTAINER_STATUS" = "running" ]; then
     gum style \
       --border normal \
       --padding "1 2" \
       --margin "1" \
       --align left \
-      "Ubuntu Server VM Status: RUNNING" \
+      "Omarchy VM Status: RUNNING" \
       "" \
       "Web console: http://127.0.0.1:8006" \
       "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1" \
       "" \
-      "To open console: omarchy-ubuntu-vm launch" \
-      "To stop:         omarchy-ubuntu-vm stop"
+      "To open console: omarchy-vm launch" \
+      "To stop:         omarchy-vm stop"
   else
-    echo "Ubuntu Server VM is stopped (status: $CONTAINER_STATUS)"
-    echo "To start: omarchy-ubuntu-vm launch"
+    echo "Omarchy VM is stopped (status: $CONTAINER_STATUS)"
+    echo "To start: omarchy-vm launch"
   fi
 }
 
 show_usage() {
-  echo "Usage: omarchy-ubuntu-vm [command]"
+  echo "Usage: omarchy-vm [command]"
   echo ""
   echo "Commands:"
-  echo "  install              Install and configure Ubuntu VM"
-  echo "  remove               Remove Ubuntu VM and its local config"
+  echo "  install              Install and configure Omarchy VM"
+  echo "  remove               Remove Omarchy VM and its local config"
   echo "  launch|start         Start VM (if needed) and open web console"
-  echo "  ssh [user]           SSH into the VM (default user: ubuntu)"
+  echo "  ssh [user]           SSH into the VM (default user: omarchy)"
   echo "  stop|down            Stop the running VM"
   echo "  status               Show current VM status"
   echo "  help                 Show this help message"
   echo ""
   echo "Examples:"
-  echo "  omarchy-ubuntu-vm install"
-  echo "  omarchy-ubuntu-vm launch"
-  echo "  omarchy-ubuntu-vm ssh ubuntu"
-  echo "  omarchy-ubuntu-vm stop"
+  echo "  omarchy-vm install"
+  echo "  omarchy-vm launch"
+  echo "  omarchy-vm ssh omarchy"
+  echo "  omarchy-vm stop"
 }
 
 case "$1" in
   install)
-    install_ubuntu_server
+    install_omarchy_vm
     ;;
   remove)
-    remove_ubuntu_server
+    remove_omarchy_vm
     ;;
   launch|start)
-    launch_ubuntu_server
+    launch_omarchy_vm
     ;;
   ssh)
-    ssh_ubuntu_server "$@"
+    ssh_omarchy_vm "$@"
     ;;
   stop|down)
-    stop_ubuntu_server
+    stop_omarchy_vm
     ;;
   status)
-    status_ubuntu_server
+    status_omarchy_vm
     ;;
   help|--help|-h|"")
     show_usage
