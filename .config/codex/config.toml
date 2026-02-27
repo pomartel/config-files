@@ -1,4 +1,6 @@
 personality = "pragmatic"
+model = "gpt-5.3-codex"
+model_reasoning_effort = "high"
 
 [[skills.config]]
 path = "/home/po/.config/codex/skills/.system/skill-creator/SKILL.md"
