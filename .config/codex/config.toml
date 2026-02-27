@@ -16,5 +16,8 @@ trust_level = "trusted"
 [projects."/home/po/.config/uwsm"]
 trust_level = "trusted"
 
+[projects."/home/po/bin"]
+trust_level = "trusted"
+
 [tui]
 notification_method = "osc9"

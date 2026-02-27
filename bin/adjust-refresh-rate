@@ -1,0 +1,38 @@
+#!/bin/bash
+# Monitor and adjusts monitor refresh rate based on power profile
+# source: https://github.com/basecamp/omarchy/discussions/4787
+
+MONITOR="eDP-1"
+declare -A PROFILE_RATES=(
+  ["power-saver"]=60
+  ["balanced"]=120
+  ["performance"]=120
+)
+
+set_refresh_rate() {
+  local profile
+  local rate
+  local mode
+  local position
+  local scale
+  local monitor_state
+
+  profile=$(powerprofilesctl get)
+  rate="${PROFILE_RATES[$profile]:-120}"
+
+  monitor_state=$(hyprctl monitors -j | jq -r --arg mon "$MONITOR" '.[] | select(.name == $mon) | "\(.width)x\(.height) \(.x)x\(.y) \(.scale)"')
+  read -r mode position scale <<<"$monitor_state"
+
+  hyprctl keyword monitor "$MONITOR,${mode}@${rate},${position},${scale}"
+  # notify-send -t 2000 "Monitor" "${rate}Hz (${profile})"
+}
+
+# Apply initial configuration
+set_refresh_rate
+
+# Monitor power profile changes via D-Bus with a strict match rule.
+# On each change signal, re-read ActiveProfile from powerprofilesctl.
+dbus-monitor --system \
+  "type='signal',sender='net.hadess.PowerProfiles',path='/net/hadess/PowerProfiles',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged'" | while read -r line; do
+  [[ "$line" == *"member=PropertiesChanged"* ]] && set_refresh_rate
+done
