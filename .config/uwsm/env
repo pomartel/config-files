@@ -2,8 +2,12 @@
 #
 
 # Ensure Omarchy bins are in the path
-export OMARCHY_PATH=$HOME/.local/share/omarchy
-# export OMARCHY_PATH=$HOME/Work/omarchy
+if [ "$(hostname)" = "home-omarchy" ]; then
+  export OMARCHY_PATH=$HOME/Work/omarchy
+else
+  export OMARCHY_PATH=$HOME/.local/share/omarchy
+fi
+
 
 export PATH=$OMARCHY_PATH/bin:$PATH
 
@@ -18,5 +22,4 @@ source ~/.config/uwsm/secrets
 
 # Activate mise if present on the system
 omarchy-cmd-present mise && eval "$(mise activate bash)"
-
 

@@ -10,5 +10,11 @@ trust_level = "trusted"
 [projects."/home/po/Work/omarchy"]
 trust_level = "trusted"
 
+[projects."/home/po/Work/sudomarchy"]
+trust_level = "trusted"
+
+[projects."/home/po/.config/uwsm"]
+trust_level = "trusted"
+
 [tui]
 notification_method = "osc9"

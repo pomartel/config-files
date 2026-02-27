@@ -65,18 +65,6 @@ install_ubuntu_server() {
 
   mkdir -p "$HOME/.ubuntu-server"
   mkdir -p "$HOME/.config/ubuntu-server-vm"
-  mkdir -p "$HOME/UbuntuServer"
-
-  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/ubuntu-vm.desktop" > /dev/null
-[Desktop Entry]
-Name=Ubuntu VM
-Comment=Start Ubuntu VM and open web console
-Exec=uwsm app -- omarchy-ubuntu-vm launch
-Icon=utilities-terminal
-Terminal=false
-Type=Application
-Categories=System;Virtualization;
-EOF_DESKTOP
 
   local TOTAL_RAM
   local TOTAL_RAM_GB
@@ -202,7 +190,6 @@ services:
       - ${SSH_PORT}:22
     volumes:
       - $HOME/.ubuntu-server:/storage
-      - $HOME/UbuntuServer:/shared
     restart: always
     stop_grace_period: 2m
 EOF_COMPOSE
@@ -224,11 +211,6 @@ EOF_COMPOSE
   echo "Ubuntu Server VM is starting up."
   echo "Web console: http://127.0.0.1:8006"
   echo "SSH tunnel:  ssh -p $SSH_PORT <user>@127.0.0.1"
-  echo ""
-  echo "Opening web console..."
-  sleep 3
-  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
-
   echo ""
   echo "Installation runs in the background."
   echo "Complete Ubuntu Server install in the web console, then connect via SSH."
@@ -289,8 +271,6 @@ launch_ubuntu_server() {
     "" \
     "Web console: http://127.0.0.1:8006" \
     "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1"
-
-  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
 }
 
 ssh_ubuntu_server() {
@@ -299,17 +279,39 @@ ssh_ubuntu_server() {
     exit 1
   fi
 
+  local CONTAINER_STATUS
+  CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
+
+  if [ "$CONTAINER_STATUS" != "running" ]; then
+    echo "Starting Ubuntu Server VM..."
+    notify-send "Ubuntu Server VM" "Starting VM (15-30 seconds)" -t 15000
+
+    if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
+      echo "Failed to start Ubuntu Server VM!"
+      echo "  Try checking: omarchy-ubuntu-vm status"
+      echo "  View logs: docker logs $CONTAINER_NAME"
+      notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
+      exit 1
+    fi
+  fi
+
   local SSH_PORT
   SSH_PORT=$(get_ssh_port)
 
   local SSH_USER
-  SSH_USER="${2:-ubuntu}"
+  SSH_USER="${2:-po}"
 
   local SSH_TERM
   SSH_TERM="${OMARCHY_VM_SSH_TERM:-xterm-256color}"
 
   echo "Connecting over SSH on port $SSH_PORT as user '$SSH_USER'..."
+  echo "Disconnect to stop the VM."
   TERM="$SSH_TERM" ssh -p "$SSH_PORT" "$SSH_USER"@127.0.0.1
+
+  echo ""
+  echo "SSH disconnected. Stopping Ubuntu Server VM..."
+  docker-compose -f "$COMPOSE_FILE" down
+  echo "Ubuntu Server VM stopped."
 }
 
 stop_ubuntu_server() {
@@ -364,8 +366,8 @@ show_usage() {
   echo "Commands:"
   echo "  install              Install and configure Ubuntu VM"
   echo "  remove               Remove Ubuntu VM and its local config"
-  echo "  launch|start         Start VM (if needed) and open web console"
-  echo "  ssh [user]           SSH into the VM (default user: ubuntu)"
+  echo "  launch|start         Start VM (if needed)"
+  echo "  ssh [user]           SSH into the VM (default user: po)"
   echo "  stop|down            Stop the running VM"
   echo "  status               Show current VM status"
   echo "  help                 Show this help message"
@@ -373,7 +375,7 @@ show_usage() {
   echo "Examples:"
   echo "  omarchy-ubuntu-vm install"
   echo "  omarchy-ubuntu-vm launch"
-  echo "  omarchy-ubuntu-vm ssh ubuntu"
+  echo "  omarchy-ubuntu-vm ssh po"
   echo "  omarchy-ubuntu-vm stop"
 }
 

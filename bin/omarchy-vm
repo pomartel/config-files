@@ -5,7 +5,7 @@ IMAGE_NAME="qemux/qemu"
 
 check_prerequisites() {
   local DISK_SIZE_GB=${1:-32}
-  local REQUIRED_SPACE=$((DISK_SIZE_GB + 8))  # Add overhead for Omarchy ISO and temp files
+  local REQUIRED_SPACE=$((DISK_SIZE_GB + 8)) # Add overhead for Omarchy ISO and temp files
 
   if [ ! -e /dev/kvm ]; then
     gum style \
@@ -47,25 +47,30 @@ wait_for_port() {
   return 0
 }
 
-get_ssh_port() {
-  local port
-  port=$(grep -E '^[[:space:]]*-[[:space:]]*[0-9]+:22$' "$COMPOSE_FILE" | sed -E 's/.*- *([0-9]+):22/\1/' | head -n1)
-  if [ -z "$port" ]; then
-    port=2222
-  fi
-  echo "$port"
-}
-
 get_latest_omarchy_iso_url() {
   local iso_url
-  iso_url=$(curl -fsSL https://github.com/basecamp/omarchy/releases \
-    | grep -Eo 'https://iso\\.omarchy\\.org/omarchy-[0-9.]+\\.iso' \
-    | head -n1)
+  local latest_version
 
-  if [ -z "$iso_url" ]; then
-    iso_url="https://iso.omarchy.org/omarchy-3.3.2.iso"
+  latest_version=$(curl -fsSL -H "Accept: application/vnd.github+json" \
+    -H "User-Agent: omarchy-vm" \
+    https://api.github.com/repos/basecamp/omarchy/releases/latest |
+    sed -nE 's/.*"tag_name":[[:space:]]*"v?([0-9.]+)".*/\1/p' |
+    head -n1)
+
+  if [ -z "$latest_version" ]; then
+    latest_version=$(curl -fsSL -H "User-Agent: omarchy-vm" https://github.com/basecamp/omarchy/releases |
+      grep -Eo 'tag/v[0-9.]+\"' |
+      sed -E 's#tag/v([0-9.]+)".*#\1#' |
+      sort -V |
+      tail -n1)
   fi
 
+  if [ -z "$latest_version" ]; then
+    echo "Failed to determine the latest Omarchy ISO URL." >&2
+    return 1
+  fi
+
+  iso_url="https://iso.omarchy.org/omarchy-${latest_version}.iso"
   echo "$iso_url"
 }
 
@@ -78,14 +83,13 @@ install_omarchy_vm() {
 
   mkdir -p "$HOME/.omarchy-vm"
   mkdir -p "$HOME/.config/omarchy-vm"
-  mkdir -p "$HOME/Omarchy"
 
-  cat << EOF_DESKTOP | tee "$HOME/.local/share/applications/omarchy-vm.desktop" > /dev/null
+  cat <<EOF_DESKTOP | tee "$HOME/.local/share/applications/omarchy-vm.desktop" >/dev/null
 [Desktop Entry]
 Name=Omarchy VM
 Comment=Start Omarchy VM and open web console
 Exec=uwsm app -- omarchy-vm launch
-Icon=utilities-terminal
+Icon=${OMARCHY_PATH}icon.png
 Terminal=false
 Type=Application
 Categories=System;Virtualization;
@@ -112,7 +116,7 @@ EOF_DESKTOP
   done
 
   local SELECTED_RAM
-  SELECTED_RAM=$(echo "$RAM_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="2G" --header="How much RAM would you like to allocate to Omarchy VM?")
+  SELECTED_RAM=$(echo "$RAM_OPTIONS" | tr ' ' '\n' | sed '/^$/d' | gum choose --selected="8G" --header="How much RAM would you like to allocate to Omarchy VM?")
   if [ -z "$SELECTED_RAM" ]; then
     echo "Installation cancelled by user"
     exit 1
@@ -160,29 +164,12 @@ EOF_DESKTOP
     exit 1
   fi
 
-  local SSH_PORT
-  SSH_PORT=$(gum input --placeholder="Host SSH port (1024-65535)" --value="2222" --header="Choose a host port to forward to VM SSH (port 22):" --char-limit=5)
-  if [ -z "$SSH_PORT" ]; then
-    echo "Installation cancelled by user"
-    exit 1
-  fi
-
-  if ! [[ "$SSH_PORT" =~ ^[0-9]+$ ]] || [ "$SSH_PORT" -lt 1024 ] || [ "$SSH_PORT" -gt 65535 ]; then
-    echo "Invalid input. Using default SSH port: 2222"
-    SSH_PORT=2222
-  fi
-
   local DISK_SIZE_NUM
   DISK_SIZE_NUM=$(echo "$SELECTED_DISK" | sed 's/G//')
   check_prerequisites "$DISK_SIZE_NUM"
 
   local OMARCHY_ISO_URL
-  OMARCHY_ISO_URL=$(get_latest_omarchy_iso_url)
-
-  if [ -z "$OMARCHY_ISO_URL" ]; then
-    echo "Failed to determine the latest Omarchy ISO URL."
-    exit 1
-  fi
+  OMARCHY_ISO_URL=$(get_latest_omarchy_iso_url) || exit 1
 
   gum style \
     --border normal \
@@ -195,7 +182,6 @@ EOF_DESKTOP
     "RAM:        $SELECTED_RAM" \
     "CPU:        $SELECTED_CORES cores" \
     "Disk:       $SELECTED_DISK" \
-    "SSH Port:   $SSH_PORT -> 22" \
     "" \
     "ISO:        $OMARCHY_ISO_URL"
 
@@ -205,7 +191,7 @@ EOF_DESKTOP
     exit 1
   fi
 
-  cat << EOF_COMPOSE | tee "$COMPOSE_FILE" > /dev/null
+  cat <<EOF_COMPOSE | tee "$COMPOSE_FILE" >/dev/null
 services:
   omarchy:
     image: $IMAGE_NAME
@@ -223,10 +209,8 @@ services:
       - NET_ADMIN
     ports:
       - 8006:8006
-      - ${SSH_PORT}:22
     volumes:
       - $HOME/.omarchy-vm:/storage
-      - $HOME/Omarchy:/shared
     restart: always
     stop_grace_period: 2m
 EOF_COMPOSE
@@ -240,22 +224,21 @@ EOF_COMPOSE
     echo "Failed to start Omarchy VM!"
     echo "  Common issues:"
     echo "  - Docker daemon not running: sudo systemctl start docker"
-    echo "  - Ports already in use (8006 or $SSH_PORT)"
+    echo "  - Port 8006 already in use"
     echo "  - Permission issues: make sure you're in the docker group"
     exit 1
   fi
 
   echo "Omarchy VM is starting up."
   echo "Web console: http://127.0.0.1:8006"
-  echo "SSH tunnel:  ssh -p $SSH_PORT <user>@127.0.0.1"
   echo ""
   echo "Opening web console..."
   sleep 3
-  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
+  setsid omarchy-launch-webapp "http://127.0.0.1:8006" >/dev/null 2>&1 &
 
   echo ""
   echo "Installation runs in the background."
-  echo "Complete the Omarchy install in the web console, then connect via SSH."
+  echo "Complete the Omarchy install in the web console."
   echo "To stop the VM: omarchy-vm stop"
 }
 
@@ -278,9 +261,6 @@ launch_omarchy_vm() {
     echo "Omarchy VM not configured. Please run: omarchy-vm install"
     exit 1
   fi
-
-  local SSH_PORT
-  SSH_PORT=$(get_ssh_port)
 
   local CONTAINER_STATUS
   CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
@@ -310,29 +290,10 @@ launch_omarchy_vm() {
     --align center \
     "Omarchy VM Running" \
     "" \
-    "Web console: http://127.0.0.1:8006" \
-    "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1"
+    "Web console: http://127.0.0.1:8006"
 
-  xdg-open "http://127.0.0.1:8006" >/dev/null 2>&1 || true
-}
-
-ssh_omarchy_vm() {
-  if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Omarchy VM not configured. Please run: omarchy-vm install"
-    exit 1
-  fi
-
-  local SSH_PORT
-  SSH_PORT=$(get_ssh_port)
-
-  local SSH_USER
-  SSH_USER="${2:-omarchy}"
-
-  local SSH_TERM
-  SSH_TERM="${OMARCHY_VM_SSH_TERM:-xterm-256color}"
-
-  echo "Connecting over SSH on port $SSH_PORT as user '$SSH_USER'..."
-  TERM="$SSH_TERM" ssh -p "$SSH_PORT" "$SSH_USER"@127.0.0.1
+  setsid omarchy-launch-webapp "http://127.0.0.1:8006" >/dev/null 2>&1 &
+  disown
 }
 
 stop_omarchy_vm() {
@@ -353,9 +314,6 @@ status_omarchy_vm() {
     exit 1
   fi
 
-  local SSH_PORT
-  SSH_PORT=$(get_ssh_port)
-
   local CONTAINER_STATUS
   CONTAINER_STATUS=$(docker inspect --format='{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)
 
@@ -371,8 +329,6 @@ status_omarchy_vm() {
       "Omarchy VM Status: RUNNING" \
       "" \
       "Web console: http://127.0.0.1:8006" \
-      "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1" \
-      "" \
       "To open console: omarchy-vm launch" \
       "To stop:         omarchy-vm stop"
   else
@@ -388,7 +344,6 @@ show_usage() {
   echo "  install              Install and configure Omarchy VM"
   echo "  remove               Remove Omarchy VM and its local config"
   echo "  launch|start         Start VM (if needed) and open web console"
-  echo "  ssh [user]           SSH into the VM (default user: omarchy)"
   echo "  stop|down            Stop the running VM"
   echo "  status               Show current VM status"
   echo "  help                 Show this help message"
@@ -396,36 +351,32 @@ show_usage() {
   echo "Examples:"
   echo "  omarchy-vm install"
   echo "  omarchy-vm launch"
-  echo "  omarchy-vm ssh omarchy"
   echo "  omarchy-vm stop"
 }
 
 case "$1" in
-  install)
-    install_omarchy_vm
-    ;;
-  remove)
-    remove_omarchy_vm
-    ;;
-  launch|start)
-    launch_omarchy_vm
-    ;;
-  ssh)
-    ssh_omarchy_vm "$@"
-    ;;
-  stop|down)
-    stop_omarchy_vm
-    ;;
-  status)
-    status_omarchy_vm
-    ;;
-  help|--help|-h|"")
-    show_usage
-    ;;
-  *)
-    echo "Unknown command: $1" >&2
-    echo "" >&2
-    show_usage >&2
-    exit 1
-    ;;
+install)
+  install_omarchy_vm
+  ;;
+remove)
+  remove_omarchy_vm
+  ;;
+launch | start)
+  launch_omarchy_vm
+  ;;
+stop | down)
+  stop_omarchy_vm
+  ;;
+status)
+  status_omarchy_vm
+  ;;
+help | --help | -h | "")
+  show_usage
+  ;;
+*)
+  echo "Unknown command: $1" >&2
+  echo "" >&2
+  show_usage >&2
+  exit 1
+  ;;
 esac
