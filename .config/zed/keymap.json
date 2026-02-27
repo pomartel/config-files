@@ -7,10 +7,17 @@
 // from the command palette.
 [
   {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+    },
+  },
+  {
     "context": "Workspace",
     "bindings": {
       // "shift shift": "file_finder::Toggle"
-      "ctrl-shift-alt-r": "task::Spawn"
+      "ctrl-shift-alt-r": "task::Spawn",
     },
   },
   {
@@ -21,57 +28,65 @@
   },
   {
     "bindings": {
-      "ctrl-alt-t": "terminal_panel::ToggleFocus"
-    }
+      "ctrl-alt-t": "terminal_panel::ToggleFocus",
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-shift-t": "workspace::NewTerminal"
-    }
+      "ctrl-shift-t": "workspace::NewTerminal",
+    },
   },
   {
     "bindings": {
-      "ctrl-alt-up": "workspace::ActivatePaneUp"
-    }
+      "ctrl-alt-up": "workspace::ActivatePaneUp",
+    },
   },
   {
     "bindings": {
-      "ctrl-alt-down": "workspace::ActivatePaneDown"
-    }
+      "ctrl-alt-down": "workspace::ActivatePaneDown",
+    },
   },
   {
     "bindings": {
-      "ctrl-alt-left": "workspace::ActivatePaneLeft"
-    }
+      "ctrl-alt-left": "workspace::ActivatePaneLeft",
+    },
   },
   {
     "bindings": {
-      "ctrl-alt-right": "workspace::ActivatePaneRight"
-    }
+      "ctrl-alt-right": "workspace::ActivatePaneRight",
+    },
   },
   {
     "context": "!Editor",
-      "bindings": {
-      "ctrl-alt-shift-up": "vim::ResizePaneUp"
-    }
+    "bindings": {
+      "ctrl-alt-shift-up": "vim::ResizePaneUp",
+    },
   },
   {
     "context": "!Editor",
-      "bindings": {
-      "ctrl-alt-shift-right": "vim::ResizePaneLeft"
-    }
+    "bindings": {
+      "ctrl-alt-shift-right": "vim::ResizePaneLeft",
+    },
   },
   {
     "context": "!Editor",
-      "bindings": {
-      "ctrl-alt-shift-down": "vim::ResizePaneDown"
-    }
+    "bindings": {
+      "ctrl-alt-shift-down": "vim::ResizePaneDown",
+    },
   },
   {
     "context": "!Editor",
-      "bindings": {
-      "ctrl-alt-shift-left": "vim::ResizePaneRight"
-    }
-  }
+    "bindings": {
+      "ctrl-alt-shift-left": "vim::ResizePaneRight",
+    },
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "ctrl-z": "git::Uncommit",
+      "ctrl-delete": "git::RestoreTrackedFiles",
+      "ctrl-s": "git::Fetch",
+    },
+  },
 ]

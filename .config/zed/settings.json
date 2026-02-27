@@ -7,26 +7,29 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "restore_on_startup": "last_workspace",
   "theme": "Omazed",
   "agent": {
     "tool_permissions": {
       "default": "allow",
     },
     "default_model": {
-      "model": "gpt-5.3-codex",
       "provider": "openai",
+      "model": "gpt-5.3-codex",
+    },
+    "commit_message_model": {
+      "provider": "openai",
+      "model": "gpt-5.3-codex",
     },
   },
+
   "agent_servers": {
     "codex": {
       "favorite_config_option_values": {
-        "model": [
-          "gpt-5.3-codex",
-          "gpt-5.2"
-        ]
+        "model": ["gpt-5.3-codex", "gpt-5.2"],
       },
       "default_config_options": {
-        "mode": "full-access"
+        "mode": "full-access",
       },
     },
   },
