@@ -1,6 +1,0 @@
-[Unit]
-Description=Switch power profile to power-saver on low battery
-Requires=switch-power-profile-on-low-battery.service
-[Timer]
-OnBootSec=1min
-OnUnitActiveSec=1min
