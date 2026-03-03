@@ -15,11 +15,11 @@
     },
     "default_model": {
       "provider": "openai",
-      "model": "gpt-5.3-codex",
+      "model": "gpt-5.2-codex",
     },
     "commit_message_model": {
       "provider": "openai",
-      "model": "gpt-5.3-codex",
+      "model": "gpt-5.2-codex",
     },
   },
 
