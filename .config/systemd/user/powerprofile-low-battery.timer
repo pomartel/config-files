@@ -1,6 +1,6 @@
 [Unit]
 Description=Switch to power-saver profile on low battery timer
-Requires=omarchy-powerprofile-low-battery.service
+Requires=powerprofile-low-battery.service
 
 [Timer]
 OnBootSec=1min

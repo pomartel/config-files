@@ -4,7 +4,7 @@ After=graphical-session.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/bin/omarchy-powerprofile-power-saver-on-low-battery
+ExecStart=%h/bin/powerprofile-low-battery
 Environment=DISPLAY=:0
 LogLevelMax=warning
 
