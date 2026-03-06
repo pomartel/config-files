@@ -64,8 +64,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "omarchy-launch-or-focus-tui btop",
-    "on-click-right": "omarchy-launch-floating-terminal-with-presentation isd"
+    "on-click": "omarchy-launch-or-focus-tui btop"
   },
   "clock": {
     "locale": "fr_CA.UTF-8",
