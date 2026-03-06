@@ -15,18 +15,14 @@
     },
     "default_model": {
       "provider": "openai",
-      "model": "gpt-5.2-codex",
-    },
-    "commit_message_model": {
-      "provider": "openai",
-      "model": "gpt-5.2-codex",
+      "model": "gpt-5.2",
     },
   },
 
   "agent_servers": {
     "codex": {
       "favorite_config_option_values": {
-        "model": ["gpt-5.3-codex", "gpt-5.2"],
+        "model": ["gpt-5.4"],
       },
       "default_config_options": {
         "mode": "full-access",

@@ -1,7 +1,11 @@
 @import "../omarchy/current/theme/waybar.css";
 
+window#waybar {
+  background-color: alpha(@background, 0.88);
+}
+
 * {
-  background-color: @background;
+  background-color: transparent;
   color: @foreground;
 
   border: none;
@@ -62,6 +66,7 @@
 }
 
 tooltip {
+  background-color: @background;
   padding: 2px;
 }
 
