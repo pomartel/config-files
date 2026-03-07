@@ -15,6 +15,6 @@ fi
 shift
 
 # Execute the command if on AC power
-if ! omarchy-battery-discharging; then
+if ! battery-discharging; then
   "$cmd" "$@"
 fi
