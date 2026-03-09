@@ -1,6 +1,6 @@
 personality = "pragmatic"
 model = "gpt-5.4"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "medium"
 
 [[skills.config]]
 path = "/home/po/.config/codex/skills/.system/skill-creator/SKILL.md"
@@ -22,6 +22,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/home/po"]
+trust_level = "trusted"
+
+[projects."/home/po/.local/share/omarchy"]
 trust_level = "trusted"
 
 [tui]
