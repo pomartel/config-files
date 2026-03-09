@@ -1,11 +1,6 @@
 # Changes require a restart to take effect.
 #
 
-# Ensure Omarchy bins are in the path
-if [ -d "$HOME/Work/omarchy" ]; then
-  export OMARCHY_PATH="$HOME/Work/omarchy"
-fi
-
 export POWER_SAVER_BATTERY_TRESHOLD=70
 
 export PATH=$OMARCHY_PATH/bin:$PATH
@@ -20,4 +15,4 @@ source ~/.config/uwsm/default
 source ~/.config/uwsm/secrets
 
 # Activate mise if present on the system
-omarchy-cmd-present mise && eval "$(mise activate bash)"
+omarchy-cmd-present mise && eval "$(mise activate bash --shims)"

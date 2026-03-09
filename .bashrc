@@ -20,10 +20,6 @@ alias lg=lazygit
 alias rm='trash'
 alias cat='bat -pp'
 
-if [ -d "$HOME/Work/omarchy" ]; then
-  export OMARCHY_PATH="$HOME/Work/omarchy"
-fi
-
 yca() {
   msg="${*:-config changes}"
   yadm commit -am "$msg" && yadm push

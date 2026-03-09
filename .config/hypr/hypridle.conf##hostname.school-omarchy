@@ -29,6 +29,6 @@ listener {
 }
 
 listener {
-    timeout = 5400 # 1.5hour
+    timeout = 3600 # 1hour
     on-timeout = systemctl suspend # suspend pc
 }
