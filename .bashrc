@@ -41,7 +41,7 @@ alias rs="./bin/dev"
 
 # Omarchy Development
 alias bg="cd $HOME/Work/sudomarchy/"
-alias om="cd $HOME/Work/omarchy/"
+alias om="cd $OMARCHY_PATH"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"
