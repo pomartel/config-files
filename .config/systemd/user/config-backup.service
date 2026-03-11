@@ -1,6 +1,5 @@
 [Unit]
 Description=Back up .config to S3 with restic
-ConditionACPower=true
 
 [Service]
 Type=oneshot
