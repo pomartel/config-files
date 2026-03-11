@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/restic"
+ENV_FILE="$CONFIG_DIR/config-backup.env"
+EXCLUDE_FILE="$CONFIG_DIR/config-backup.exclude"
+BRAVE_INCLUDE_FILE="$CONFIG_DIR/config-backup.brave-include"
+TMP_INCLUDE_FILE="$(mktemp)"
+
+cleanup() {
+  rm -f "$TMP_INCLUDE_FILE"
+}
+
+trap cleanup EXIT
+
+if [[ -f "$ENV_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$ENV_FILE"
+fi
+
+require_cmd() {
+  local cmd=$1
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Missing required command: $cmd" >&2
+    exit 1
+  fi
+}
+
+resolve_secret() {
+  local direct_value=${1-}
+  local op_ref=${2-}
+
+  if [[ -n "$direct_value" ]]; then
+    printf '%s' "$direct_value"
+    return 0
+  fi
+
+  if [[ -n "$op_ref" ]]; then
+    require_cmd op
+    op read "$op_ref"
+    return 0
+  fi
+
+  return 1
+}
+
+require_file() {
+  local path=$1
+  if [[ ! -f "$path" ]]; then
+    echo "Required file not found: $path" >&2
+    exit 1
+  fi
+}
+
+require_cmd restic
+require_file "$EXCLUDE_FILE"
+require_file "$BRAVE_INCLUDE_FILE"
+
+AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"
+RESTIC_S3_PREFIX="${RESTIC_S3_PREFIX:-config-restic}"
+S3_BUCKET="${S3_BUCKET:-}"
+RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-}"
+CONFIG_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+AWS_ACCESS_KEY_ID_VALUE="$(resolve_secret "${AWS_ACCESS_KEY_ID:-}" "${OP_AWS_ACCESS_KEY_ID_REF:-}" || true)"
+AWS_SECRET_ACCESS_KEY_VALUE="$(resolve_secret "${AWS_SECRET_ACCESS_KEY:-}" "${OP_AWS_SECRET_ACCESS_KEY_REF:-}" || true)"
+RESTIC_PASSWORD_VALUE="$(resolve_secret "${RESTIC_PASSWORD:-}" "${OP_RESTIC_PASSWORD_REF:-}" || true)"
+
+if [[ -z "$S3_BUCKET" && -z "$RESTIC_REPOSITORY" ]]; then
+  echo "Set S3_BUCKET or RESTIC_REPOSITORY in $ENV_FILE" >&2
+  exit 1
+fi
+
+if [[ -z "$AWS_ACCESS_KEY_ID_VALUE" ]]; then
+  echo "Set AWS_ACCESS_KEY_ID or OP_AWS_ACCESS_KEY_ID_REF in $ENV_FILE" >&2
+  exit 1
+fi
+
+if [[ -z "$AWS_SECRET_ACCESS_KEY_VALUE" ]]; then
+  echo "Set AWS_SECRET_ACCESS_KEY or OP_AWS_SECRET_ACCESS_KEY_REF in $ENV_FILE" >&2
+  exit 1
+fi
+
+if [[ -z "$RESTIC_PASSWORD_VALUE" ]]; then
+  echo "Set RESTIC_PASSWORD or OP_RESTIC_PASSWORD_REF in $ENV_FILE" >&2
+  exit 1
+fi
+
+if [[ -z "$RESTIC_REPOSITORY" ]]; then
+  RESTIC_REPOSITORY="s3:s3.amazonaws.com/${S3_BUCKET}/${RESTIC_S3_PREFIX}"
+fi
+
+export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID_VALUE"
+export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY_VALUE"
+export AWS_DEFAULT_REGION
+export RESTIC_REPOSITORY
+export RESTIC_PASSWORD="$RESTIC_PASSWORD_VALUE"
+
+skip_roots=(
+  "1Password"
+  "BraveSoftware"
+  "chromium"
+  "google-chrome"
+  "google-chrome-beta"
+  "google-chrome-unstable"
+  "microsoft-edge-dev"
+  "mozilla"
+  "vivaldi"
+  "vivaldi-snapshot"
+)
+
+while IFS= read -r -d '' path; do
+  base_name="$(basename "$path")"
+
+  for skip_root in "${skip_roots[@]}"; do
+    if [[ "$base_name" == "$skip_root" ]]; then
+      continue 2
+    fi
+  done
+
+  printf '%s\n' "$path" >>"$TMP_INCLUDE_FILE"
+done < <(find "$CONFIG_ROOT" -mindepth 1 -maxdepth 1 -print0 | sort -z)
+
+while IFS= read -r rel_path; do
+  [[ -z "$rel_path" || "$rel_path" == \#* ]] && continue
+
+  full_path="$CONFIG_ROOT/$rel_path"
+  if [[ -e "$full_path" ]]; then
+    printf '%s\n' "$full_path" >>"$TMP_INCLUDE_FILE"
+  fi
+done <"$BRAVE_INCLUDE_FILE"
+
+if ! restic cat config >/dev/null 2>&1; then
+  restic init
+fi
+
+host_tag="host:$(hostname -s 2>/dev/null || hostname)"
+
+restic backup \
+  --files-from-verbatim "$TMP_INCLUDE_FILE" \
+  --exclude-file "$EXCLUDE_FILE" \
+  --tag config \
+  --tag "$host_tag"
+
+restic forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6

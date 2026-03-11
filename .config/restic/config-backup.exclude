@@ -1,0 +1,17 @@
+/home/po/.config/uwsm/secrets
+/home/po/.config/codex/auth.json
+/home/po/.config/codex/*.sqlite*
+/home/po/.config/restic/config-backup.env
+/home/po/.config/**/Cache/**
+/home/po/.config/**/Code Cache/**
+/home/po/.config/**/GPUCache/**
+/home/po/.config/**/Crashpad/**
+/home/po/.config/**/crashes/**
+/home/po/.config/**/logs/**
+/home/po/.config/**/blob_storage/**
+/home/po/.config/**/Session Storage/**
+/home/po/.config/**/Local Storage/**
+/home/po/.config/**/*.log
+/home/po/.config/**/*-journal
+/home/po/.config/fcitx/dbus/**
+/home/po/.config/ibus/bus/**
