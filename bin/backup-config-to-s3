@@ -53,6 +53,16 @@ require_file() {
   fi
 }
 
+run_restic_maintenance() {
+  if restic forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6; then
+    return 0
+  fi
+
+  echo "restic maintenance failed, attempting to clear stale locks and retry" >&2
+  restic unlock
+  restic forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+}
+
 require_cmd restic
 require_file "$EXCLUDE_FILE"
 require_file "$BRAVE_INCLUDE_FILE"
@@ -143,4 +153,4 @@ restic backup \
   --tag config \
   --tag "$host_tag"
 
-restic forget --prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6
+run_restic_maintenance

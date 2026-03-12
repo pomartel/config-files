@@ -17,6 +17,7 @@
 	mnemonicPrefix = true    # More intuitive refs in diff output
 [commit]
 	verbose = true           # Include diff comment in commit message template
+	gpgsign = true
 [column]
 	ui = auto 			     # Output in columns when possible
 [branch]
@@ -29,5 +30,10 @@
 [user]
 	name = Pierre Olivier Martel
 	email = pomartel@coderubik.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4Oy36cHsJjOZtLQBFyKI4bm9u4aYvOlahe2fLo0NmK
 [core]
 	editor = nvim
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign
