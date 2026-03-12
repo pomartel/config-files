@@ -61,6 +61,7 @@
   "ensure_final_newline_on_save": false,
   "file_types": {
     "markdown": ["*.marp"],
+    "Shell Script": ["", ".env.*"],
   },
   "format_on_save": "on",
   "git": {

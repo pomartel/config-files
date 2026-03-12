@@ -11,8 +11,16 @@ source ~/.local/share/omarchy/default/bash/rc
 # alias p='python'
 
 # Show current running process in tab title
-# trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
+trap 'echo -ne "\033]2;$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
 
+yca() {
+  msg="${*:-config changes}"
+  yadm commit -am "$msg" && yadm push
+}
+
+# Basic
+export CODEX_HOME="$HOME/.config/codex"
+alias c='codex --dangerously-bypass-approvals-and-sandbox'
 alias reload="source $HOME/.bashrc"
 alias y=yadm
 alias z=zeditor
@@ -20,26 +28,16 @@ alias lg=lazygit
 alias rm='trash'
 alias cat='bat -pp'
 
-yca() {
-  msg="${*:-config changes}"
-  yadm commit -am "$msg" && yadm push
-}
-
-export CODEX_HOME="/home/po/.config/codex"
-alias c='codex --dangerously-bypass-approvals-and-sandbox'
-
 # Work
-export POLL_PATH="$HOME/Work/poll-app"
-alias po="cd $POLL_PATH"
+alias po="cd $HOME/Work/poll-app"
 alias site="cd $HOME/Work/poll-app.com/"
 alias cr="cd $HOME/Work/coderubik.com/"
-
 alias mm="target=poll bundle exec middleman"
 alias rdb="rails db:migrate"
 alias rdbr="rails db:rollback"
 alias rs="./bin/dev"
 
-# Omarchy Development
+# Omarchy
 alias bg="cd $HOME/Work/sudomarchy/"
 alias om="cd $OMARCHY_PATH"
 
@@ -49,36 +47,8 @@ alias cours="cd $COURS_PATH"
 alias sp="cd $COURS_PATH/serveur-prof"
 alias md="cd $HOME/Work/markdown"
 alias watchmd="$HOME/Work/markdown/scripts/watch_changes"
-
 alias sshp="ssh po@serveurprof.com -p 143"
 alias sshu="ssh u1234567@serveurprof.com -p 143"
-
-deploy() {
-  for t in "$@"; do
-    echo "---- Deploying to $t ----"
-    git push $t +HEAD:master
-  done
-}
-
-mmbuild() {
-  case $1 in
-  cr) targets=(coderubik) ;;
-  en) targets=(poll survey contest quiz) ;;
-  fr) targets=(sondage concours) ;;
-  es) targets=(encuesta concurso) ;;
-  pt) targets=(enquete promocao) ;;
-  de) targets=(umfrage gewinnspiel) ;;
-  all) targets=(poll survey contest quiz sondage concours encuesta concurso enquete promocao umfrage gewinnspiel) ;;
-  *) targets=($1) ;;
-  esac
-
-  for t in "${targets[@]}"; do
-    echo "Deploying Middleman site for $t"
-    target=$t bundle exec middleman build
-    target=$t bundle exec middleman s3_sync
-    target=$t bundle exec middleman invalidate
-  done
-}
 
 if [[ -f "$HOME/.config/tmux/functions.sh" ]]; then
   source "$HOME/.config/tmux/functions.sh"
