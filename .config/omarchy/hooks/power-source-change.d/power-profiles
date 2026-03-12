@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# This hook is called when the system switches between AC and battery power.
+# It sets the default power profile when the system switches between AC and battery.
+
+mapfile -t profiles < <(omarchy-powerprofiles-list)
+
+if ((${#profiles[@]} <= 1)); then
+  exit 0
+fi
+
+POWER_SOURCE=$1
+
+AC_PROFILE="balanced"
+BATTERY_PROFILE="power-saver"
+
+if [[ $POWER_SOURCE == "battery" ]]; then
+  powerprofilesctl set "$BATTERY_PROFILE"
+elif [[ $POWER_SOURCE == "ac" ]]; then
+  powerprofilesctl set "$AC_PROFILE"
+fi
