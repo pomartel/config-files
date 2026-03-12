@@ -3,7 +3,7 @@
 keyboard_layout:
   layout: "ca"
 
-search_shortcut: META+CTRL+O
+# search_shortcut: META+CTRL+O
 
 show_notifications: false
 
