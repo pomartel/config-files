@@ -214,7 +214,7 @@ EOF_COMPOSE
   echo ""
   echo "Installation runs in the background."
   echo "Complete Ubuntu Server install in the web console, then connect via SSH."
-  echo "To stop the VM: ubuntu-vm stop"
+  echo "To stop the VM: ubuntu-server-vm stop"
 }
 
 remove_ubuntu_server() {
@@ -234,7 +234,7 @@ remove_ubuntu_server() {
 
 launch_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: ubuntu-vm install"
+    echo "Ubuntu Server VM not configured. Please run: ubuntu-server-vm install"
     exit 1
   fi
 
@@ -250,7 +250,7 @@ launch_ubuntu_server() {
 
     if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
       echo "Failed to start Ubuntu Server VM!"
-      echo "  Try checking: ubuntu-vm status"
+      echo "  Try checking: ubuntu-server-vm status"
       echo "  View logs: docker logs $CONTAINER_NAME"
       notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
       exit 1
@@ -275,7 +275,7 @@ launch_ubuntu_server() {
 
 ssh_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Ubuntu Server VM not configured. Please run: ubuntu-vm install"
+    echo "Ubuntu Server VM not configured. Please run: ubuntu-server-vm install"
     exit 1
   fi
 
@@ -288,7 +288,7 @@ ssh_ubuntu_server() {
 
     if ! docker-compose -f "$COMPOSE_FILE" up -d >/dev/null 2>&1; then
       echo "Failed to start Ubuntu Server VM!"
-      echo "  Try checking: ubuntu-vm status"
+      echo "  Try checking: ubuntu-server-vm status"
       echo "  View logs: docker logs $CONTAINER_NAME"
       notify-send -u critical "Ubuntu Server VM" "Failed to start VM"
       exit 1
@@ -328,7 +328,7 @@ stop_ubuntu_server() {
 status_ubuntu_server() {
   if [ ! -f "$COMPOSE_FILE" ]; then
     echo "Ubuntu Server VM not configured."
-    echo "To set up: ubuntu-vm install"
+    echo "To set up: ubuntu-server-vm install"
     exit 1
   fi
 
@@ -340,7 +340,7 @@ status_ubuntu_server() {
 
   if [ -z "$CONTAINER_STATUS" ]; then
     echo "Ubuntu Server VM container not found."
-    echo "To start: ubuntu-vm launch"
+    echo "To start: ubuntu-server-vm launch"
   elif [ "$CONTAINER_STATUS" = "running" ]; then
     gum style \
       --border normal \
@@ -352,16 +352,16 @@ status_ubuntu_server() {
       "Web console: http://127.0.0.1:8006" \
       "SSH:         ssh -p $SSH_PORT <user>@127.0.0.1" \
       "" \
-      "To open console: ubuntu-vm launch" \
-      "To stop:         ubuntu-vm stop"
+      "To open console: ubuntu-server-vm launch" \
+      "To stop:         ubuntu-server-vm stop"
   else
     echo "Ubuntu Server VM is stopped (status: $CONTAINER_STATUS)"
-    echo "To start: ubuntu-vm launch"
+    echo "To start: ubuntu-server-vm launch"
   fi
 }
 
 show_usage() {
-  echo "Usage: ubuntu-vm [command]"
+  echo "Usage: ubuntu-server-vm [command]"
   echo ""
   echo "Commands:"
   echo "  install              Install and configure Ubuntu VM"
@@ -373,10 +373,10 @@ show_usage() {
   echo "  help                 Show this help message"
   echo ""
   echo "Examples:"
-  echo "  ubuntu-vm install"
-  echo "  ubuntu-vm launch"
-  echo "  ubuntu-vm ssh po"
-  echo "  ubuntu-vm stop"
+  echo "  ubuntu-server-vm install"
+  echo "  ubuntu-server-vm launch"
+  echo "  ubuntu-server-vm ssh po"
+  echo "  ubuntu-server-vm stop"
 }
 
 case "$1" in
