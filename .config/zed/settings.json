@@ -10,13 +10,6 @@
   "restore_on_startup": "last_workspace",
   "theme": "Omazed",
   "agent": {
-    "favorite_models": [
-      {
-        "provider": "zed.dev",
-        "model": "gpt-5.4",
-        "enable_thinking": false
-      }
-    ],
     "tool_permissions": {
       "default": "allow",
     },
