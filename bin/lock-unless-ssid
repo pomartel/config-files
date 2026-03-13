@@ -6,7 +6,7 @@ set -euo pipefail
 SAFE_SSIDS=("$@")
 
 usage() {
-    cat <<'EOF'
+  cat <<'EOF'
 Usage:
   lock-if-unsafe.sh SSID1 [SSID2 ...]
   Locks the current session unless the connected Wi-Fi SSID matches one of the provided SSIDs.
@@ -14,24 +14,24 @@ EOF
 }
 
 if ((${#SAFE_SSIDS[@]} == 0)); then
-    usage >&2
-    exit 2
+  usage >&2
+  exit 2
 fi
 
 SSID="$(iw dev wlan0 link 2>/dev/null | sed -n 's/^.*SSID: //p')"
 
 # Not connected to Wi-Fi => unsafe (lock).
 if [[ -z "$SSID" ]]; then
-    loginctl lock-session
-    exit 0
+  omarchy-lock-screen
+  exit 0
 fi
 
 # Exact match against allowlist
 for safe in "${SAFE_SSIDS[@]}"; do
-    if [[ "$SSID" == "$safe" ]]; then
-        echo "On a safe network ($SSID). No need to lock."
-        exit 0
-    fi
+  if [[ "$SSID" == "$safe" ]]; then
+    echo "On a safe network ($SSID). No need to lock."
+    exit 0
+  fi
 done
 
-loginctl lock-session
+omarchy-lock-screen
