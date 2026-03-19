@@ -3,7 +3,7 @@ Description=Run .config backup at 1pm
 
 [Timer]
 OnCalendar=*-*-* 13:00:00
-Persistent=true
+Persistent=false
 RandomizedDelaySec=10m
 
 [Install]
