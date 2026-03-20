@@ -7,7 +7,7 @@ search_shortcut: off
 
 show_notifications: false
 
-# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/config.schema.json
+yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/config.schema.json
 
 # For a complete introduction, visit the official docs at: https://espanso.org/docs/
 
