@@ -2,17 +2,16 @@
 
 set -euo pipefail
 
-readonly RECIPE_NAME="${RECIPE_NAME:-The Economist.recipe}"
-readonly KINDLE_EMAIL="${KINDLE_EMAIL:-monkindleamoi@kindle.com}"
-readonly OUTPUT_DIR="${OUTPUT_DIR:-$HOME/Dropbox/Calibre/books}"
-readonly OUTPUT_FILE="${OUTPUT_FILE:-$OUTPUT_DIR/the-economist-$(date +%F).epub}"
-readonly EMAIL_SUBJECT="${EMAIL_SUBJECT:-The Economist $(date +%F)}"
-readonly EMAIL_BODY="${EMAIL_BODY:-Automated delivery from Calibre.}"
-readonly SMTP_FROM="${SMTP_FROM:-po@pouding.com}"
-readonly SMTP_RELAY="${SMTP_RELAY:-smtp.gmail.com}"
-readonly SMTP_USERNAME="${SMTP_USERNAME:-po@pouding.com}"
-
-readonly SMTP_PASSWORD="${SMTP_PASSWORD:-${GMAIL_APP_PASSWORD:-}}"
+RECIPE_NAME="${RECIPE_NAME:-The Economist.recipe}"
+KINDLE_EMAIL="${KINDLE_EMAIL:-monkindleamoi@kindle.com}"
+OUTPUT_DIR="${OUTPUT_DIR:-$HOME/Dropbox/Books/calibre}"
+OUTPUT_FILE="${OUTPUT_FILE:-$OUTPUT_DIR/the-economist-$(date +%F).epub}"
+EMAIL_SUBJECT="${EMAIL_SUBJECT:-The Economist $(date +%F)}"
+EMAIL_BODY="${EMAIL_BODY:-Automated delivery from Calibre.}"
+SMTP_FROM="${SMTP_FROM:-po@pouding.com}"
+SMTP_RELAY="${SMTP_RELAY:-smtp.gmail.com}"
+SMTP_USERNAME="${SMTP_USERNAME:-po@pouding.com}"
+SMTP_PASSWORD="${SMTP_PASSWORD:-${GMAIL_APP_PASSWORD:-}}"
 
 if [[ -z "$SMTP_PASSWORD" ]]; then
   echo "Missing SMTP password. Export GMAIL_APP_PASSWORD or SMTP_PASSWORD before running." >&2
