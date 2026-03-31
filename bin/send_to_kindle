@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly RECIPE_NAME="${RECIPE_NAME:-The Economist.recipe}"
+readonly KINDLE_EMAIL="${KINDLE_EMAIL:-monkindleamoi@kindle.com}"
+readonly OUTPUT_DIR="${OUTPUT_DIR:-$HOME/Dropbox/Calibre/books}"
+readonly OUTPUT_FILE="${OUTPUT_FILE:-$OUTPUT_DIR/the-economist-$(date +%F).epub}"
+readonly EMAIL_SUBJECT="${EMAIL_SUBJECT:-The Economist $(date +%F)}"
+readonly EMAIL_BODY="${EMAIL_BODY:-Automated delivery from Calibre.}"
+readonly SMTP_FROM="${SMTP_FROM:-po@pouding.com}"
+readonly SMTP_RELAY="${SMTP_RELAY:-smtp.gmail.com}"
+readonly SMTP_USERNAME="${SMTP_USERNAME:-po@pouding.com}"
+
+readonly SMTP_PASSWORD="${SMTP_PASSWORD:-${GMAIL_APP_PASSWORD:-}}"
+
+if [[ -z "$SMTP_PASSWORD" ]]; then
+  echo "Missing SMTP password. Export GMAIL_APP_PASSWORD or SMTP_PASSWORD before running." >&2
+  exit 1
+fi
+
+mkdir -p "$OUTPUT_DIR"
+
+echo "Converting ${RECIPE_NAME} to EPUB..."
+ebook-convert "$RECIPE_NAME" "$OUTPUT_FILE"
+
+echo "Sending ${OUTPUT_FILE} to ${KINDLE_EMAIL}..."
+calibre-smtp \
+  --relay "$SMTP_RELAY" \
+  --port "${SMTP_PORT:-587}" \
+  --username "$SMTP_USERNAME" \
+  --password "$SMTP_PASSWORD" \
+  --encryption-method "${SMTP_ENCRYPTION_METHOD:-TLS}" \
+  --subject "$EMAIL_SUBJECT" \
+  --attachment "$OUTPUT_FILE" \
+  "$SMTP_FROM" \
+  "$KINDLE_EMAIL" \
+  "$EMAIL_BODY"
+
+echo "Sent: $OUTPUT_FILE"
