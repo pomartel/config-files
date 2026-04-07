@@ -8,23 +8,6 @@ is_valid_brightness() {
   [[ $value =~ ^([1-9][0-9]?|100)$ ]]
 }
 
-# Returns the most likely display backlight device.
-# Start with the first possible output, then refine to the most likely given an order heuristic.
-device="$(ls -1 /sys/class/backlight 2>/dev/null | head -n1)"
-for pattern in amdgpu_bl* intel_backlight acpi_video*; do
-  for candidate_path in /sys/class/backlight/$pattern; do
-    if [[ -e $candidate_path ]]; then
-      device="${candidate_path##*/}"
-      break 2
-    fi
-  done
-done
-
-if [[ -z $device ]]; then
-  echo "Couldn't detect a display backlight device." >&2
-  exit 1
-fi
-
 if [[ $# -eq 0 ]]; then
   interactive_mode=true
   echo -e "\e[32mLet's set the laptop display brightness when on battery or AC.\n\e[0m"
@@ -52,10 +35,9 @@ else
 fi
 
 rule_file="/etc/udev/rules.d/99-display-brightness.rules"
-
 cat <<EOF | sudo tee "$rule_file" >/dev/null
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="/usr/bin/brightnessctl -d ${device} set ${bat_brightness}%"
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="/usr/bin/brightnessctl -d ${device} set ${ac_brightness}%"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="/usr/bin/brightnessctl -c backlight set ${bat_brightness}%"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="/usr/bin/brightnessctl -c backlight set ${ac_brightness}%"
 EOF
 
 sudo udevadm control --reload-rules
