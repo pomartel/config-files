@@ -49,7 +49,3 @@ alias md="cd $HOME/Work/markdown"
 alias watchmd="$HOME/Work/markdown/scripts/watch_changes"
 alias sshp="ssh po@serveurprof.com -p 143"
 alias sshu="ssh u1234567@serveurprof.com -p 143"
-
-if [[ -f "$HOME/.config/tmux/functions.sh" ]]; then
-  source "$HOME/.config/tmux/functions.sh"
-fi
