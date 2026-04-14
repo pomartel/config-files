@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink",
+    "device-description": "Lunar Lake-M HD Audio Controller Speaker",
+    "device-profile": "Speaker",
+    "preset-name": "Dolby X1 Extreme Gen4 - music-balanced"
+}
