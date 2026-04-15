@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Usage: omarchy-powerprofiles-set <ac|battery>
+
+case "$1" in
+ac)
+  powerprofilesctl set balanced
+  ;;
+battery)
+  powerprofilesctl set balanced
+  ;;
+esac
