@@ -16,5 +16,19 @@ keybindings = [
  { key = { Char = " " }, action = "SetDefault" },
 ]
 
+[names]
+# Prefer per-endpoint descriptions, otherwise every SoundWire endpoint appears
+# as the shared ALSA device nickname: "sof-soundwire".
+endpoint = [ "{node:node.description}", "{device:device.nick}", "{device:device.description}" ]
+device = [ "{device:device.description}", "{device:device.nick}" ]
+
 [char_sets.default]
 default_device = "⮞"
+
+[[filters]]
+id = "aux-headphones-jack"
+matches = [ { "node:node.name" = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Headphones__sink" } ]
+
+[[filters]]
+id = "headset-microphone"
+matches = [ { "node:node.name" = "alsa_input.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Headset__source" } ]
