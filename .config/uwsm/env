@@ -15,4 +15,4 @@ source ~/.config/uwsm/secrets
 # Activate mise if present on the system
 omarchy-cmd-present mise && eval "$(mise activate bash --shims)"
 
-export POWER_SAVER_BATTERY_TRESHOLD=70
+export POWER_SAVER_BATTERY_TRESHOLD=50
