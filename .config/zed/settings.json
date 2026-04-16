@@ -19,15 +19,20 @@
       "provider": "zed.dev",
       "model": "gpt-5.4",
     },
+    "commit_message_model": {
+      "provider": "openai",
+      "model": "gpt-5.4-nano",
+    },
   },
 
   "agent_servers": {
-    "codex": {
-      "favorite_config_option_values": {
-        "model": ["gpt-5.4"],
-      },
+    "codex-acp": {
+      "type": "registry",
       "default_config_options": {
         "mode": "full-access",
+      },
+      "favorite_config_option_values": {
+        "model": ["gpt-5.4"],
       },
     },
   },
@@ -41,6 +46,7 @@
     "ruby": true,
     "scss": true,
     "toml": true,
+    "hyprlang": true,
     "vscode-great-icons": true,
   },
   "autosave": {
@@ -51,10 +57,8 @@
   "base_keymap": "VSCode",
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
   "buffer_font_size": 15,
-  "ensure_final_newline_on_save": false,
   "file_types": {
     "markdown": ["*.marp"],
-    "Shell Script": ["", ".env.*"],
   },
   "format_on_save": "on",
   "git": {
