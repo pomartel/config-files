@@ -1,0 +1,19 @@
+#!/bin/bash
+
+special_workspace="$1"
+current_special_workspace=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .specialWorkspace.name')
+
+hyprctl dispatch togglespecialworkspace "$special_workspace"
+
+if [[ "$current_special_workspace" == "special:$special_workspace" ]]; then
+  exit 1
+fi
+
+# Window rules are only applied when a window is opened. Recenter existing
+# floating windows when moving a special workspace between monitors.
+hyprctl clients -j |
+  jq -r --arg workspace "special:$special_workspace" '.[] | select(.workspace.name == $workspace and .floating == true) | .address' |
+  while read -r address; do
+    hyprctl dispatch focuswindow "address:$address" >/dev/null
+    hyprctl dispatch centerwindow 1 >/dev/null
+  done
