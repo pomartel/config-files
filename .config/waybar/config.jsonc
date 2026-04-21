@@ -70,7 +70,7 @@
     "locale": "fr_CA.UTF-8",
     "format": "{:L%A %H:%M}",
     "tooltip": false,
-    "on-click": "pkill -x waycal || waycal",
+    "on-click": "pkill -x waycal || LC_TIME=fr_CA.UTF-8 waycal",
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
   "network": {
@@ -93,6 +93,7 @@
     "on-click": "omarchy-launch-wifi"
   },
   "battery": {
+    "bat": "BAT0",
     "format": "{capacity}% {icon}",
     "format-discharging": "{icon}",
     "format-charging": "{icon}",

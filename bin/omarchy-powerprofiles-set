@@ -4,9 +4,9 @@
 
 case "$1" in
 ac)
-  powerprofilesctl set balanced
+  powerprofilesctl set power-saver
   ;;
 battery)
-  powerprofilesctl set balanced
+  powerprofilesctl set power-saver
   ;;
 esac
