@@ -4,9 +4,10 @@
 
 case "$1" in
 ac)
-  powerprofilesctl set power-saver
+  powerprofilesctl set balanced
+  echo balance_power | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference
   ;;
 battery)
-  powerprofilesctl set power-saver
+  powerprofilesctl set balanced
   ;;
 esac
