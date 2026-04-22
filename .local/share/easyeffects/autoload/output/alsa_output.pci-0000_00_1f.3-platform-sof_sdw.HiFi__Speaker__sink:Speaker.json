@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink",
+    "device-description": "Laptop Speakers",
+    "device-profile": "Speaker",
+    "preset-name": "Laptop-Speakers"
+}
