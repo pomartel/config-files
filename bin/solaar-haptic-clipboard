@@ -9,11 +9,11 @@ HOLD_SECONDS="0.4"
 mkdir -p "$STATE_DIR"
 
 send_copy() {
-  wtype -M ctrl -k c -m ctrl
+  wtype -M ctrl -k Insert -m ctrl
 }
 
 send_paste() {
-  wtype -M ctrl -k v -m ctrl
+  wtype -M shift -k Insert -m shift
 }
 
 case "${1:-}" in
