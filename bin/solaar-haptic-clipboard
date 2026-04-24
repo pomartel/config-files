@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-haptic-clipboard"
+TOKEN_FILE="$STATE_DIR/token"
+FIRED_FILE="$STATE_DIR/fired"
+HOLD_SECONDS="0.4"
+
+mkdir -p "$STATE_DIR"
+
+send_copy() {
+  wtype -M ctrl -k c -m ctrl
+}
+
+send_paste() {
+  wtype -M ctrl -k v -m ctrl
+}
+
+case "${1:-}" in
+  press)
+    token="$(date +%s%N)"
+    printf '%s\n' "$token" > "$TOKEN_FILE"
+    rm -f "$FIRED_FILE"
+    (
+      sleep "$HOLD_SECONDS"
+      if [[ -f "$TOKEN_FILE" ]] && [[ "$(cat "$TOKEN_FILE")" == "$token" ]]; then
+        : > "$FIRED_FILE"
+        send_paste
+      fi
+    ) >/dev/null 2>&1 &
+    ;;
+  release)
+    if [[ -f "$TOKEN_FILE" ]]; then
+      if [[ ! -f "$FIRED_FILE" ]]; then
+        send_copy
+      fi
+      rm -f "$TOKEN_FILE" "$FIRED_FILE"
+    fi
+    ;;
+  *)
+    echo "usage: $0 press|release" >&2
+    exit 2
+    ;;
+esac
