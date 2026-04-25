@@ -9,16 +9,16 @@
 {
   "cli_default_open_behavior": "new_window",
   "project_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "git_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "restore_on_startup": "last_workspace",
   "theme": "Omazed",
@@ -31,7 +31,7 @@
       "effort": "medium",
       "enable_thinking": true,
       "provider": "zed.dev",
-      "model": "gpt-5.4",
+      "model": "gpt-5.5",
     },
     "commit_message_model": {
       "provider": "openai",
@@ -46,7 +46,7 @@
         "mode": "full-access",
       },
       "favorite_config_option_values": {
-        "model": ["gpt-5.4"],
+        "model": ["gpt-5.5"],
       },
     },
   },
