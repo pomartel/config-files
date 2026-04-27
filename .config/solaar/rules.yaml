@@ -10,6 +10,16 @@
   - Test: [thumb_wheel_up, 15]
   - KeyPress: [XF86_AudioRaiseVolume, click]
 - Rule:
+  - Device: MX Master 3 Wireless Mouse
+  - Feature: THUMB WHEEL
+  - Test: [thumb_wheel_down, 15]
+  - KeyPress: [XF86_AudioLowerVolume, click]
+- Rule:
+  - Device: MX Master 3 Wireless Mouse
+  - Feature: THUMB WHEEL
+  - Test: [thumb_wheel_up, 15]
+  - KeyPress: [XF86_AudioRaiseVolume, click]
+- Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Right]
   - KeyPress: [XF86_AudioNext, click]
@@ -39,6 +49,14 @@
   - Execute: [/home/po/bin/solaar-haptic-clipboard, press]
 - Rule:
   - Device: MX Master 4
+  - Key: [Smart Shift, released]
+  - Execute: [/home/po/bin/solaar-haptic-clipboard, release]
+- Rule:
+  - Device: MX Master 3 Wireless Mouse
+  - Key: [Smart Shift, pressed]
+  - Execute: [/home/po/bin/solaar-haptic-clipboard, press]
+- Rule:
+  - Device: MX Master 3 Wireless Mouse
   - Key: [Smart Shift, released]
   - Execute: [/home/po/bin/solaar-haptic-clipboard, release]
 ...

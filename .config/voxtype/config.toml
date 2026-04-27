@@ -128,6 +128,9 @@ remote_timeout_secs = 20
 # - paste: Copies to clipboard then simulates paste keystroke (requires wl-copy and wtype or ydotool)
 mode = "paste"
 
+# Press Enter after outputting transcribed text
+auto_submit = true
+
 # Fall back to clipboard if typing fails
 fallback_to_clipboard = true
 
