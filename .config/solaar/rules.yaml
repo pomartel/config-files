@@ -20,17 +20,25 @@
 - Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Down]
-  - KeyPress: [XF86_AudioPause, click]
+  - Execute: [hyprctl, dispatch, exec, "[workspace 6] omarchy-launch-or-focus spotify"]
 - Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Up]
+  - Execute: [hyprctl, dispatch, exec, "[workspace 6] omarchy-launch-or-focus spotify"]
+- Rule:
+  - Device: MX Master 4
+  - MouseGesture: [Mouse Gesture Button]
   - KeyPress: [XF86_AudioPlay, click]
 - Rule:
   - Device: MX Master 4
   - Key: [Haptic, pressed]
+  - Execute: [hyprctl, dispatch, workspace, previous]
+- Rule:
+  - Device: MX Master 4
+  - Key: [Smart Shift, pressed]
   - Execute: [/home/po/bin/solaar-haptic-clipboard, press]
 - Rule:
   - Device: MX Master 4
-  - Key: [Haptic, released]
+  - Key: [Smart Shift, released]
   - Execute: [/home/po/bin/solaar-haptic-clipboard, release]
 ...

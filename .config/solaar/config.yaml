@@ -9,7 +9,7 @@
   _sensitive: {divert-keys: true, hires-smooth-invert: false}
   _unitId: B20B69DA
   change-host: null
-  divert-keys: {82: 0, 83: 0, 86: 0, 195: 2, 196: 0, 416: 1}
+  divert-keys: {82: 0, 83: 0, 86: 0, 195: 2, 196: 1, 416: 1}
   dpi: 1000
   force-sensing: {0: 5036}
   haptic-level: 60
