@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cours="${1:-}"
+
+if [[ -z "$cours" ]]; then
+  echo "Usage: tmux-cours <cours>"
+  exit 1
+fi
+
+cours_dir="$HOME/Cours/$cours"
+
+if [[ ! -d "$cours_dir" ]]; then
+  echo "Directory not found: $cours_dir"
+  exit 1
+fi
+
+if [[ -z "${TMUX:-}" ]]; then
+  tmux new-session -c "$cours_dir" "tmux-cours \"$cours\""
+  exit 0
+fi
+
+ai_pane=$(tmux display-message -p '#{pane_id}')
+
+tmux split-window -h -p 30 -c "$cours_dir"
+bash_pane=$(tmux display-message -p '#{pane_id}')
+
+tmux select-pane -t "$bash_pane"
+tmux split-window -v -p 50 -c "$cours_dir"
+md_pane=$(tmux display-message -p '#{pane_id}')
+
+tmux send-keys -t "$md_pane" "watchmd $cours" C-m
+tmux send-keys -t "$ai_pane" "c" C-m
+
+tmux select-pane -t "$ai_pane"
