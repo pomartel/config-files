@@ -17,7 +17,8 @@ if [[ ! -d "$cours_dir" ]]; then
 fi
 
 if [[ -z "${TMUX:-}" ]]; then
-  tmux new-session -c "$cours_dir" "tmux-cours \"$cours\""
+  quoted_cours=$(printf '%q' "$cours")
+  tmux new-session -c "$cours_dir" "tmux-cours $quoted_cours; exec bash"
   exit 0
 fi
 
