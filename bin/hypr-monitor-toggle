@@ -14,4 +14,6 @@ done
 # Projector mode: if in mirror mode, set laptop monitor to 1080p60
 if hyprctl monitors | grep -q "monitor mirrors"; then
   hyprctl keyword monitor "eDP-1,1920x1080@60,auto,2"
+else
+  hyprctl keyword monitor "eDP-1,2880x1800@120,auto,2"
 fi
