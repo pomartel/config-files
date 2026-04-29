@@ -7,6 +7,32 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ssh_connections": [
+    {
+      "host": "serveurprof.com",
+      "username": "po",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/po"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "serveurprof.com",
+      "username": "u1234567",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/u1234567"
+          ]
+        }
+      ]
+    }
+  ],
   "cli_default_open_behavior": "new_window",
   "project_panel": {
     "dock": "left",
