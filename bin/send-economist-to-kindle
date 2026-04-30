@@ -6,9 +6,9 @@ epub="$HOME/Dropbox/Books/Economist/the-economist-$today.epub"
 
 mkdir -p "$(dirname "$epub")"
 
-# ebook-convert \
-#   "The Economist.recipe" \
-#   "$epub"
+ebook-convert \
+  "The Economist.recipe" \
+  "$epub"
 
 calibre-smtp \
   --relay "email-smtp.us-east-1.amazonaws.com" \
