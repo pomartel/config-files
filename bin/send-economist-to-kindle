@@ -1,0 +1,23 @@
+#!/bin/bash
+set -euo pipefail
+
+today="$(date +%F)"
+epub="$HOME/Calibre/Economist/the-economist-$today.epub"
+
+mkdir -p "$(dirname "$epub")"
+
+ebook-convert \
+  "The Economist.recipe" \
+  "$epub"
+
+calibre-smtp \
+  --relay "email-smtp.us-east-1.amazonaws.com" \
+  --port "587" \
+  --username "AKIAXXL2W3NH2MKBBZWD" \
+  --password "BDdwGp/gYUjX0HgN1s107WQzh/8Qk9qnPTxpaqYpl+Vw" \
+  --encryption-method "TLS" \
+  --subject "The Economist $today" \
+  --attachment "$epub" \
+  "support@coderubik.com" \
+  "monkindleamoi@kindle.com" \
+  "Automated delivery from Calibre."

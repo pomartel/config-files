@@ -1,6 +1,0 @@
-[Unit]
-Description=Send content to Kindle
-
-[Service]
-Type=oneshot
-ExecStart=/home/po/bin/send-to-kindle
