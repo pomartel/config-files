@@ -2,13 +2,13 @@
 set -euo pipefail
 
 today="$(date +%F)"
-epub="$HOME/Calibre/Economist/the-economist-$today.epub"
+epub="$HOME/Dropbox/Books/Economist/the-economist-$today.epub"
 
 mkdir -p "$(dirname "$epub")"
 
-ebook-convert \
-  "The Economist.recipe" \
-  "$epub"
+# ebook-convert \
+#   "The Economist.recipe" \
+#   "$epub"
 
 calibre-smtp \
   --relay "email-smtp.us-east-1.amazonaws.com" \
@@ -18,6 +18,6 @@ calibre-smtp \
   --encryption-method "TLS" \
   --subject "The Economist $today" \
   --attachment "$epub" \
-  "support@coderubik.com" \
+  "pomartel@coderubik.com" \
   "monkindleamoi@kindle.com" \
   "Automated delivery from Calibre."

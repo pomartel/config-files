@@ -1,0 +1,9 @@
+[Unit]
+Description=Send The Economist to Kindle weekly
+
+[Timer]
+OnCalendar=Thu *-*-* 11:00:00 America/New_York
+Persistent=true
+
+[Install]
+WantedBy=timers.target

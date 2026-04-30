@@ -1,0 +1,6 @@
+[Unit]
+Description=Send The Economist to Kindle
+
+[Service]
+Type=oneshot
+ExecStart=%h/bin/send-economist-to-kindle
