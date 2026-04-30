@@ -13,8 +13,8 @@ ebook-convert \
 calibre-smtp \
   --relay "email-smtp.us-east-1.amazonaws.com" \
   --port "587" \
-  --username "AKIAXXL2W3NH2MKBBZWD" \
-  --password "BDdwGp/gYUjX0HgN1s107WQzh/8Qk9qnPTxpaqYpl+Vw" \
+  --username "$SES_SMTP_USERNAME" \
+  --password "$SES_SMTP_PASSWORD" \
   --encryption-method "TLS" \
   --subject "The Economist $today" \
   --attachment "$epub" \
