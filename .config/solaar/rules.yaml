@@ -30,7 +30,7 @@
 - Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Down]
-  - Execute: [hyprctl, dispatch, exec, "[workspace 6] omarchy-launch-or-focus spotify"]
+  - Execute: [hyprctl, dispatch, killactive]
 - Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Up]
