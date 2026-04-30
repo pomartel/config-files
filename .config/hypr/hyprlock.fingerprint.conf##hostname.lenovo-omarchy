@@ -1,0 +1,7 @@
+auth {
+    fingerprint:enabled = true
+}
+
+input-field {
+    placeholder_text = <span> Entrez le mot de passe 󰈷 </span>
+}
