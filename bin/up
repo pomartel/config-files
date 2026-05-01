@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "Pulling yadm..."
+cd ~ || exit
+if ! yadm pull; then
+  echo -e "\033[31mFailed to pull yadm\033[0m"
+  exit 1
+fi
+
+pull_repo() {
+  local path="$1"
+  shift
+
+  echo "Pulling $(basename "$path")..."
+  (
+    cd "$path" || exit
+    if ! git pull; then
+      echo -e "\033[31mFailed to pull $(basename "$path")\033[0m"
+      exit 1
+    fi
+
+    if [ "$#" -gt 0 ]; then
+      "$@"
+    fi
+  )
+}
+
+pull_repo "$HOME/Install" ./INSTALL.sh
+pull_repo "$HOME/Work/markdown"
+pull_repo "$HOME/Work/sudomarchy"
