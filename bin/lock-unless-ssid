@@ -22,7 +22,7 @@ SSID="$(iw dev wlan0 link 2>/dev/null | sed -n 's/^.*SSID: //p')"
 
 # Not connected to Wi-Fi => unsafe (lock).
 if [[ -z "$SSID" ]]; then
-  omarchy-lock-screen
+  omarchy-system-lock
   exit 0
 fi
 
@@ -34,4 +34,4 @@ for safe in "${SAFE_SSIDS[@]}"; do
   fi
 done
 
-omarchy-lock-screen
+omarchy-system-lock
