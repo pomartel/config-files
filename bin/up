@@ -11,7 +11,7 @@ pull_repo() {
   local path="$1"
   shift
 
-  echo "Pulling $(basename "$path")..."
+  echo "\nPulling $(basename "$path")..."
 
   cd "$path" || exit
   if ! git pull; then
@@ -22,7 +22,6 @@ pull_repo() {
   if [ "$#" -gt 0 ]; then
     "$@"
   fi
-  echo
 }
 
 pull_repo "$HOME/Install" ./INSTALL.sh
