@@ -12,17 +12,17 @@ pull_repo() {
   shift
 
   echo "Pulling $(basename "$path")..."
-  (
-    cd "$path" || exit
-    if ! git pull; then
-      echo -e "\033[31mFailed to pull $(basename "$path")\033[0m"
-      exit 1
-    fi
 
-    if [ "$#" -gt 0 ]; then
-      "$@"
-    fi
-  )
+  cd "$path" || exit
+  if ! git pull; then
+    echo -e "\033[31mFailed to pull $(basename "$path")\033[0m"
+    exit 1
+  fi
+
+  if [ "$#" -gt 0 ]; then
+    "$@"
+  fi
+  echo
 }
 
 pull_repo "$HOME/Install" ./INSTALL.sh
