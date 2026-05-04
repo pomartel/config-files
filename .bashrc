@@ -23,6 +23,7 @@ yca() {
 
 # Basic
 export CODEX_HOME="$HOME/.config/codex"
+
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
 alias reload="source $HOME/.bashrc"
 alias y=yadm
@@ -32,7 +33,9 @@ alias rm='trash'
 alias cat='bat -pp'
 
 # Work
-alias po="cd $HOME/Work/poll-app"
+export POLL_PATH="$HOME/Work/poll-app"
+
+alias po="cd $POLL_PATH"
 alias site="cd $HOME/Work/poll-app.com/"
 alias cr="cd $HOME/Work/coderubik.com/"
 alias mm="target=poll bundle exec middleman"
@@ -46,6 +49,7 @@ alias om="cd $OMARCHY_PATH"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"
+
 alias cours="cd $COURS_PATH"
 alias sp="cd $COURS_PATH/serveur-prof"
 alias md="cd $HOME/Work/markdown"
