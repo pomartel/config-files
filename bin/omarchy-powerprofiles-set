@@ -25,7 +25,7 @@ fi
 
 case "$action" in
 ac)
-  powerprofilesctl set power-saver
+  powerprofilesctl set balanced
   ;;
 battery)
   powerprofilesctl set power-saver
