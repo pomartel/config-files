@@ -2,23 +2,23 @@
 - Rule:
   - Device: MX Master 4
   - Feature: THUMB WHEEL
-  - Test: [thumb_wheel_down, 15]
-  - KeyPress: [XF86_AudioLowerVolume, click]
+  - Test: [thumb_wheel_down, 25]
+  - Execute: [/home/po/bin/solaar/thumb-wheel, down]
 - Rule:
   - Device: MX Master 4
   - Feature: THUMB WHEEL
-  - Test: [thumb_wheel_up, 15]
-  - KeyPress: [XF86_AudioRaiseVolume, click]
+  - Test: [thumb_wheel_up, 25]
+  - Execute: [/home/po/bin/solaar/thumb-wheel, up]
 - Rule:
   - Device: MX Master 3 Wireless Mouse
   - Feature: THUMB WHEEL
-  - Test: [thumb_wheel_down, 15]
-  - KeyPress: [XF86_AudioLowerVolume, click]
+  - Test: [thumb_wheel_down, 25]
+  - Execute: [/home/po/bin/solaar/thumb-wheel, down]
 - Rule:
   - Device: MX Master 3 Wireless Mouse
   - Feature: THUMB WHEEL
-  - Test: [thumb_wheel_up, 15]
-  - KeyPress: [XF86_AudioRaiseVolume, click]
+  - Test: [thumb_wheel_up, 25]
+  - Execute: [/home/po/bin/solaar/thumb-wheel, up]
 - Rule:
   - Device: MX Master 4
   - MouseGesture: [Mouse Gesture Button, Mouse Right]
@@ -45,18 +45,26 @@
   - Execute: [hyprctl, dispatch, workspace, previous]
 - Rule:
   - Device: MX Master 4
+  - Key: [Middle Button, pressed]
+  - Execute: [/home/po/bin/solaar/middle-button, press]
+- Rule:
+  - Device: MX Master 3 Wireless Mouse
+  - Key: [Middle Button, pressed]
+  - Execute: [/home/po/bin/solaar/middle-button, press]
+- Rule:
+  - Device: MX Master 4
   - Key: [Smart Shift, pressed]
-  - Execute: [/home/po/bin/solaar-haptic-clipboard, press]
+  - Execute: [/home/po/bin/solaar/smart-shift, press]
 - Rule:
   - Device: MX Master 4
   - Key: [Smart Shift, released]
-  - Execute: [/home/po/bin/solaar-haptic-clipboard, release]
+  - Execute: [/home/po/bin/solaar/smart-shift, release]
 - Rule:
   - Device: MX Master 3 Wireless Mouse
   - Key: [Smart Shift, pressed]
-  - Execute: [/home/po/bin/solaar-haptic-clipboard, press]
+  - Execute: [/home/po/bin/solaar/smart-shift, press]
 - Rule:
   - Device: MX Master 3 Wireless Mouse
   - Key: [Smart Shift, released]
-  - Execute: [/home/po/bin/solaar-haptic-clipboard, release]
+  - Execute: [/home/po/bin/solaar/smart-shift, release]
 ...

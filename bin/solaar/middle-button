@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+send_middle_click() {
+  python - <<'PY'
+from logitech_receiver.diversion import buttons, click
+
+click(buttons["middle"], 1)
+PY
+}
+
+copy_primary_selection() {
+  wl-paste --primary | wl-copy
+  wl-copy --primary --clear
+}
+
+paste_clipboard() {
+  wtype -M shift -k Insert -m shift
+}
+
+should_copy_primary() {
+  primary="$(wl-paste --primary --no-newline 2>/dev/null || true)"
+  clipboard="$(wl-paste --no-newline 2>/dev/null || true)"
+
+  [[ -n "$primary" && "$primary" != "$clipboard" ]]
+}
+
+case "${1:-press}" in
+press)
+  if should_copy_primary; then
+    copy_primary_selection
+    send_middle_click
+  else
+    send_middle_click
+    paste_clipboard
+  fi
+  ;;
+*)
+  echo "usage: $0 [press]" >&2
+  exit 2
+  ;;
+esac
