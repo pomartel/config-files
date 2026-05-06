@@ -94,6 +94,7 @@
   },
   "battery": {
     "bat": "BAT0",
+    "adapter": "AC0",
     "format": "{capacity}% {icon}",
     "format-discharging": "{icon}",
     "format-charging": "{icon}",
