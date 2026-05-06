@@ -4,28 +4,16 @@ set -euo pipefail
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-smart-shift"
 TOKEN_FILE="$STATE_DIR/token"
 FIRED_FILE="$STATE_DIR/fired"
-HOLD_SECONDS="0.2"
+HOLD_SECONDS="0.25"
 
 mkdir -p "$STATE_DIR"
 
-in_ghostty() {
-  [[ "$(hyprctl activewindow -j | jq -r '.class // ""')" == "com.mitchellh.ghostty" ]]
+copy_selection() {
+  wtype -M ctrl -k Insert -m ctrl
 }
 
-close_tab() {
-  if in_ghostty; then
-    wtype -M ctrl -M shift -k w -m shift -m ctrl
-  else
-    wtype -M ctrl -k w -m ctrl
-  fi
-}
-
-open_tab() {
-  if in_ghostty; then
-    wtype -M ctrl -M shift -k t -m shift -m ctrl
-  else
-    wtype -M ctrl -k t -m ctrl
-  fi
+paste_clipboard() {
+  wtype -M shift -k Insert -m shift
 }
 
 case "${1:-}" in
@@ -37,14 +25,14 @@ press)
     sleep "$HOLD_SECONDS"
     if [[ -f "$TOKEN_FILE" ]] && [[ "$(cat "$TOKEN_FILE")" == "$token" ]]; then
       : >"$FIRED_FILE"
-      open_tab
+      paste_clipboard
     fi
   ) >/dev/null 2>&1 &
   ;;
 release)
   if [[ -f "$TOKEN_FILE" ]]; then
     if [[ ! -f "$FIRED_FILE" ]]; then
-      close_tab
+      copy_selection
     fi
     rm -f "$TOKEN_FILE" "$FIRED_FILE"
   fi

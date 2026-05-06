@@ -3,7 +3,6 @@ set -euo pipefail
 
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-middle-button"
 TOKEN_FILE="$STATE_DIR/token"
-FIRED_FILE="$STATE_DIR/fired"
 HOLD_SECONDS="0.25"
 
 mkdir -p "$STATE_DIR"
@@ -12,31 +11,20 @@ paste_clipboard() {
   wtype -M shift -k Insert -m shift
 }
 
-copy_primary_selection() {
-  wl-paste --primary | wl-copy
-  wl-copy --primary --clear
-}
-
-case "${1:-}" in
+case "${1:-press}" in
 press)
   token="$(date +%s%N)"
   printf '%s\n' "$token" >"$TOKEN_FILE"
-  rm -f "$FIRED_FILE"
   (
     sleep "$HOLD_SECONDS"
     if [[ -f "$TOKEN_FILE" ]] && [[ "$(cat "$TOKEN_FILE")" == "$token" ]]; then
-      : >"$FIRED_FILE"
       paste_clipboard
+      rm -f "$TOKEN_FILE"
     fi
   ) >/dev/null 2>&1 &
   ;;
 release)
-  if [[ -f "$TOKEN_FILE" ]]; then
-    if [[ ! -f "$FIRED_FILE" ]]; then
-      copy_primary_selection
-    fi
-    rm -f "$TOKEN_FILE" "$FIRED_FILE"
-  fi
+  rm -f "$TOKEN_FILE"
   ;;
 *)
   echo "usage: $0 press|release" >&2
