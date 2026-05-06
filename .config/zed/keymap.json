@@ -22,19 +22,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
       "ctrl-shift-alt-r": "task::Spawn",
-    },
-  },
-  {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-      // "j k": "vim::NormalBefore"
-    },
-  },
-  {
-    "bindings": {
-      "ctrl-alt-t": "terminal_panel::ToggleFocus",
     },
   },
   {
@@ -95,9 +83,4 @@
       "ctrl-s": "git::Fetch",
     },
   },
-  {
-    "bindings": {
-      "ctrl-shift-b": "workspace::CloseAllDocks"
-    }
-  }
 ]
