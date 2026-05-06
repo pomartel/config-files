@@ -47,7 +47,7 @@
     "dock": "left",
   },
   "restore_on_startup": "last_workspace",
-  "theme": "Rosé Pine Dawn",
+  "theme": "One Light",
   "agent": {
     "dock": "right",
     "tool_permissions": {
