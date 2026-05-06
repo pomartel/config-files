@@ -48,9 +48,17 @@
   - Key: [Middle Button, pressed]
   - Execute: [/home/po/bin/solaar/middle-button, press]
 - Rule:
+  - Device: MX Master 4
+  - Key: [Middle Button, released]
+  - Execute: [/home/po/bin/solaar/middle-button, release]
+- Rule:
   - Device: MX Master 3 Wireless Mouse
   - Key: [Middle Button, pressed]
   - Execute: [/home/po/bin/solaar/middle-button, press]
+- Rule:
+  - Device: MX Master 3 Wireless Mouse
+  - Key: [Middle Button, released]
+  - Execute: [/home/po/bin/solaar/middle-button, release]
 - Rule:
   - Device: MX Master 4
   - Key: [Smart Shift, pressed]

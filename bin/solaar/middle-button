@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-send_middle_click() {
-  python - <<'PY'
-from logitech_receiver.diversion import buttons, click
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-middle-button"
+TOKEN_FILE="$STATE_DIR/token"
+FIRED_FILE="$STATE_DIR/fired"
+HOLD_SECONDS="0.25"
 
-click(buttons["middle"], 1)
-PY
+mkdir -p "$STATE_DIR"
+
+paste_clipboard() {
+  wtype -M shift -k Insert -m shift
 }
 
 copy_primary_selection() {
@@ -14,29 +17,29 @@ copy_primary_selection() {
   wl-copy --primary --clear
 }
 
-paste_clipboard() {
-  wtype -M shift -k Insert -m shift
-}
-
-should_copy_primary() {
-  primary="$(wl-paste --primary --no-newline 2>/dev/null || true)"
-  clipboard="$(wl-paste --no-newline 2>/dev/null || true)"
-
-  [[ -n "$primary" && "$primary" != "$clipboard" ]]
-}
-
-case "${1:-press}" in
+case "${1:-}" in
 press)
-  if should_copy_primary; then
-    copy_primary_selection
-    send_middle_click
-  else
-    send_middle_click
-    paste_clipboard
+  token="$(date +%s%N)"
+  printf '%s\n' "$token" >"$TOKEN_FILE"
+  rm -f "$FIRED_FILE"
+  (
+    sleep "$HOLD_SECONDS"
+    if [[ -f "$TOKEN_FILE" ]] && [[ "$(cat "$TOKEN_FILE")" == "$token" ]]; then
+      : >"$FIRED_FILE"
+      paste_clipboard
+    fi
+  ) >/dev/null 2>&1 &
+  ;;
+release)
+  if [[ -f "$TOKEN_FILE" ]]; then
+    if [[ ! -f "$FIRED_FILE" ]]; then
+      copy_primary_selection
+    fi
+    rm -f "$TOKEN_FILE" "$FIRED_FILE"
   fi
   ;;
 *)
-  echo "usage: $0 [press]" >&2
+  echo "usage: $0 press|release" >&2
   exit 2
   ;;
 esac
