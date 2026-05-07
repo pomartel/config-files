@@ -1,33 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-control_is_down() {
-  python - <<'PY'
-from evdev import InputDevice, ecodes, list_devices
-
-ctrl_keys = {ecodes.KEY_LEFTCTRL, ecodes.KEY_RIGHTCTRL}
-
-for path in list_devices():
-    try:
-        dev = InputDevice(path)
-        caps = dev.capabilities().get(ecodes.EV_KEY, [])
-        if ctrl_keys & set(caps) and ctrl_keys & set(dev.active_keys()):
-            raise SystemExit(0)
-    except OSError:
-        pass
-
-raise SystemExit(1)
-PY
-}
-
-previous_tab() {
-  wtype -M ctrl -M shift -k Tab -m shift -m ctrl
-}
-
-next_tab() {
-  wtype -M ctrl -k Tab -m ctrl
-}
-
 volume_down() {
   omarchy-swayosd-client --output-volume lower
 }
@@ -38,18 +11,10 @@ volume_up() {
 
 case "${1:-}" in
 down)
-  if control_is_down; then
-    volume_down
-  else
-    previous_tab
-  fi
+  volume_down
   ;;
 up)
-  if control_is_down; then
-    volume_up
-  else
-    next_tab
-  fi
+  volume_up
   ;;
 *)
   echo "usage: $0 down|up" >&2
