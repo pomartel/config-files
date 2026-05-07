@@ -24,6 +24,24 @@ yca() {
 # Basic
 export CODEX_HOME="$HOME/.config/codex"
 
+codex() {
+  local tmux_window_renamed=0
+
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux rename-window "codex ${PWD##*/}"
+    tmux_window_renamed=1
+  fi
+
+  command codex "$@"
+  local status=$?
+
+  if (( tmux_window_renamed )); then
+    tmux set-window-option automatic-rename on >/dev/null
+  fi
+
+  return "$status"
+}
+
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
 alias reload="source $HOME/.bashrc"
 alias y=yadm
