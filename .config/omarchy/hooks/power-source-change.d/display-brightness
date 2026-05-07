@@ -2,9 +2,9 @@
 
 case "$1" in
 ac)
-  brightnessctl -c backlight set "30%%"
+  brightnessctl -c backlight set "100%%"
   ;;
 battery)
-  brightnessctl -c backlight set "100%%"
+  brightnessctl -c backlight set "30%%"
   ;;
 esac

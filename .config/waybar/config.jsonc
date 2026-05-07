@@ -10,6 +10,7 @@
   ],
   "modules-center": [
     "clock",
+    "custom/weather",
     "custom/update",
     "custom/voxtype",
     "custom/screenrecording-indicator"
