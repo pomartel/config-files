@@ -1,0 +1,8 @@
+case "$1" in
+ac)
+  powerprofilesctl set balanced
+  ;;
+battery)
+  powerprofilesctl set power-saver
+  ;;
+esac
