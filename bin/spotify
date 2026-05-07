@@ -133,5 +133,5 @@ os.replace(tmp_file, oauth_file)
 PY
 }
 
-transfer_to_device
+( transfer_to_device ) &
 exec "$spotify_bin" "$@"
