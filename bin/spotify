@@ -4,12 +4,16 @@ set -euo pipefail
 device_name="${SPOTIFY_CONNECT_DEVICE:-Laptop}"
 spotify_bin="/usr/bin/spotify"
 oauth_file="${SPOTIFY_OAUTH_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/spotifyd/oauth.env}"
+lock_file="${SPOTIFY_LOCK_FILE:-${oauth_file}.lock}"
 
 warn() {
   printf 'spotify: %s\n' "$*" >&2
 }
 
 transfer_to_device() {
+  exec 9>"$lock_file"
+  flock -n 9 || return 0
+
   load_access_token
 
   if [[ -z "${SPOTIFY_ACCESS_TOKEN:-}" ]]; then
@@ -35,6 +39,10 @@ transfer_to_device() {
     warn "Spotify Connect device '$device_name' was not found; opening Spotify without switching output"
     return 0
   }
+
+  if jq -e --arg id "$device_id" '.devices[] | select(.id == $id and .is_active == true)' <<<"$devices_json" >/dev/null; then
+    return 0
+  fi
 
   if ! curl --fail --silent --show-error \
     --request PUT \
