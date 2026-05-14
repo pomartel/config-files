@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+active_id="$(hyprctl activeworkspace -j | jq -r '.id')"
+mapfile -t workspace_ids < <(hyprctl workspaces -j | jq -r '[.[].id | select(. >= 1 and . <= 5)] | sort | .[]')
+
+if (( ${#workspace_ids[@]} < 2 )); then
+  exit 0
+fi
+
+target_id="${workspace_ids[0]}"
+
+for index in "${!workspace_ids[@]}"; do
+  if [[ "${workspace_ids[$index]}" == "$active_id" ]]; then
+    target_id="${workspace_ids[$(( (index + 1) % ${#workspace_ids[@]} ))]}"
+    break
+  fi
+done
+
+hyprctl dispatch workspace "$target_id" >/dev/null

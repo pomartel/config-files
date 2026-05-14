@@ -42,7 +42,7 @@
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, pressed]
-    - Execute: [hyprctl, dispatch, workspace, previous]
+    - Execute: [/home/po/bin/solaar/cycle-active-workspace]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, pressed]
