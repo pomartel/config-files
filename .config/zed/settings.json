@@ -47,7 +47,7 @@
     "dock": "left",
   },
   "restore_on_startup": "last_workspace",
-  "theme": "Catppuccin Latte",
+  "theme": "Omazed",
   "agent": {
     "dock": "right",
     "tool_permissions": {
