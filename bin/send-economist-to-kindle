@@ -6,6 +6,8 @@ epub="$HOME/Dropbox/Books/Economist/the-economist-$today.epub"
 
 mkdir -p "$(dirname "$epub")"
 
+# Calibre has duplicate builtin recipes with this display name; this selector
+# currently resolves to economist_free, which is the working weekly edition.
 ebook-convert \
   "The Economist.recipe" \
   "$epub"
