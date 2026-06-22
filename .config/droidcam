@@ -1,0 +1,10 @@
+v4
+ip=192.168.18.21
+port=4747
+audio=0
+video=1
+size=1920x1080
+confirm_close=0
+vertical_flip=1
+horizontal_flip=0
+type=2
