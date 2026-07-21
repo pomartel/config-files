@@ -7,7 +7,20 @@ o.exec_on_start("hyprland-monitor-attached ~/bin/hypr-monitor-toggle ~/bin/hypr-
 -- This intentionally runs on config load, matching the old `exec` directive.
 hl.exec_cmd("hypr-monitor-toggle")
 
-o.exec_on_start([[hyprctl dispatch exec "[workspace 1 silent] uwsm-app -- omarchy-launch-browser"]])
-o.exec_on_start([[hyprctl dispatch exec '[workspace 2 silent] uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux']])
-o.exec_on_start("hyprctl dispatch workspace 1")
+hl.on("hyprland.start", function()
+  hl.dispatch(hl.dsp.exec_cmd(
+    "uwsm-app -- omarchy-launch-browser",
+    { workspace = "1 silent" }
+  ))
+end)
+
+hl.on("hyprland.start", function()
+  hl.dispatch(hl.dsp.exec_cmd(
+    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]],
+    { workspace = "2 silent" }
+  ))
+end)
+hl.on("hyprland.start", function()
+  hl.dispatch(hl.dsp.focus({ workspace = 1 }))
+end)
 o.exec_on_start("trash-empty 30")

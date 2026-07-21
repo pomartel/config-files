@@ -75,7 +75,7 @@ mode = "remote"
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # Or provide absolute path to a custom .bin model file
-model = "gpt-4o-mini-transcribe"
+model = "gpt-4o-transcribe"
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
@@ -104,7 +104,7 @@ on_demand_loading = false
 
 # --- Remote mode settings (used when mode = "remote") ---
 remote_endpoint = "https://api.openai.com"  # Required
-remote_model = "gpt-4o-mini-transcribe"      # Model to request from server
+remote_model = "gpt-4o-transcribe"           # Model to request from server
 # remote_api_key = "sk-..."                   # Or use VOXTYPE_WHISPER_API_KEY env var
 remote_timeout_secs = 20
 
