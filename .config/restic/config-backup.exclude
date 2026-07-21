@@ -1,4 +1,4 @@
-/home/po/.config/uwsm/secrets
+/home/po/.config/uwsm/env.d/99-secrets
 /home/po/.config/codex/auth.json
 /home/po/.config/codex/*.sqlite*
 /home/po/.config/restic/config-backup.env

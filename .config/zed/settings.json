@@ -95,7 +95,10 @@
     },
   },
   "base_keymap": "VSCode",
-  "buffer_font_family": "Liberation Mono",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_features": {
+    "calt": false,
+  },
   "buffer_font_size": 15,
   "file_types": {
     "markdown": ["*.marp"],
