@@ -2,18 +2,35 @@
 
 ext="DP-1"
 
+monitor_is_active() {
+  hyprctl -j monitors all | jq -e --arg output "$1" \
+    'any(.[]; .name == $output and .disabled == false)' >/dev/null
+}
+
+mirror_is_active() {
+  hyprctl -j monitors all | jq -e \
+    'any(.[]; .mirrorOf != null and .mirrorOf != "none")' >/dev/null
+}
+
+workspace_exists() {
+  hyprctl -j workspaces | jq -e --argjson workspace "$1" \
+    'any(.[]; .id == $workspace)' >/dev/null
+}
+
 for w in {1..10}; do
-  if hyprctl monitors | grep -q "^Monitor $ext"; then
-    hyprctl keyword "workspace $w, gapsout:10, gapsin:5"
-    [ $w -ne 6 ] && hyprctl dispatch moveworkspacetomonitor $w $ext
+  if monitor_is_active "$ext"; then
+    hyprctl eval "hl.workspace_rule({ workspace = \"$w\", gaps_out = 10, gaps_in = 5 })"
+    if [ "$w" -ne 6 ] && workspace_exists "$w"; then
+      hyprctl eval "hl.dispatch(hl.dsp.workspace.move({ workspace = \"$w\", monitor = \"$ext\" }))"
+    fi
   else
-    hyprctl keyword "workspace $w, gapsout:3, gapsin:1"
+    hyprctl eval "hl.workspace_rule({ workspace = \"$w\", gaps_out = 3, gaps_in = 1 })"
   fi
 done
 
 # Projector mode: if in mirror mode, set laptop monitor to 1080p60
-if hyprctl monitors | grep -q "monitor mirrors"; then
-  hyprctl keyword monitor "eDP-1,1920x1080@60,auto,2"
+if mirror_is_active; then
+  hyprctl eval 'hl.monitor({ output = "eDP-1", mode = "1920x1080@60", position = "auto", scale = 2 })'
 else
-  hyprctl keyword monitor "eDP-1,2880x1800@120,auto,2"
+  hyprctl eval 'hl.monitor({ output = "eDP-1", mode = "2880x1800@120", position = "auto", scale = 2 })'
 fi

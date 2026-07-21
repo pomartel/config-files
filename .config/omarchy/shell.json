@@ -10,9 +10,6 @@
           "verticalFormat": "HH\n—\nmm"
         },
         {
-          "id": "omarchy.weather"
-        },
-        {
           "id": "omarchy.system-update"
         }
       ],
