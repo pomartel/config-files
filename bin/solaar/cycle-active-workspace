@@ -17,4 +17,4 @@ for index in "${!workspace_ids[@]}"; do
   fi
 done
 
-hyprctl dispatch workspace "$target_id" >/dev/null
+hyprctl dispatch "hl.dsp.focus({ workspace = \"$target_id\" })" >/dev/null

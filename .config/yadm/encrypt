@@ -1,2 +1,2 @@
-.config/uwsm/secrets
+.config/uwsm/env.d/99-secrets
 .config/restic/config-backup.env

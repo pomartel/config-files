@@ -1,5 +1,3 @@
--- Personal keybindings, ported from bindings.conf.
-
 local bindings = {
   { "SUPER + ALT + RETURN", "Terminal", [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)"]] },
   { "SUPER + RETURN", "Tmux", [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]] },

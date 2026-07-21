@@ -2,11 +2,11 @@
 set -euo pipefail
 
 volume_down() {
-  omarchy-swayosd-client --output-volume lower
+  omarchy audio output volume lower
 }
 
 volume_up() {
-  omarchy-swayosd-client --output-volume raise
+  omarchy audio output volume raise
 }
 
 case "${1:-}" in

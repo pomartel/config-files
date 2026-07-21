@@ -90,7 +90,7 @@ install_ubuntu_server() {
 
   check_prerequisites
 
-  omarchy-pkg-add gum openbsd-netcat
+  omarchy pkg add gum openbsd-netcat
 
   mkdir -p "$HOME/.ubuntu-server"
   mkdir -p "$HOME/.config/ubuntu-server-vm"

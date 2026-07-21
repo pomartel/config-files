@@ -30,11 +30,11 @@
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button, Mouse Down]
-    - Execute: [hyprctl, dispatch, killactive]
+    - Execute: [hyprctl, dispatch, "hl.dsp.window.close()"]
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button, Mouse Up]
-    - Execute: [hyprctl, dispatch, exec, "omarchy-launch-or-focus spotify"]
+    - Execute: [omarchy-launch-or-focus, spotify]
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button]

@@ -1,9 +1,17 @@
 #!/bin/bash
 
-special_workspace="$1"
+set -u
+
+special_workspace="${1:-}"
+
+if [[ ! $special_workspace =~ ^[a-zA-Z0-9_-]+$ ]]; then
+  echo "Usage: toggle-special-workspace <workspace-name>" >&2
+  exit 2
+fi
+
 current_special_workspace=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .specialWorkspace.name')
 
-hyprctl dispatch togglespecialworkspace "$special_workspace"
+hyprctl dispatch "hl.dsp.workspace.toggle_special(\"$special_workspace\")" >/dev/null
 
 if [[ "$current_special_workspace" == "special:$special_workspace" ]]; then
   exit 1
@@ -14,6 +22,6 @@ fi
 hyprctl clients -j |
   jq -r --arg workspace "special:$special_workspace" '.[] | select(.workspace.name == $workspace and .floating == true) | .address' |
   while read -r address; do
-    hyprctl dispatch focuswindow "address:$address" >/dev/null
-    hyprctl dispatch centerwindow 1 >/dev/null
+    hyprctl dispatch "hl.dsp.focus({ window = \"address:$address\" })" >/dev/null
+    hyprctl dispatch 'hl.dsp.window.center({ preserve_reserved = true })' >/dev/null
   done

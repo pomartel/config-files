@@ -8,9 +8,3 @@ export EDITOR=nvim
 
 # When locking, do not turn off the display.
 export OMARCHY_LOCK_ONLY=true
-
-# Load session-wide secrets managed through yadm encryption.
-[ -r "$HOME/.config/uwsm/secrets" ] && . "$HOME/.config/uwsm/secrets"
-
-# Threshold used by ~/bin/powerprofile-low-battery.
-export POWER_SAVER_BATTERY_TRESHOLD=50
