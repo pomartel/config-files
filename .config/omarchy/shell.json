@@ -49,9 +49,14 @@
     "transparent": false
   },
   "idle": {
-    "lock": 7200,
-    "screensaver": 300
+    "lock": 3600,
+    "screensaver": 300,
+    "suspend": 7200
   },
-  "plugins": [],
+  "plugins": [
+    {
+      "id": "local.idle-suspend"
+    }
+  ],
   "version": 1
 }
