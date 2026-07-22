@@ -2,9 +2,3 @@
 
 # Add user scripts to PATH.
 export PATH="$HOME/bin:$PATH"
-
-# Use Neovim as the default editor.
-export EDITOR=nvim
-
-# When locking, do not turn off the display.
-export OMARCHY_LOCK_ONLY=true
