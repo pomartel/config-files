@@ -28,7 +28,3 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
-
--- Prefer user-owned command overrides, such as ~/bin/omarchy-system-lock,
--- over Omarchy's package-managed commands.
--- hl.env("PATH", (os.getenv("HOME") or "") .. "/bin:" .. (os.getenv("PATH") or "/usr/local/bin:/usr/bin"))

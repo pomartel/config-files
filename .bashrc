@@ -33,24 +33,6 @@ yca() {
 # Basic
 export CODEX_HOME="$HOME/.config/codex"
 
-codex() {
-  local tmux_window_renamed=0
-
-  if [[ -n "${TMUX:-}" ]]; then
-    tmux rename-window "codex ${PWD##*/}"
-    tmux_window_renamed=1
-  fi
-
-  command codex "$@"
-  local status=$?
-
-  if (( tmux_window_renamed )); then
-    tmux set-window-option automatic-rename on >/dev/null
-  fi
-
-  return "$status"
-}
-
 alias c='codex --dangerously-bypass-approvals-and-sandbox'
 alias reload="source $HOME/.bashrc"
 alias y=yadm
@@ -60,26 +42,25 @@ alias rm='trash'
 alias cat='bat -pp'
 
 # Work
-export POLL_PATH="$HOME/Work/poll-app"
+export POLL_PATH="$HOME/Projects/poll-app"
 
 alias po="cd $POLL_PATH"
-alias site="cd $HOME/Work/poll-app.com/"
-alias cr="cd $HOME/Work/coderubik.com/"
+alias site="cd $HOME/Projects/poll-app.com/"
+alias cr="cd $HOME/Projects/coderubik.com/"
 alias mm="target=poll bundle exec middleman"
 alias rdb="rails db:migrate"
 alias rdbr="rails db:rollback"
 alias rs="./bin/dev"
 
 # Omarchy
-alias bg="cd $HOME/Work/sudomarchy/"
-alias om="cd $OMARCHY_PATH"
+alias bg="cd $HOME/Projects/sudomarchy/"
 
 # Teaching
 export COURS_PATH="$HOME/Cours"
 
 alias cours="cd $COURS_PATH"
 alias sp="cd $COURS_PATH/serveur-prof"
-alias md="cd $HOME/Work/markdown"
-alias watchmd="$HOME/Work/markdown/scripts/watch_changes"
+alias md="cd $HOME/Projects/markdown"
+alias watchmd="$HOME/Projects/markdown/scripts/watch_changes"
 alias sshp="ssh po@serveurprof.com -p 143"
 alias sshu="ssh u1234567@serveurprof.com -p 143"

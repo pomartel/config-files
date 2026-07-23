@@ -65,7 +65,7 @@ BarWidget {
     onPressed: function(button) {
       if (!root.bar) return
       if (button === Qt.RightButton) root.bar.run("omarchy-menu-timezone")
-      else root.bar.run("LC_ALL=fr_CA.UTF-8 LC_TIME=fr_CA.UTF-8 /home/po/bin/waycal")
+      else root.bar.run("pgrep -x waycal >/dev/null && pkill -x waycal || LC_ALL=fr_CA.UTF-8 LC_TIME=fr_CA.UTF-8 /home/po/bin/waycal")
     }
 
     Column {

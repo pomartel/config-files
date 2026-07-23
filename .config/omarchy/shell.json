@@ -50,12 +50,13 @@
   },
   "idle": {
     "lock": 3600,
+    "monitorOff": 600,
     "screensaver": 300,
     "suspend": 7200
   },
   "plugins": [
     {
-      "id": "local.idle-suspend"
+      "id": "local.idle-power"
     }
   ],
   "version": 1
