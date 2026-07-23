@@ -19,11 +19,19 @@ workspace_exists() {
 
 for w in {1..10}; do
   if monitor_is_active "$ext"; then
+    if [ "$w" -le 5 ]; then
+      hyprctl eval "hl.workspace_rule({ workspace = \"$w\", monitor = \"$ext\" })"
+    elif [ "$w" -eq 6 ]; then
+      hyprctl eval 'hl.workspace_rule({ workspace = "6", monitor = "eDP-1" })'
+    fi
     hyprctl eval "hl.workspace_rule({ workspace = \"$w\", gaps_out = 10, gaps_in = 5 })"
     if [ "$w" -ne 6 ] && workspace_exists "$w"; then
       hyprctl eval "hl.dispatch(hl.dsp.workspace.move({ workspace = \"$w\", monitor = \"$ext\" }))"
     fi
   else
+    if [ "$w" -le 5 ] || [ "$w" -eq 6 ]; then
+      hyprctl eval "hl.workspace_rule({ workspace = \"$w\", monitor = \"eDP-1\" })"
+    fi
     hyprctl eval "hl.workspace_rule({ workspace = \"$w\", gaps_out = 3, gaps_in = 1 })"
   fi
 done
