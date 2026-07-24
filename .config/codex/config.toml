@@ -1,0 +1,41 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "low"
+[projects."/home/po/Install"]
+trust_level = "trusted"
+
+[projects."/home/po"]
+trust_level = "trusted"
+
+[projects."/home/po/Dropbox/Cours/G03"]
+trust_level = "trusted"
+
+[projects."/home/po/.config/hypr"]
+trust_level = "trusted"
+
+[projects."/home/po/bin"]
+trust_level = "trusted"
+
+[projects."/home/po/Work/sudomarchy"]
+trust_level = "trusted"
+
+[projects."/home/po/.local/share/omarchy"]
+trust_level = "trusted"
+
+[projects."/home/po/.config/BraveSoftware/Brave-Origin-Nightly"]
+trust_level = "trusted"
+
+[projects."/home/po/Work/poll-app"]
+trust_level = "trusted"
+
+[projects."/home/po/Projects/waycal"]
+trust_level = "trusted"
+
+[tui]
+terminal_title = ["status", "task-progress", "project"]
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+
+[notice.model_migrations]
+"gpt-5.4" = "gpt-5.6-terra"
