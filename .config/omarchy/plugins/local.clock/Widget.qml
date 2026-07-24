@@ -65,7 +65,12 @@ BarWidget {
     onPressed: function(button) {
       if (!root.bar) return
       if (button === Qt.RightButton) root.bar.run("omarchy-menu-timezone")
-      else root.bar.run("pgrep -x waycal >/dev/null && pkill -x waycal || LC_ALL=fr_CA.UTF-8 LC_TIME=fr_CA.UTF-8 /home/po/bin/waycal")
+      else {
+        var screenName = button.QsWindow && button.QsWindow.window && button.QsWindow.window.screen
+          ? button.QsWindow.window.screen.name : ""
+        var payload = JSON.stringify({ screen: screenName, locale: "fr_CA" })
+        root.bar.run("omarchy-shell shell toggle intemporel " + Util.shellQuote(payload))
+      }
     }
 
     Column {

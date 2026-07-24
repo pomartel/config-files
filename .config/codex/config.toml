@@ -1,41 +1,84 @@
-model = "gpt-5.6-sol"
-model_reasoning_effort = "low"
+personality = "pragmatic"
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+plan_mode_reasoning_effort = "medium"
+
+[[skills.config]]
+path = "/home/po/.config/codex/skills/.system/skill-creator/SKILL.md"
+enabled = false
+
 [projects."/home/po/Install"]
 trust_level = "trusted"
 
-[projects."/home/po"]
+[projects."/home/po/Projects/omarchy"]
 trust_level = "trusted"
 
-[projects."/home/po/Dropbox/Cours/G03"]
+[projects."/home/po/Projects/sudomarchy"]
 trust_level = "trusted"
 
-[projects."/home/po/.config/hypr"]
+[projects."/home/po/.config/uwsm"]
 trust_level = "trusted"
 
 [projects."/home/po/bin"]
 trust_level = "trusted"
 
-[projects."/home/po/Work/sudomarchy"]
+[projects."/home/po"]
 trust_level = "trusted"
 
 [projects."/home/po/.local/share/omarchy"]
 trust_level = "trusted"
 
-[projects."/home/po/.config/BraveSoftware/Brave-Origin-Nightly"]
+[projects."/home/po/Dropbox/Cours/serveur-prof"]
 trust_level = "trusted"
 
-[projects."/home/po/Work/poll-app"]
+[projects."/home/po/Projects/poll-app.com"]
+trust_level = "trusted"
+
+[projects."/home/po/Projects/poll-app"]
+trust_level = "trusted"
+
+[projects."/home/po/Dropbox/Cours/SF4"]
+trust_level = "trusted"
+
+[projects."/home/po/Dropbox/Cours/G03"]
+trust_level = "trusted"
+
+[projects."/home/po/Dropbox/Pictures/Signature"]
+trust_level = "trusted"
+
+[projects."/home/po/.config"]
+trust_level = "trusted"
+
+[projects."/home/po/.config/hypr"]
+trust_level = "trusted"
+
+[projects."/home/po/Dropbox/Documents/CV"]
+trust_level = "trusted"
+
+[projects."/home/po/.config/xournalpp"]
+trust_level = "trusted"
+
+[projects."/home/po/Projects/omarchy-pkgs"]
 trust_level = "trusted"
 
 [projects."/home/po/Projects/waycal"]
 trust_level = "trusted"
 
+[projects."/home/po/Dropbox/Cours/G25"]
+trust_level = "trusted"
+
 [tui]
-terminal_title = ["status", "task-progress", "project"]
+notification_method = "osc9"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
 
-[notice.model_migrations]
-"gpt-5.4" = "gpt-5.6-terra"
+[features]
+js_repl = true
+use_linux_sandbox_bwrap = true
+multi_agent = true
+apps = true
+guardian_approval = true
+prevent_idle_sleep = true
+memories = true

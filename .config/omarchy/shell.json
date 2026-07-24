@@ -57,6 +57,9 @@
   "plugins": [
     {
       "id": "local.idle-power"
+    },
+    {
+      "id": "intemporel"
     }
   ],
   "version": 1
