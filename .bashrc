@@ -33,9 +33,16 @@ yca() {
 # Basic
 export CODEX_HOME="$HOME/.config/codex"
 
-alias c='codex --dangerously-bypass-approvals-and-sandbox'
+unalias c 2>/dev/null || true
+c() {
+  codex --dangerously-bypass-approvals-and-sandbox "$@"
+  local status=$?
+  printf '\a'
+  return "$status"
+}
 alias reload="source $HOME/.bashrc"
 alias y=yadm
+alias ylg='lazygit --work-tree="$HOME" --git-dir="$HOME/.local/share/yadm/repo.git"'
 alias z=zeditor
 alias lg=lazygit
 alias rm='trash'

@@ -4,10 +4,12 @@
     "layout": {
       "center": [
         {
+          "id": "local.clock",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "local.clock",
-          "verticalFormat": "HH\n—\nmm"
+          "verticalFormat": "HH\n—\nmm",
+          "birthYear": 1982,
+          "lifeExpectancy": 90
         },
         {
           "id": "omarchy.system-update"

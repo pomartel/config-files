@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Io
 import qs.Commons
 import qs.Ui
+import "Model.js" as Model
 
 BarWidget {
   id: root
@@ -11,9 +12,14 @@ BarWidget {
   property bool alt: false
   property date displayDate: clock.date
 
-  readonly property string activeFormat: alt
-    ? setting("formatAlt", "d MMMM 'W'ww yyyy")
-    : (bar && bar.vertical ? setting("verticalFormat", "HH\n—\nmm") : setting("format", "dddd HH:mm"))
+  readonly property string configuredFormat: root.vertical
+    ? setting("verticalFormat", "HH\n—\nmm")
+    : setting("format", "dddd HH:mm")
+  readonly property string configuredAltFormat: root.vertical
+    ? setting("verticalFormatAlt", "dd\nMMM\n'W'ww\n''yy")
+    : setting("formatAlt", "d MMMM 'W'ww yyyy")
+  readonly property var formatRing: Model.clockFormatRing(configuredFormat, configuredAltFormat, Model.clockFormats(root.vertical))
+  readonly property string activeFormat: configuredFormat
   readonly property string displayText: formatted(displayDate)
   readonly property var verticalLines: displayText.split("\n")
 
@@ -21,21 +27,21 @@ BarWidget {
     displayDate = new Date()
   }
 
-  function isoWeek(date) {
-    var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-    var day = d.getUTCDay() || 7
-    d.setUTCDate(d.getUTCDate() + 4 - day)
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
-    return Math.ceil(((d - yearStart) / 86400000 + 1) / 7)
-  }
+  function cycleFormat() {
+    var current = String(configuredFormat)
+    var next = Model.nextClockFormat(formatRing, current)
+    if (next === "" || next === current) return
 
-  function isoWeekLiteral(date) {
-    var week = isoWeek(date)
-    return (week < 10 ? "0" : "") + week
+    var entry = { id: root.moduleName }
+    for (var key in root.settings) if (key !== "id") entry[key] = root.settings[key]
+    entry[root.vertical ? "verticalFormat" : "format"] = next
+    root.settings = entry
+    if (root.bar && root.bar.shell && typeof root.bar.shell.updateEntryInline === "function")
+      root.bar.shell.updateEntryInline(root.moduleName, entry)
   }
 
   function formatted(date) {
-    return Qt.locale("fr_CA").toString(date, activeFormat.replace(/ww/g, isoWeekLiteral(date)))
+    return Qt.locale("fr_CA").toString(date, activeFormat.replace(/ww/g, Model.isoWeekLiteral(date.getFullYear(), date.getMonth(), date.getDate())))
   }
 
   implicitWidth: button.implicitWidth
@@ -64,7 +70,8 @@ BarWidget {
     verticalPadding: 8.75
     onPressed: function(button) {
       if (!root.bar) return
-      if (button === Qt.RightButton) root.bar.run("omarchy-menu-timezone")
+      if (button === Qt.RightButton) root.cycleFormat()
+      else if (button === Qt.MiddleButton) root.bar.run("omarchy-menu-timezone")
       else {
         var screenName = button.QsWindow && button.QsWindow.window && button.QsWindow.window.screen
           ? button.QsWindow.window.screen.name : ""

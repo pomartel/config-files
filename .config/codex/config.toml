@@ -67,6 +67,9 @@ trust_level = "trusted"
 [projects."/home/po/Dropbox/Cours/G25"]
 trust_level = "trusted"
 
+[projects."/home/po/Projects/intemporel"]
+trust_level = "trusted"
+
 [tui]
 notification_method = "osc9"
 
