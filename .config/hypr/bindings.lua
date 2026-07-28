@@ -35,7 +35,7 @@ local bindings = {
   { "SUPER + CTRL + ESCAPE", "Suspend system", "systemctl suspend", { locked = true } },
   { "SUPER + CTRL + ALT + ESCAPE", "Hibernate system", "systemctl hibernate", { locked = true } },
   { "SUPER + ALT + C", "Confettis animation", "confetti" },
-  { "SUPER + CTRL + D", "Calendar", [[omarchy-shell shell toggle intemporel '{"locale":"fr_CA"}']] },
+  { "SUPER + CTRL + D", "Calendar", "omarchy-shell shell toggle intemporel" },
   { "SUPER + CTRL + P", "HDMI Toggle (Projector)", "hdmi-toggle", { locked = true } },
 }
 
