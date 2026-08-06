@@ -26,6 +26,9 @@
           "id": "omarchy.tray"
         },
         {
+          "id": "omarchy.model-usage"
+        },
+        {
           "id": "omarchy.dropbox"
         },
         {
@@ -52,7 +55,7 @@
     "lock": 3600,
     "monitorOff": 600,
     "screensaver": 300,
-    "suspend": 7200
+    "suspend": 86400
   },
   "plugins": [
     {
@@ -62,5 +65,8 @@
       "id": "intemporel"
     }
   ],
-  "version": 1
+  "version": 1,
+  "disabledPlugins": [
+    "omarchy.idle"
+  ]
 }
