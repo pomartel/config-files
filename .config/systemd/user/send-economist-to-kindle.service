@@ -3,4 +3,5 @@ Description=Send The Economist to Kindle
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/nm-online --quiet --timeout=90
 ExecStart=%h/bin/send-economist-to-kindle
