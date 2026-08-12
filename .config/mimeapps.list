@@ -99,3 +99,4 @@ application/wps-office.dps=onlyoffice-desktopeditors.desktop
 application/wps-office.dpt=onlyoffice-desktopeditors.desktop
 application/x-hwp=onlyoffice-desktopeditors.desktop
 application/rtf=onlyoffice-desktopeditors.desktop
+x-scheme-handler/codex=chatgpt.desktop
