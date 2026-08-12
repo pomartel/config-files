@@ -1,0 +1,5 @@
+[yadm]
+	auto-exclude = true
+[filter "solaar-config"]
+	clean = sed '/^[[:space:]]*_config_cookie:/d'
+	smudge = cat
