@@ -1,6 +1,7 @@
 -- Personal startup commands, ported from autostart.conf.
 
 o.launch_on_start("solaar -w hide --restart-on-wake-up -b solaar")
+o.launch_on_start("hyprsunset")
 o.exec_on_start("sleep 3; uwsm-app -- 1password --silent")
 o.exec_on_start("hyprland-monitor-attached ~/bin/hypr-monitor-toggle ~/bin/hypr-monitor-toggle")
 
