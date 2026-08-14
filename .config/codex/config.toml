@@ -102,12 +102,12 @@ prevent_idle_sleep = true
 memories = true
 
 [marketplaces.openai-bundled]
-last_updated = "2026-08-12T14:21:00Z"
+last_updated = "2026-08-14T14:25:39Z"
 source_type = "local"
 source = "/home/po/.config/codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-08-12T14:22:05Z"
+last_updated = "2026-08-14T14:26:39Z"
 source_type = "local"
 source = "/home/po/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -172,3 +172,4 @@ NODE_REPL_TRUSTED_CODE_PATHS = "/home/po/.config/codex:/usr/lib/chatgpt/resource
 conversationDetailMode = "STEPS_COMMANDS"
 ambient-suggestions-enabled = true
 preventSleepWhileRunning = true
+followUpQueueMode = "queue"
