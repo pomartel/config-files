@@ -7,6 +7,7 @@
           "id": "intemporel",
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "locale": "fr_CA",
           "verticalFormat": "HH\n—\nmm"
         },
         {
