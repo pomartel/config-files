@@ -82,7 +82,11 @@ trust_level = "trusted"
 [projects."/home/po/Dropbox/Documents/Codex/2026-08-12/ad"]
 trust_level = "trusted"
 
+<<<<<<< HEAD
 [projects."/home/po/Dropbox/Cours/F03"]
+=======
+[projects."/home/po/.config/codex/Documents/Codex"]
+>>>>>>> a3247015 (config changes)
 trust_level = "trusted"
 
 [tui]
@@ -105,12 +109,20 @@ prevent_idle_sleep = true
 memories = true
 
 [marketplaces.openai-bundled]
+<<<<<<< HEAD
 last_updated = "2026-08-14T14:25:39Z"
+=======
+last_updated = "2026-08-13T01:00:02Z"
+>>>>>>> a3247015 (config changes)
 source_type = "local"
 source = "/home/po/.config/codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
+<<<<<<< HEAD
 last_updated = "2026-08-14T14:26:39Z"
+=======
+last_updated = "2026-08-12T20:24:32Z"
+>>>>>>> a3247015 (config changes)
 source_type = "local"
 source = "/home/po/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
