@@ -82,6 +82,9 @@ trust_level = "trusted"
 [projects."/home/po/Dropbox/Documents/Codex/2026-08-12/ad"]
 trust_level = "trusted"
 
+[projects."/home/po/Dropbox/Cours/F03"]
+trust_level = "trusted"
+
 [tui]
 notifications = ["agent-turn-complete"]
 notification_method = "osc9"
