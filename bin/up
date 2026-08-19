@@ -27,3 +27,5 @@ pull_repo() {
 pull_repo "$HOME/Install" ./INSTALL.sh
 pull_repo "$HOME/Projects/markdown"
 pull_repo "$HOME/Projects/sudomarchy"
+
+omarchy plugin update
