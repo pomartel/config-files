@@ -106,6 +106,11 @@ last_updated = "2026-08-12T20:24:32Z"
 source_type = "local"
 source = "/home/po/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-20T20:54:20Z"
+source_type = "local"
+source = "/home/po/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
 [plugins."sites@openai-bundled"]
 enabled = true
 
