@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Compatibility shim for Omarchy's agents widget. Codex 0.149 removed the
+# "untrusted" approval-policy name; its equivalent is now "never".
+args=("$@")
+for ((i = 0; i < ${#args[@]}; i++)); do
+  if [[ ${args[i]} == "untrusted" && $i -gt 0 && ( ${args[i - 1]} == "-a" || ${args[i - 1]} == "--ask-for-approval" ) ]]; then
+    args[i]="never"
+  elif [[ ${args[i]} == "--ask-for-approval=untrusted" ]]; then
+    args[i]="--ask-for-approval=never"
+  fi
+done
+
+codex_binary=$(mise which codex) || exit 1
+exec "$codex_binary" "${args[@]}"
