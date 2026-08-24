@@ -1,0 +1,5 @@
+[projects."/home/po"]
+trust_level = "trusted"
+
+[tui]
+terminal_title = ["app-name", "project-name", "activity"]
