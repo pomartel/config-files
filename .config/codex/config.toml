@@ -1,3 +1,6 @@
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
 [projects."/home/po"]
 trust_level = "trusted"
 
