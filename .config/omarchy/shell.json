@@ -28,25 +28,30 @@
       "right": [
         {
           "id": "io.github.tyrichards.tray",
+          "order": [
+            "1Password_status_icon_1",
+            "omarchy.agents",
+            "omarchy.dropbox"
+          ],
           "widgets": [
             {
               "entry": {
                 "id": "omarchy.dropbox"
               },
               "listed": true
+            },
+            {
+              "entry": {
+                "id": "omarchy.agents"
+              },
+              "listed": true
             }
           ],
-          "order": [
-            "1Password_status_icon_1",
-            "chrome_status_icon_1",
-            "omarchy.dropbox"
-          ]
+          "hidden": [],
+          "showTrayIcons": true
         },
         {
           "id": "io.github.aryan-techie.todoist"
-        },
-        {
-          "id": "omarchy.agents"
         },
         {
           "id": "omarchy.bluetooth"
@@ -83,6 +88,9 @@
     },
     {
       "id": "omarchy.dropbox"
+    },
+    {
+      "id": "omarchy.agents"
     }
   ],
   "version": 1,
