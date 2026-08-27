@@ -27,31 +27,16 @@
       ],
       "right": [
         {
-          "id": "io.github.tyrichards.tray",
-          "order": [
-            "1Password_status_icon_1",
-            "omarchy.agents",
-            "omarchy.dropbox"
-          ],
-          "widgets": [
-            {
-              "entry": {
-                "id": "omarchy.dropbox"
-              },
-              "listed": true
-            },
-            {
-              "entry": {
-                "id": "omarchy.agents"
-              },
-              "listed": true
-            }
-          ],
-          "hidden": [],
-          "showTrayIcons": true
+          "id": "omarchy.tray"
         },
         {
           "id": "io.github.aryan-techie.todoist"
+        },
+        {
+          "id": "omarchy.agents"
+        },
+        {
+          "id": "omarchy.dropbox"
         },
         {
           "id": "omarchy.bluetooth"
