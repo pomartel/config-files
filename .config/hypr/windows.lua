@@ -13,7 +13,7 @@ o.window("^(org.gnome.NautilusPreviewer)$", { size = { "monitor_w*0.6", "monitor
 
 o.window("^(brave-app.todoist.*)$", { tag = "+fixed-centered-floating-window" })
 o.window({ workspace = "special:ai" }, { tag = "+fixed-centered-floating-window" })
-o.window("^Spotify$", { workspace = "6" })
+o.window("^fastpotify$", { workspace = "6" })
 
 o.window({ title = "^(Mode.*PIP.*Picture-in-Picture|.*Picture.?in.?[Pp]icture.*)$" }, { tag = "+pip" })
 o.window({ tag = "pip" }, { move = { "monitor_w-window_w-20", "monitor_h-window_h-20" } })

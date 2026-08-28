@@ -34,7 +34,7 @@
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button, Mouse Up]
-    - Execute: [omarchy-launch-or-focus, spotify]
+    - Execute: [omarchy-launch-or-focus, fastpotify]
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button]

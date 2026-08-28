@@ -1,6 +1,6 @@
 local bindings = {
-  { "SUPER + RETURN",        "Terminal",                [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)"]] },
-  { "SUPER + ALT + RETURN",              "Tmux",                    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]] },
+  { "SUPER + RETURN",              "Terminal",                [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)"]] },
+  { "SUPER + ALT + RETURN",        "Tmux",                    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]] },
   { "SUPER + SHIFT + RETURN",      "Browser",                 "omarchy-launch-browser" },
 
   { "SUPER + SHIFT + A",           "ChatGPT",                 "omarchy-launch-or-focus '^chatgpt$' chatgpt" },
@@ -18,8 +18,8 @@ local bindings = {
   { "SUPER + SHIFT + CTRL + G",    "WhatsApp",                "omarchy-launch-or-focus-webapp brave-web.whatsapp https://web.whatsapp.com/ --profile-directory=Default" },
   { "SUPER + SHIFT + L",           "Calibre",                 "gtk-launch calibre-gui" },
   { "SUPER + SHIFT + N",           "Neovim",                  "omarchy-launch-editor" },
-  { "SUPER + SHIFT + M",           "Music (Spotify)",         "omarchy-launch-or-focus spotify" },
-  { "SUPER + SHIFT + ALT + M",     "Music TUI",               "omarchy-launch-or-focus-tui cliamp" },
+  { "SUPER + SHIFT + M",           "Music (Fastpotify)",      "omarchy-launch-or-focus fastpotify" },
+  { "SUPER + SHIFT + ALT + M",     "Music (Cliamp)",          "omarchy-launch-or-focus-tui cliamp" },
   { "SUPER + SHIFT + O",           "Only Office",             [[omarchy-launch-or-focus "^ONLYOFFICE$" "gtk-launch onlyoffice-desktopeditors"]] },
   { "SUPER + SHIFT + ALT + O",     "Obsidian",                [[omarchy-launch-or-focus "^obsidian$" "uwsm-app -- obsidian"]] },
   { "SUPER + SHIFT + P",           "Apple Photos",            "omarchy-launch-or-focus-webapp brave-www.icloud https://www.icloud.com/photos/ --profile-directory=Default" },
