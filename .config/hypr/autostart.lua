@@ -17,7 +17,7 @@ end)
 
 hl.on("hyprland.start", function()
   hl.dispatch(hl.dsp.exec_cmd(
-    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]],
+    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)"]],
     { workspace = "2 silent" }
   ))
 end)
