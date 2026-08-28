@@ -10,7 +10,7 @@ hl.exec_cmd("hypr-monitor-toggle")
 
 hl.on("hyprland.start", function()
   hl.dispatch(hl.dsp.exec_cmd(
-    "uwsm-app -- omarchy-launch-browser",
+    "sleep 2; uwsm-app -- omarchy-launch-browser",
     { workspace = "1 silent" }
   ))
 end)
