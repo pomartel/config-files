@@ -27,7 +27,7 @@ local bindings = {
   { "SUPER + SHIFT + CTRL + T",    "Todoist",                 "toggle-special-workspace todos && omarchy-launch-or-focus-webapp brave-app.todoist https://app.todoist.com/app/ --profile-directory=Default" },
   { "SUPER + SHIFT + ALT + T",     "Apple reminders",         "omarchy-launch-or-focus-webapp brave-www.icloud https://www.icloud.com/reminders/ --profile-directory=Default" },
   { "SUPER + SHIFT + W",           "Typora",                  [[omarchy-launch-or-focus ^Typora$ "uwsm-app -- typora --enable-wayland-ime"]] },
-  { "SUPER + SHIFT + Y",           "YouTube",                 "omarchy-launch-or-focus-webapp brave-youtube https://youtube.com/ --profile-directory=Default" },
+  { "SUPER + SHIFT + Y",           "Yadm plugin",             "omarchy-shell shell toggle qs-yadm" },
   { "SUPER + SHIFT + ALT + Y",     "Netflix",                 "omarchy-launch-or-focus-webapp brave-www.netflix https://www.netflix.com/browse --profile-directory=Default" },
   { "SUPER + SHIFT + X",           "1Password",               "uwsm-app -- 1password" },
   { "SUPER + SHIFT + Z",           "Zed Editor",              "gtk-launch dev.zed.Zed" },
@@ -37,7 +37,6 @@ local bindings = {
   { "SUPER + ALT + C",             "Confettis animation",     "confetti" },
   { "SUPER + CTRL + D",            "Calendar",                "omarchy-shell shell toggle intemporel" },
   { "SUPER + CTRL + P",            "HDMI Toggle (Projector)", "hdmi-toggle",                                                                                                                                          { locked = true } },
-  { "SUPER + CTRL + Y",            "Yadm plugin",             "omarchy-shell shell toggle qs-yadm" },
 }
 
 for _, binding in ipairs(bindings) do
