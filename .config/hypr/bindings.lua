@@ -37,7 +37,7 @@ local bindings = {
   { "SUPER + ALT + C",             "Confettis animation",     "confetti" },
   { "SUPER + CTRL + D",            "Calendar",                "omarchy-shell shell toggle intemporel" },
   { "SUPER + CTRL + P",            "HDMI Toggle (Projector)", "hdmi-toggle",                                                                                                                                          { locked = true } },
-  { "SUPER + CTRL + Y",            "Yadm plugin",             "omarchy-shell shell toggle qs-yadm" },
+  { "SUPER + CTRL + Y",            "Yadm",                    "omarchy-shell shell toggle qs-yadm" },
 }
 
 for _, binding in ipairs(bindings) do
