@@ -7,7 +7,8 @@ local bindings = {
   { "SUPER + SHIFT + B",           "Browser",                 "omarchy-launch-browser --profile-directory=Default" },
   { "SUPER + SHIFT + ALT + B",     "Browser (school)",        "omarchy-launch-browser --profile-directory=School" },
   { "SUPER + SHIFT + CTRL + B",    "Browser (private)",       "omarchy-launch-browser --private" },
-  { "SUPER + SHIFT + C",           "Calendar Pouding",        "omarchy-launch-or-focus-webapp brave-calendar https://calendar.google.com/calendar/u/0/r --profile-directory=Default" },
+  { "SUPER + SHIFT + C",           "Calendar plugin",         "omarchy-shell shell toggle intemporel" },
+  { "SUPER + SHIFT + CTRL + C",    "Calendar Pouding",        "omarchy-launch-or-focus-webapp brave-calendar https://calendar.google.com/calendar/u/0/r --profile-directory=Default" },
   { "SUPER + SHIFT + ALT + C",     "Calendar Rosemont",       [[omarchy-launch-or-focus-webapp "Agenda - Pierre Olivier Martel - Outlook" https://outlook.office.com/calendar/view/month --profile-directory=School]] },
   { "SUPER + SHIFT + E",           "Email Pouding",           "omarchy-launch-or-focus-webapp brave-mail https://mail.google.com/mail/u/0/ --profile-directory=Default" },
   { "SUPER + SHIFT + ALT + E",     "Email Rosemont",          [[omarchy-launch-or-focus-webapp "Courriel - Pierre Olivier Martel - Outlook" https://outlook.office.com/mail/ --profile-directory=School]] },
@@ -19,7 +20,6 @@ local bindings = {
   { "SUPER + SHIFT + L",           "Calibre",                 "gtk-launch calibre-gui" },
   { "SUPER + SHIFT + N",           "Neovim",                  "omarchy-launch-editor" },
   { "SUPER + SHIFT + M",           "Music (Fastpotify)",      "omarchy-launch-or-focus fastpotify" },
-  { "SUPER + SHIFT + ALT + M",     "Music (Cliamp)",          "omarchy-launch-or-focus-tui cliamp" },
   { "SUPER + SHIFT + O",           "Only Office",             [[omarchy-launch-or-focus "^ONLYOFFICE$" "gtk-launch onlyoffice-desktopeditors"]] },
   { "SUPER + SHIFT + ALT + O",     "Obsidian",                [[omarchy-launch-or-focus "^obsidian$" "uwsm-app -- obsidian"]] },
   { "SUPER + SHIFT + P",           "Apple Photos",            "omarchy-launch-or-focus-webapp brave-www.icloud https://www.icloud.com/photos/ --profile-directory=Default" },
@@ -35,7 +35,6 @@ local bindings = {
   { "SUPER + CTRL + ESCAPE",       "Suspend system",          "systemctl suspend",                                                                                                                                    { locked = true } },
   { "SUPER + CTRL + ALT + ESCAPE", "Hibernate system",        "systemctl hibernate",                                                                                                                                  { locked = true } },
   { "SUPER + ALT + C",             "Confettis animation",     "confetti" },
-  { "SUPER + CTRL + D",            "Calendar",                "omarchy-shell shell toggle intemporel" },
   { "SUPER + CTRL + P",            "HDMI Toggle (Projector)", "hdmi-toggle",                                                                                                                                          { locked = true } },
 }
 
