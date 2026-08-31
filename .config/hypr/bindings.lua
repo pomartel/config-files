@@ -3,7 +3,7 @@ local bindings = {
   { "SUPER + ALT + RETURN",        "Tmux",                    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]] },
   { "SUPER + SHIFT + RETURN",      "Browser",                 "omarchy-launch-browser" },
 
-  { "SUPER + SHIFT + A",           "ChatGPT",                 "omarchy-launch-or-focus '^chatgpt$' chatgpt" },
+  { "SUPER + SHIFT + A",           "ChatGPT",                 "omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/ --profile-directory=Default" },
   { "SUPER + SHIFT + B",           "Browser",                 "omarchy-launch-browser --profile-directory=Default" },
   { "SUPER + SHIFT + ALT + B",     "Browser (school)",        "omarchy-launch-browser --profile-directory=School" },
   { "SUPER + SHIFT + CTRL + B",    "Browser (private)",       "omarchy-launch-browser --private" },
@@ -37,6 +37,7 @@ local bindings = {
   { "SUPER + ALT + C",             "Confettis animation",     "confetti" },
   { "SUPER + CTRL + D",            "Calendar",                "omarchy-shell shell toggle intemporel" },
   { "SUPER + CTRL + P",            "HDMI Toggle (Projector)", "hdmi-toggle",                                                                                                                                          { locked = true } },
+  { "SUPER + CTRL + Y",            "Yadm",                    "omarchy-shell shell toggle qs-yadm" },
 }
 
 for _, binding in ipairs(bindings) do
@@ -49,4 +50,3 @@ o.bind("SUPER + Q", "Close active window", hl.dsp.window.close())
 
 hl.unbind("SUPER + W")
 o.bind("SUPER + W", "Send SUPER+W to CTRL+W", hl.dsp.send_shortcut({ mods = "CTRL", key = "W", window = "activewindow" }))
-o.bind("CTRL + SUPER + Y", "Toggle Todoist", "omarchy-shell shell toggle io.github.aryan-techie.todoist")
