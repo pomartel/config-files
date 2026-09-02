@@ -29,7 +29,6 @@ local bindings = {
   { "SUPER + SHIFT + W",           "Typora",                  [[omarchy-launch-or-focus ^Typora$ "uwsm-app -- typora --enable-wayland-ime"]] },
   { "SUPER + SHIFT + ALT + W",     "Omawrite",                "omarchy-launch-or-focus omawrite" },
   { "SUPER + SHIFT + Y",           "Yadm plugin",             "omarchy-shell shell toggle qs-yadm" },
-  { "SUPER + SHIFT + ALT + Y",     "Netflix",                 "omarchy-launch-or-focus-webapp brave-www.netflix https://www.netflix.com/browse --profile-directory=Default" },
   { "SUPER + SHIFT + X",           "1Password",               "uwsm-app -- 1password" },
   { "SUPER + SHIFT + Z",           "Zed Editor",              "gtk-launch dev.zed.Zed" },
 
