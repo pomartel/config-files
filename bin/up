@@ -1,12 +1,5 @@
 #!/bin/bash
 
-echo "Pulling yadm..."
-cd ~ || exit
-if ! yadm pull; then
-  echo -e "\033[31mFailed to pull yadm\033[0m"
-  exit 1
-fi
-
 pull_repo() {
   local path="$1"
   shift
