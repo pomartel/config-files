@@ -2,3 +2,6 @@
 
 # Add user scripts to PATH.
 export PATH="$HOME/bin:$PATH"
+
+# Keep Codex configuration and session history under XDG config.
+export CODEX_HOME="$HOME/.config/codex"
