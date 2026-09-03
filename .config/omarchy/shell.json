@@ -70,7 +70,7 @@
   },
   "plugins": [
     {
-      "id": "local.idle-power"
+      "id": "idle-power"
     },
     {
       "id": "intemporel"
