@@ -1,16 +1,60 @@
 #!/bin/bash
 set -euo pipefail
 
-today="$(date +%F)"
-epub="$HOME/Dropbox/Books/Economist/the-economist-$today.epub"
+download_only=false
+case "${1:-}" in
+  "") ;;
+  --download-only) download_only=true ;;
+  *)
+    echo "Usage: $0 [--download-only]" >&2
+    exit 2
+    ;;
+esac
+
+# Find the newest issue currently present instead of assuming that the next
+# Saturday's edition has already been uploaded.
+repository_contents="$(
+  curl \
+    --fail \
+    --location \
+    --retry 3 \
+    --retry-all-errors \
+    --silent \
+    --show-error \
+    'https://api.github.com/repos/hehonghui/awesome-english-ebooks/contents/01_economist?ref=master'
+)"
+issue_slug="$(
+  jq --exit-status --raw-output \
+    '[.[] | select(.type == "dir") | .name | select(test("^te_[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}$"))] | max | sub("^te_"; "")' \
+    <<< "$repository_contents"
+)"
+issue_date="${issue_slug//./-}"
+epub="$HOME/Dropbox/Books/Economist/the-economist-$issue_date.epub"
+source_url="https://raw.githubusercontent.com/hehonghui/awesome-english-ebooks/master/01_economist/te_$issue_slug/TheEconomist.$issue_slug.epub"
+partial="$epub.part"
 
 mkdir -p "$(dirname "$epub")"
+trap 'rm -f "$partial"' EXIT
 
-# Calibre has duplicate builtin recipes with this display name; this selector
-# currently resolves to economist_free, which is the working weekly edition.
-ebook-convert \
-  "The Economist.recipe" \
-  "$epub"
+echo "Downloading The Economist $issue_date from GitHub..."
+curl \
+  --fail \
+  --location \
+  --retry 3 \
+  --retry-all-errors \
+  --show-error \
+  --output "$partial" \
+  "$source_url"
+
+unzip -tqq "$partial"
+mv "$partial" "$epub"
+trap - EXIT
+
+echo "Saved $epub"
+
+if [[ "$download_only" == true ]]; then
+  exit 0
+fi
 
 calibre-smtp \
   --relay "email-smtp.us-east-1.amazonaws.com" \
@@ -18,7 +62,7 @@ calibre-smtp \
   --username "$SES_SMTP_USERNAME" \
   --password "$SES_SMTP_PASSWORD" \
   --encryption-method "TLS" \
-  --subject "The Economist $today" \
+  --subject "The Economist $issue_date" \
   --attachment "$epub" \
   "pomartel@coderubik.com" \
   "monkindleamoi@kindle.com" \
