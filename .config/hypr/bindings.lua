@@ -3,7 +3,8 @@ local bindings = {
   { "SUPER + ALT + RETURN",        "Tmux",                    [[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" tmux]] },
   { "SUPER + SHIFT + RETURN",      "Browser",                 "omarchy-launch-or-focus brave-origin omarchy-launch-browser" },
 
-  { "SUPER + SHIFT + A",           "ChatGPT",                 "omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/" },
+  { "SUPER + SHIFT + A",           "ChatGPT scratchpad",      "toggle-special-workspace ai && omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/" },
+  { "SUPER + SHIFT + ALT + A",     "ChatGPT",                 "omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/" },
   { "SUPER + SHIFT + B",           "Browser",                 "omarchy-launch-or-focus brave-origin omarchy-launch-browser" },
   { "SUPER + SHIFT + ALT + B",     "Browser (school)",        "omarchy-launch-or-focus brave-origin omarchy-launch-browser" },
   { "SUPER + SHIFT + CTRL + B",    "Browser (private)",       "omarchy-launch-browser --private" },
