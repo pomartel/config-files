@@ -9,23 +9,11 @@ trust_level = "trusted"
 [projects."/home/po/Downloads"]
 trust_level = "trusted"
 
-[projects."/home/po/Dropbox/Documents/Codex/2026-08-27/quel-est-le-format-de-l"]
-trust_level = "trusted"
-
 [projects."/home/po/Dropbox/Cours/SF1"]
 trust_level = "trusted"
 
-[projects."/home/po/Dropbox/Cours/SF1/2 - Réseaux et résolution de problèmes"]
-trust_level = "trusted"
-
-[projects."/home/po/Dropbox/Cours/SF1/2 - Algorithmie et résolution de problèmes"]
-trust_level = "trusted"
-
-[projects."/home/po/Projects/intemporel"]
-trust_level = "trusted"
-
 [tui]
-terminal_title = ["app-name", "project-name", "activity"]
+terminal_title = ["activity", "project-name", "thread-title"]
 
 [marketplaces.openai-bundled]
 source_type = "local"
