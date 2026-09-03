@@ -30,7 +30,7 @@
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button, Mouse Down]
-    - Execute: [hyprctl, dispatch, "hl.dsp.window.close()"]
+    - Execute: [/home/po/bin/solaar/close-tab-or-window]
 - Rule:
     - Device: MX Master 4
     - MouseGesture: [Mouse Gesture Button, Mouse Up]

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+window_class="$(hyprctl activewindow -j | jq -r '.class // ""' | tr '[:upper:]' '[:lower:]')"
+
+case "$window_class" in
+  *brave* | *chromium* | *chrome* | *firefox* | *librewolf* | *zen* | *vivaldi* | *opera* | *microsoft-edge* | *thorium* | *qutebrowser*)
+    wtype -M ctrl -k w -m ctrl
+    ;;
+  *)
+    hyprctl dispatch "hl.dsp.window.close()" >/dev/null
+    ;;
+esac
