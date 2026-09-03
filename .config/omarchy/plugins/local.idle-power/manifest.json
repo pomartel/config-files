@@ -3,7 +3,7 @@
   "id": "local.idle-power",
   "name": "Idle Power",
   "version": "1.3.0",
-  "author": "Omarchy",
+  "author": "Pierre Olivier Martel",
   "description": "Configurable screensaver, monitor power-off, and suspend service without idle locking.",
   "kinds": [
     "service"
