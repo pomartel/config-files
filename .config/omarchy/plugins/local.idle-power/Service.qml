@@ -32,7 +32,9 @@ Item {
   property bool stayAwakeStateLoaded: false
   property bool idledThisCycle: false
   property bool screensaverStartedThisCycle: false
+  property bool screensaverStopExpected: false
   property bool monitorsOffThisCycle: false
+  property bool monitorWakeArmed: false
   property bool monitorWakePending: false
   property bool suspendRequestedThisCycle: false
   property double idleCycleStartedAt: 0
@@ -100,20 +102,38 @@ Item {
     screensaverProcess.running = true
   }
 
+  function stopScreensaver(reason) {
+    if (!root.screensaverStartedThisCycle || screensaverStopProcess.running) return
+
+    root.screensaverStopExpected = true
+    screensaverStopGraceTimer.restart()
+    logEvent("screensaver-stop-requested", reason || "monitor-off")
+    screensaverStopProcess.command = [
+      "bash", "-lc",
+      "pkill -x ttfx 2>/dev/null || true; timeout 1s pidwait -x ttfx 2>/dev/null || true; pkill -f '[o]rg.omarchy.screensaver' 2>/dev/null || true"
+    ]
+    screensaverStopProcess.running = true
+  }
+
   function turnOffMonitors(reason) {
     if (!root.idleEnabled || !root.idledThisCycle || root.monitorsOffThisCycle || root.suspendRequestedThisCycle) return
 
     root.monitorsOffThisCycle = true
+    root.monitorWakeArmed = false
     monitorOffTimer.stop()
     logEvent("monitors-off-requested", reason || "timeout")
     monitorOffProcess.command = ["omarchy-brightness-display", "off"]
     monitorOffProcess.running = true
+    stopScreensaver("monitor-off")
   }
 
   function wakeMonitors(reason) {
     if (!root.monitorsOffThisCycle) return
 
     root.monitorsOffThisCycle = false
+    root.monitorWakeArmed = false
+    root.screensaverStopExpected = false
+    screensaverStopGraceTimer.stop()
     logEvent("monitors-wake-requested", reason || "idle-cycle-cancel")
     if (monitorOffProcess.running) {
       root.monitorWakePending = true
@@ -133,7 +153,9 @@ Item {
 
     root.idledThisCycle = true
     root.screensaverStartedThisCycle = false
+    root.screensaverStopExpected = false
     root.monitorsOffThisCycle = false
+    root.monitorWakeArmed = false
     root.suspendRequestedThisCycle = false
     root.suspendRequestedAt = 0
     // IdleMonitor fires after firstIdleTimeoutSeconds, so reconstruct the
@@ -158,9 +180,12 @@ Item {
     monitorOffTimer.stop()
     suspendTimer.stop()
     screensaverLaunchGraceTimer.stop()
+    screensaverStopGraceTimer.stop()
     suspendRequestGuardTimer.stop()
     root.idledThisCycle = false
     root.screensaverStartedThisCycle = false
+    root.screensaverStopExpected = false
+    root.monitorWakeArmed = false
     root.suspendRequestedThisCycle = false
     root.idleCycleStartedAt = 0
     root.suspendRequestedAt = 0
@@ -186,6 +211,10 @@ Item {
 
   function handleScreensaverWindowClosed(address) {
     setScreensaverWindow(address, false)
+    if (root.screensaverStopExpected) {
+      if (root.screensaverWindowCount === 0) root.screensaverStartedThisCycle = false
+      return
+    }
     if (!root.idleEnabled || !root.idledThisCycle || !root.screensaverStartedThisCycle || root.screensaverWindowCount > 0) return
     if (root.suspendRequestedThisCycle) return
 
@@ -213,6 +242,10 @@ Item {
 
   function handleActiveSignal() {
     if (!root.idledThisCycle) return
+
+    // Closing the screensaver after DPMS-off can produce an active signal.
+    // The dedicated monitorWakeMonitor handles real activity from this point.
+    if (root.monitorsOffThisCycle) return
 
     if (root.suspendRequestedThisCycle) {
       if (Date.now() - root.suspendRequestedAt < suspendRequestGuardTimer.interval) {
@@ -264,7 +297,9 @@ Item {
       idle: idleMonitor.isIdle,
       inIdleCycle: root.idledThisCycle,
       screensaverStarted: root.screensaverStartedThisCycle,
+      screensaverStopExpected: root.screensaverStopExpected,
       monitorsOff: root.monitorsOffThisCycle,
+      monitorWakeArmed: root.monitorWakeArmed,
       monitorWakePending: root.monitorWakePending,
       suspendRequested: root.suspendRequestedThisCycle,
       screensaver: root.screensaverTimeoutSeconds,
@@ -280,11 +315,15 @@ Item {
         monitorOff: monitorOffTimer.running,
         suspend: suspendTimer.running,
         screensaverLaunchGrace: screensaverLaunchGraceTimer.running,
+        screensaverStopGrace: screensaverStopGraceTimer.running,
         suspendRequestGuard: suspendRequestGuardTimer.running
       },
       processes: {
         screensaver: {
           running: screensaverProcess.running
+        },
+        screensaverStop: {
+          running: screensaverStopProcess.running
         },
         monitorOff: {
           running: monitorOffProcess.running,
@@ -313,6 +352,21 @@ Item {
     timeout: root.firstIdleTimeoutSeconds
     respectInhibitors: true
     onIsIdleChanged: root.handleIdleChanged()
+  }
+
+  IdleMonitor {
+    id: monitorWakeMonitor
+    enabled: root.idleEnabled && root.monitorsOffThisCycle
+    timeout: 1
+    respectInhibitors: false
+    onIsIdleChanged: {
+      if (!enabled) return
+      if (isIdle) {
+        root.monitorWakeArmed = true
+      } else if (root.monitorWakeArmed) {
+        root.cancelIdleCycle("activity-after-monitor-off")
+      }
+    }
   }
 
   Timer {
@@ -347,6 +401,13 @@ Item {
   }
 
   Timer {
+    id: screensaverStopGraceTimer
+    interval: 3000
+    repeat: false
+    onTriggered: root.screensaverStopExpected = false
+  }
+
+  Timer {
     id: suspendRequestGuardTimer
     interval: 10000
     repeat: false
@@ -367,6 +428,13 @@ Item {
     id: screensaverProcess
     onExited: function(exitCode, exitStatus) {
       root.logEvent("screensaver-process-exit", "exitCode=" + exitCode + " status=" + exitStatus)
+    }
+  }
+
+  Process {
+    id: screensaverStopProcess
+    onExited: function(exitCode, exitStatus) {
+      root.logEvent("screensaver-stop-process-exit", "exitCode=" + exitCode + " status=" + exitStatus)
     }
   }
 
