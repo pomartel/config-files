@@ -18,8 +18,12 @@ pull_repo() {
 }
 
 pull_repo "$HOME/Install" ./INSTALL.sh
-pull_repo "$HOME/Projects/markdown"
-pull_repo "$HOME/Projects/sudomarchy"
+
+while IFS= read -r -d '' repo; do
+  if git -C "$repo" rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    pull_repo "$repo"
+  fi
+done < <(find "$HOME/Projects" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 
 echo
 omarchy plugin update
