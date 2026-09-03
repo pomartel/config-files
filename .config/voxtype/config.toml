@@ -6,7 +6,7 @@
 # Transcription engine: "whisper" (default) or "parakeet"
 # Whisper: whisper.cpp via whisper-rs (most compatible)
 # Parakeet: NVIDIA FastConformer via ONNX Runtime (requires --features parakeet)
-# engine = "whisper"
+engine = "whisper"
 
 # State file for external integrations (Waybar, polybar, etc.)
 # Use "auto" for default location ($XDG_RUNTIME_DIR/voxtype/state),
@@ -69,13 +69,13 @@ volume = 1
 # Execution mode: "local" (default) or "remote"
 # - local: Use whisper.cpp locally via FFI
 # - remote: Send audio to OpenAI-compatible API endpoint
-mode = "remote"
+mode = "local"
 
 # Model to use for transcription (local mode)
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # Or provide absolute path to a custom .bin model file
-model = "gpt-4o-transcribe"
+model = "large-v3-turbo"
 
 # Language for transcription
 # Use "en" for English, "auto" for auto-detection
