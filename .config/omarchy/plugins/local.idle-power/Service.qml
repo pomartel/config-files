@@ -22,6 +22,7 @@ Item {
   readonly property int monitorOffTimeoutSeconds: secondsFromConfig(idleConfig.monitorOff, defaultMonitorOffSeconds)
   readonly property int suspendTimeoutSeconds: secondsFromConfig(idleConfig.suspend, defaultSuspendSeconds)
   readonly property int firstIdleTimeoutSeconds: Math.min(screensaverTimeoutSeconds, monitorOffTimeoutSeconds, suspendTimeoutSeconds)
+  readonly property int screensaverDelaySeconds: Math.max(0, screensaverTimeoutSeconds - firstIdleTimeoutSeconds)
   readonly property int monitorOffDelaySeconds: Math.max(0, monitorOffTimeoutSeconds - firstIdleTimeoutSeconds)
   readonly property int suspendDelaySeconds: Math.max(0, suspendTimeoutSeconds - firstIdleTimeoutSeconds)
   readonly property bool idleEnabled: stayAwakeStateLoaded && !stayAwake
@@ -30,6 +31,7 @@ Item {
   property bool stayAwake: false
   property bool stayAwakeStateLoaded: false
   property bool idledThisCycle: false
+  property bool screensaverStartedThisCycle: false
   property bool monitorsOffThisCycle: false
   property bool monitorWakePending: false
   property bool suspendRequestedThisCycle: false
@@ -87,6 +89,17 @@ Item {
     suspendProcess.running = true
   }
 
+  function launchScreensaver(reason) {
+    if (!root.idleEnabled || !root.idledThisCycle || root.screensaverStartedThisCycle || root.suspendRequestedThisCycle) return
+
+    root.screensaverStartedThisCycle = true
+    screensaverTimer.stop()
+    screensaverLaunchGraceTimer.restart()
+    logEvent("screensaver-requested", reason || "timeout")
+    screensaverProcess.command = ["bash", "-lc", "[[ $(omarchy-shell lock isLocked 2>/dev/null) == \"true\" ]] || omarchy-launch-screensaver"]
+    screensaverProcess.running = true
+  }
+
   function turnOffMonitors(reason) {
     if (!root.idleEnabled || !root.idledThisCycle || root.monitorsOffThisCycle || root.suspendRequestedThisCycle) return
 
@@ -119,6 +132,7 @@ Item {
     if (root.idledThisCycle) return
 
     root.idledThisCycle = true
+    root.screensaverStartedThisCycle = false
     root.monitorsOffThisCycle = false
     root.suspendRequestedThisCycle = false
     root.suspendRequestedAt = 0
@@ -128,22 +142,25 @@ Item {
     resetScreensaverWindows()
     logEvent("idle-cycle-start", "screensaver=" + root.screensaverTimeoutSeconds + " monitorOff=" + root.monitorOffTimeoutSeconds + " suspend=" + root.suspendTimeoutSeconds)
 
+    if (root.screensaverDelaySeconds === 0) launchScreensaver("screensaver-timeout-immediate")
+    else screensaverTimer.restart()
+
     if (root.monitorOffDelaySeconds === 0) turnOffMonitors("monitor-timeout-immediate")
     else monitorOffTimer.restart()
 
     if (root.suspendDelaySeconds === 0) requestSuspend("suspend-timeout-immediate")
     else suspendTimer.restart()
-    if (root.firstIdleTimeoutSeconds === root.screensaverTimeoutSeconds)
-      screensaverLaunchGraceTimer.restart()
   }
 
   function cancelIdleCycle(reason) {
     logEvent("idle-cycle-cancel", reason || "requested")
+    screensaverTimer.stop()
     monitorOffTimer.stop()
     suspendTimer.stop()
     screensaverLaunchGraceTimer.stop()
     suspendRequestGuardTimer.stop()
     root.idledThisCycle = false
+    root.screensaverStartedThisCycle = false
     root.suspendRequestedThisCycle = false
     root.idleCycleStartedAt = 0
     root.suspendRequestedAt = 0
@@ -169,11 +186,11 @@ Item {
 
   function handleScreensaverWindowClosed(address) {
     setScreensaverWindow(address, false)
-    if (!root.idleEnabled || !root.idledThisCycle || root.screensaverWindowCount > 0) return
+    if (!root.idleEnabled || !root.idledThisCycle || !root.screensaverStartedThisCycle || root.screensaverWindowCount > 0) return
     if (root.suspendRequestedThisCycle) return
 
-    // At a shared lock/suspend deadline the built-in lock service may close
-    // the screensaver just before this plugin's Timer event is delivered.
+    // The screensaver may close just before this plugin's suspend Timer event
+    // is delivered, so preserve the deadline when both events coincide.
     if (atSuspendDeadline()) requestSuspend("deadline-during-screensaver-close")
     else cancelIdleCycle("screensaver-dismissed")
   }
@@ -206,8 +223,8 @@ Item {
       return
     }
 
-    // The built-in idle service launches the screensaver at the same first
-    // timeout. Its window can make the compositor report synthetic activity.
+    // Launching the screensaver can make the compositor report synthetic
+    // activity. Keep the idle cycle armed while its window is present.
     if (root.screensaverWindowCount > 0 || screensaverLaunchGraceTimer.running) {
       logEvent("idle-monitor-active", "screensaver cycle remains armed")
       return
@@ -246,23 +263,29 @@ Item {
       stayAwake: root.stayAwake,
       idle: idleMonitor.isIdle,
       inIdleCycle: root.idledThisCycle,
+      screensaverStarted: root.screensaverStartedThisCycle,
       monitorsOff: root.monitorsOffThisCycle,
       monitorWakePending: root.monitorWakePending,
       suspendRequested: root.suspendRequestedThisCycle,
       screensaver: root.screensaverTimeoutSeconds,
       monitorOff: root.monitorOffTimeoutSeconds,
       suspend: root.suspendTimeoutSeconds,
+      screensaverDelay: root.screensaverDelaySeconds,
       monitorOffDelay: root.monitorOffDelaySeconds,
       suspendDelay: root.suspendDelaySeconds,
       elapsedIdle: Math.floor(root.elapsedIdleSeconds()),
       screensaverWindows: root.screensaverWindowCount,
       timers: {
+        screensaver: screensaverTimer.running,
         monitorOff: monitorOffTimer.running,
         suspend: suspendTimer.running,
         screensaverLaunchGrace: screensaverLaunchGraceTimer.running,
         suspendRequestGuard: suspendRequestGuardTimer.running
       },
       processes: {
+        screensaver: {
+          running: screensaverProcess.running
+        },
         monitorOff: {
           running: monitorOffProcess.running,
           lastExitCode: root.lastMonitorOffExitCode,
@@ -290,6 +313,13 @@ Item {
     timeout: root.firstIdleTimeoutSeconds
     respectInhibitors: true
     onIsIdleChanged: root.handleIdleChanged()
+  }
+
+  Timer {
+    id: screensaverTimer
+    interval: root.screensaverDelaySeconds * 1000
+    repeat: false
+    onTriggered: root.launchScreensaver("screensaver-timeout")
   }
 
   Timer {
@@ -331,6 +361,13 @@ Item {
   Connections {
     target: Hyprland
     function onRawEvent(event) { root.handleHyprlandEvent(event) }
+  }
+
+  Process {
+    id: screensaverProcess
+    onExited: function(exitCode, exitStatus) {
+      root.logEvent("screensaver-process-exit", "exitCode=" + exitCode + " status=" + exitStatus)
+    }
   }
 
   Process {

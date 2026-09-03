@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "local.idle-power",
   "name": "Idle Power",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Omarchy",
-  "description": "Configurable monitor power-off and suspend service that cooperates with Omarchy's built-in idle and lock services.",
+  "description": "Configurable screensaver, monitor power-off, and suspend service without idle locking.",
   "kinds": [
     "service"
   ],

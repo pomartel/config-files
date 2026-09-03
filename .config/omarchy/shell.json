@@ -64,8 +64,7 @@
     "transparent": false
   },
   "idle": {
-    "lock": 3600,
-    "monitorOff": 600,
+    "monitorOff": 1200,
     "screensaver": 300,
     "suspend": 86400
   },

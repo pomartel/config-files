@@ -4,6 +4,6 @@ Cloned from `omarchy.idle`.
 
 Source: `/usr/share/omarchy/shell/plugins/services/idle`
 
-This local service adds configurable monitor power-off and suspend deadlines.
-The original idle service remains built into Omarchy and continues to own the
-screensaver and lock behavior.
+This local service owns configurable screensaver, monitor power-off, and
+suspend deadlines. It intentionally omits idle locking, so `omarchy.idle`
+remains disabled while this replacement service is active.
