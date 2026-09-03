@@ -11,5 +11,6 @@ o.window("^(org.gnome.NautilusPreviewer)$", { tag = "+centered-floating-window" 
 o.window("^(org.gnome.NautilusPreviewer)$", { size = { "monitor_w*0.6", "monitor_h*0.85" } })
 
 o.window("^(brave-app.todoist.*)$", { tag = "+fixed-centered-floating-window" })
+o.window("^brave-origin$", { workspace = "1 silent" })
 o.window({ workspace = "special:ai" }, { tag = "+fixed-centered-floating-window" })
 o.window("^fastpotify$", { workspace = "6" })
