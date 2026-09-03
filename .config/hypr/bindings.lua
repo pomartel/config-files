@@ -48,3 +48,9 @@ o.bind("SUPER + Q", "Close active window", hl.dsp.window.close())
 
 hl.unbind("SUPER + W")
 o.bind("SUPER + W", "Send SUPER+W to CTRL+W", hl.dsp.send_shortcut({ mods = "CTRL", key = "W", window = "activewindow" }))
+
+hl.unbind("F24")
+o.bind("F24", "Next workspace", "/home/po/bin/solaar/cycle-active-workspace")
+
+hl.unbind("CTRL + F24")
+o.bind("CTRL + F24", "Next tab", hl.dsp.send_shortcut({ mods = "CTRL", key = "Tab", window = "activewindow" }))

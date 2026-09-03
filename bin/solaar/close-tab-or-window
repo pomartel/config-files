@@ -7,6 +7,9 @@ case "$window_class" in
   *brave* | *chromium* | *chrome* | *firefox* | *librewolf* | *zen* | *vivaldi* | *opera* | *microsoft-edge* | *thorium* | *qutebrowser*)
     wtype -M ctrl -k w -m ctrl
     ;;
+  *ghostty*)
+    wtype -M ctrl -M shift -k w -m shift -m ctrl
+    ;;
   *)
     hyprctl dispatch "hl.dsp.window.close()" >/dev/null
     ;;

@@ -42,7 +42,7 @@
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, pressed]
-    - Execute: [/home/po/bin/solaar/cycle-active-workspace]
+    - KeyPress: [F24, click]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, pressed]
