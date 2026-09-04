@@ -29,6 +29,37 @@ issue_slug="$(
     <<< "$repository_contents"
 )"
 issue_date="${issue_slug//./-}"
+
+today="$(date +%F)"
+today_epoch="$(date --utc --date "$today" +%s)"
+issue_epoch="$(date --utc --date "$issue_date" +%s)"
+issue_age_days="$(( (today_epoch - issue_epoch) / 86400 ))"
+
+if (( issue_age_days > 6 )); then
+  alert_subject="Economist download aborted: latest issue is $issue_age_days days old"
+  alert_body="The newest Economist EPUB in hehonghui/awesome-english-ebooks is dated $issue_date. It is $issue_age_days days old, so the download was aborted. Check whether the repository is still being updated."
+
+  echo "$alert_body" >&2
+
+  if [[ "$download_only" == true ]]; then
+    echo "Notification email suppressed in --download-only mode." >&2
+    exit 1
+  fi
+
+  calibre-smtp \
+    --relay "email-smtp.us-east-1.amazonaws.com" \
+    --port "587" \
+    --username "$SES_SMTP_USERNAME" \
+    --password "$SES_SMTP_PASSWORD" \
+    --encryption-method "TLS" \
+    --subject "$alert_subject" \
+    "pomartel@coderubik.com" \
+    "po@pouding.com" \
+    "$alert_body"
+
+  exit 1
+fi
+
 epub="$HOME/Dropbox/Books/Economist/the-economist-$issue_date.epub"
 source_url="https://raw.githubusercontent.com/hehonghui/awesome-english-ebooks/master/01_economist/te_$issue_slug/TheEconomist.$issue_slug.epub"
 partial="$epub.part"
