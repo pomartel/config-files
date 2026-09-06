@@ -64,8 +64,8 @@
     "transparent": false
   },
   "idle": {
-    "monitorOff": 1200,
     "screensaver": 300,
+    "monitorOff": 1200,
     "suspend": false
   },
   "plugins": [
