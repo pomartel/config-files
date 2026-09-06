@@ -31,7 +31,6 @@ yca() {
 }
 
 # Basic
-export CODEX_HOME="$HOME/.config/codex"
 
 unalias c 2>/dev/null || true
 alias c='codex'
