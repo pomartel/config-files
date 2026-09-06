@@ -66,7 +66,7 @@
   "idle": {
     "monitorOff": 1200,
     "screensaver": 300,
-    "suspend": 86400
+    "suspend": false
   },
   "plugins": [
     {
