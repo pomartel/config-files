@@ -18,6 +18,9 @@ trust_level = "trusted"
 [projects."/home/po/Projects/alexa-anylist-sync"]
 trust_level = "trusted"
 
+[projects."/home/po/Projects/plugins/qs-yadm"]
+trust_level = "trusted"
+
 [tui]
 terminal_title = ["activity", "project-name", "thread-title"]
 
