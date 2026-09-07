@@ -24,7 +24,7 @@ local bindings = {
   { "SUPER + SHIFT + O",           "Only Office",             [[omarchy-launch-or-focus "^ONLYOFFICE$" "gtk-launch onlyoffice-desktopeditors"]] },
   { "SUPER + SHIFT + ALT + O",     "Obsidian",                [[omarchy-launch-or-focus "^obsidian$" "uwsm-app -- obsidian"]] },
   { "SUPER + SHIFT + P",           "Apple Photos",            "omarchy-launch-or-focus-webapp brave-www.icloud https://www.icloud.com/photos/" },
-  { "SUPER + SHIFT + T",           "Todoist plugin",          "omarchy-shell shell toggle io.github.aryan-techie.todoist" },
+  { "SUPER + SHIFT + T",           "Todoist plugin",          "omarchy-shell shell toggle omarchy-todoist" },
   { "SUPER + SHIFT + CTRL + T",    "Todoist",                 "toggle-special-workspace todos && omarchy-launch-or-focus-webapp brave-app.todoist https://app.todoist.com/app/" },
   { "SUPER + SHIFT + ALT + T",     "Apple reminders",         "omarchy-launch-or-focus-webapp brave-www.icloud https://www.icloud.com/reminders/" },
   { "SUPER + SHIFT + W",           "Typora",                  [[omarchy-launch-or-focus ^Typora$ "uwsm-app -- typora --enable-wayland-ime"]] },
