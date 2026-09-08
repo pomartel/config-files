@@ -23,8 +23,7 @@ while [[ -S $herdr_socket ]]; do
         herdr pane report-metadata "$pane_id" \
             --source "$source_id" \
             --agent codex \
-            --display-agent "$title" \
-            --ttl-ms 10000 >/dev/null 2>&1 || true
+            --display-agent "$title" >/dev/null 2>&1 || true
         last_title=$title
     fi
 
