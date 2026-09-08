@@ -110,7 +110,10 @@ args = ["serve"]
 [hooks.state]
 
 [hooks.state."/home/po/.codex/hooks.json:session_start:0:0"]
-trusted_hash = "sha256:fde18c8d8256dc63dc11cf558a575965598b014c51f2e6e360b8ca38c91f5cbb"
+trusted_hash = "sha256:2adb7497247ec0993648e9fb4c7022eec8da028bb2f0b44eb93a08e728246eff"
 
 [hooks.state."/home/po/.codex/hooks.json:session_start:0:1"]
 trusted_hash = "sha256:dbbbd767447c902a67dab45d2cca82b9f8269baed31eb99f0c3e80c9d8e01f9b"
+
+[hooks.state."/home/po/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:fde18c8d8256dc63dc11cf558a575965598b014c51f2e6e360b8ca38c91f5cbb"
