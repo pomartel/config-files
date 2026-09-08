@@ -6,7 +6,7 @@ local bindings = {
   { "SUPER + SHIFT + A",           "ChatGPT scratchpad",      "toggle-special-workspace ai && omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/" },
   { "SUPER + SHIFT + ALT + A",     "ChatGPT",                 "omarchy-launch-or-focus-webapp brave-chatgpt https://chatgpt.com/" },
   { "SUPER + SHIFT + B",           "Browser",                 "omarchy-launch-or-focus brave-origin omarchy-launch-browser" },
-  { "SUPER + SHIFT + ALT + B",     "Browser (school)",        "omarchy-launch-or-focus brave-origin omarchy-launch-browser" },
+  { "SUPER + SHIFT + ALT + B",     "Google Chrome",           "omarchy-launch-or-focus google-chrome google-chrome-stable" },
   { "SUPER + SHIFT + CTRL + B",    "Browser (private)",       "omarchy-launch-browser --private" },
   { "SUPER + SHIFT + C",           "Calendar plugin",         "omarchy-shell shell toggle intemporel" },
   { "SUPER + SHIFT + CTRL + C",    "Calendar Pouding",        "omarchy-launch-or-focus-webapp brave-calendar https://calendar.google.com/calendar/u/0/r" },
