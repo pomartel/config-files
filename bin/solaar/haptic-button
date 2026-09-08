@@ -4,7 +4,7 @@ set -euo pipefail
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-haptic-button"
 TOKEN_FILE="$STATE_DIR/token"
 FIRED_FILE="$STATE_DIR/dictation-started"
-HOLD_SECONDS="0.1"
+HOLD_SECONDS="0.2"
 
 mkdir -p "$STATE_DIR"
 
