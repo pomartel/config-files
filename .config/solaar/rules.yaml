@@ -42,11 +42,11 @@
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, pressed]
-    - Execute: [/home/po/bin/solaar/haptic-button, press]
+    - Execute: [/usr/bin/voxtype, record, start]
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, released]
-    - Execute: [/home/po/bin/solaar/haptic-button, release]
+    - Execute: [/usr/bin/voxtype, record, stop]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, pressed]
