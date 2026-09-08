@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/solaar-haptic-button"
+TOKEN_FILE="$STATE_DIR/token"
+FIRED_FILE="$STATE_DIR/dictation-started"
+HOLD_SECONDS="0.1"
+
+mkdir -p "$STATE_DIR"
+
+cycle_workspace() {
+  active_id="$(hyprctl activeworkspace -j | jq -r '.id')"
+  mapfile -t workspace_ids < <(hyprctl workspaces -j | jq -r '[.[].id | select(. >= 1 and . <= 5)] | sort | .[]')
+
+  if (( ${#workspace_ids[@]} < 2 )); then
+    return 0
+  fi
+
+  target_id="${workspace_ids[0]}"
+  for index in "${!workspace_ids[@]}"; do
+    if [[ "${workspace_ids[$index]}" == "$active_id" ]]; then
+      target_id="${workspace_ids[$(( (index + 1) % ${#workspace_ids[@]} ))]}"
+      break
+    fi
+  done
+
+  hyprctl dispatch "hl.dsp.focus({ workspace = \"$target_id\" })" >/dev/null
+}
+
+case "${1:-}" in
+press)
+  token="$(date +%s%N)"
+  printf '%s\n' "$token" >"$TOKEN_FILE"
+  rm -f "$FIRED_FILE"
+  (
+    sleep "$HOLD_SECONDS"
+    if [[ -f "$TOKEN_FILE" ]] && [[ "$(cat "$TOKEN_FILE")" == "$token" ]]; then
+      : >"$FIRED_FILE"
+      /usr/bin/voxtype record start
+    fi
+  ) >/dev/null 2>&1 &
+  ;;
+release)
+  if [[ -f "$TOKEN_FILE" ]]; then
+    if [[ -f "$FIRED_FILE" ]]; then
+      /usr/bin/voxtype record stop
+    else
+      cycle_workspace
+    fi
+    rm -f "$TOKEN_FILE" "$FIRED_FILE"
+  fi
+  ;;
+*)
+  echo "usage: $0 press|release" >&2
+  exit 2
+  ;;
+esac
