@@ -42,7 +42,11 @@
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, pressed]
-    - KeyPress: [F24, click]
+    - Execute: [voxtype, record, start]
+- Rule:
+    - Device: MX Master 4
+    - Key: [Haptic, released]
+    - Execute: [voxtype, record, stop]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, pressed]
