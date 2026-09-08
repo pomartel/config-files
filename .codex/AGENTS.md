@@ -1,6 +1,8 @@
-If you are working in a git repo or if the files are tracked in yadm, always commit and push and show me the diffs.
+If you are working in a git repo or if the files are tracked in yadm, always commit and push and show me the most important diffs and a link to the github commit.
 
-If you are working on a plugin, reload the plugins with `omarchy restart shell`. 
+If you are working on a plugin, reload the plugins with `omarchy restart shell`.
+
+If you are asked to do work on the server, connect with `ssh po@serveurprof.com`
 
 I teach computer science at a Montreal college. My classes material is in `~/Cours`. This semester, I teach the class SF1.
 
