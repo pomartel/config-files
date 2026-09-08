@@ -1,0 +1,12 @@
+[Unit]
+Description=Solaar Logitech device manager
+After=graphical-session.target bluetooth.target
+Wants=bluetooth.target
+
+[Service]
+ExecStart=/usr/bin/solaar -w hide --restart-on-wake-up -b solaar
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
