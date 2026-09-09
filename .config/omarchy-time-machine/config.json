@@ -1,0 +1,15 @@
+{
+  "source": "~",
+  "retention": { "daily": 7, "weekly": 4, "monthly": 6, "yearly": 3 },
+  "destinations": [
+    {
+      "name": "backup-drive",
+      "display_name": "S3 home backup",
+      "repository": "s3:s3.amazonaws.com/${S3_BUCKET}/${RESTIC_S3_PREFIX}",
+      "secrets_file": "~/.config/omarchy-time-machine/s3.env",
+      "password_file": "~/.config/omarchy-time-machine/backup-drive.key",
+      "exclude_file": "~/.config/omarchy-time-machine/excludes.txt",
+      "schedule": "*-*-* 13:00:00"
+    }
+  ]
+}

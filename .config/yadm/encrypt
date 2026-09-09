@@ -1,3 +1,4 @@
 .config/uwsm/env.d/99-secrets
 .config/intemporel/calendars.jsonc
 .config/omarchy-time-machine/backup-drive.key
+.config/omarchy-time-machine/s3.env

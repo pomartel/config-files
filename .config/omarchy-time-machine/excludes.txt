@@ -1,0 +1,24 @@
+/home/po/.config/**/Cache/**
+/home/po/.config/**/Code Cache/**
+/home/po/.config/**/GPUCache/**
+/home/po/.config/**/Crashpad/**
+/home/po/.config/**/crashes/**
+/home/po/.config/**/logs/**
+/home/po/.config/**/blob_storage/**
+/home/po/.config/**/Session Storage/**
+/home/po/.config/**/Local Storage/**
+/home/po/.config/**/*.log
+/home/po/.config/**/*-journal
+/home/po/.config/fcitx/dbus/**
+/home/po/.config/ibus/bus/**
+/home/po/.cache/**
+/home/po/.windows/**
+/home/po/.local/share/Trash/**
+/home/po/.npm/**
+/home/po/.cargo/registry/**
+/home/po/.cargo/git/**
+/home/po/.local/share/mise/**
+/home/po/.local/share/nvim/**
+.nx/**
+/home/po/Dropbox/**
+/home/po/Windows/**
