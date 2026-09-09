@@ -32,9 +32,6 @@
           "hidden": []
         },
         {
-          "id": "crmne.hyprmoncfg"
-        },
-        {
           "id": "jankeesvw.time-machine"
         },
         {
@@ -57,6 +54,9 @@
         },
         {
           "id": "omarchy.audio"
+        },
+        {
+          "id": "crmne.hyprmoncfg"
         },
         {
           "id": "omarchy.power"
