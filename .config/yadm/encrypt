@@ -1,4 +1,3 @@
 .config/uwsm/env.d/99-secrets
-.config/restic/config-backup.env
 .config/intemporel/calendars.jsonc
-.local/state/omarchy/io.github.aryan-techie.todoist/settings.json
+.config/omarchy-time-machine/backup-drive.key
