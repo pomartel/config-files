@@ -9,6 +9,11 @@ global_vars:
     params:
       echo: Pierre Olivier Martel
 
+  - name: non_breaking_space
+    type: echo
+    params:
+      echo: "\u00A0"
+
   - name: signature_en
     type: echo
     params:
@@ -98,7 +103,7 @@ matches:
 
       Tout est en ligne pour la tenue de livre. Quelques précisions:
 
-      - $|$
+      -{{non_breaking_space}}$|$
 
       Merci,
 
