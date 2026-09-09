@@ -4,16 +4,18 @@
       {
         "hooks": [
           {
-            "command": "setsid -f bash '/home/po/.config/codex/herdr-codex-title-sync.sh' >/dev/null 2>&1",
+            "command": "bash '/home/po/.config/codex/herdr-agent-state.sh' session",
             "timeout": 10,
             "type": "command"
           }
         ]
-      },
+      }
+    ],
+    "UserPromptSubmit": [
       {
         "hooks": [
           {
-            "command": "bash '/home/po/.config/codex/herdr-agent-state.sh' session",
+            "command": "bash '/home/po/.config/codex/herdr-codex-prompt-sync.sh'",
             "timeout": 10,
             "type": "command"
           }
