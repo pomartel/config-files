@@ -2,10 +2,7 @@
 
 o.launch_on_start("hyprsunset")
 o.exec_on_start("sleep 3; uwsm-app -- 1password --silent")
--- o.exec_on_start("hyprland-monitor-attached ~/bin/hypr-monitor-toggle ~/bin/hypr-monitor-toggle")
-
--- This intentionally runs on config load, matching the old `exec` directive.
-hl.exec_cmd("hypr-monitor-toggle")
+-- hyprmoncfgd is the sole monitor writer and handles hotplug/lid/resume events.
 
 o.launch_on_start("omarchy-launch-browser")
 

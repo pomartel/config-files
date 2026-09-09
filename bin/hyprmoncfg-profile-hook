@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+profile=${1:-}
+case "$profile" in
+  desk)
+    hyprctl keyword general:gaps_out 10
+    hyprctl keyword general:gaps_in 5
+    ;;
+  laptop-only|projector)
+    hyprctl keyword general:gaps_out 3
+    hyprctl keyword general:gaps_in 1
+    ;;
+esac

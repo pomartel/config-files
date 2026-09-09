@@ -1,25 +1,31 @@
 #!/usr/bin/env bash
 
-LAPTOP="eDP-1"
+set -euo pipefail
+
 HDMI="HDMI-A-1"
-HDMI_RES="1920x1080@60"
+PROJECTOR_PROFILE="projector"
+LAPTOP_PROFILE="laptop-only"
 
-hdmi_is_connected() {
-    hyprctl -j monitors all | jq -e --arg output "$HDMI" \
-        'any(.[]; .name == $output)' >/dev/null
-}
+if ! command -v hyprmoncfg >/dev/null 2>&1; then
+    notify-send "hyprmoncfg is not installed"
+    exit 1
+fi
 
-hdmi_is_mirroring() {
-    hyprctl -j monitors all | jq -e --arg output "$HDMI" \
-        'any(.[]; .name == $output and .mirrorOf != null and .mirrorOf != "none")' >/dev/null
-}
-
-if hdmi_is_mirroring; then
-    hyprctl eval "hl.monitor({ output = \"$HDMI\", disabled = true })"
-    hyprctl eval "hl.monitor({ output = \"$LAPTOP\", mode = \"highrr\", position = \"auto\", scale = 2 })"
-elif hdmi_is_connected; then
-    hyprctl eval "hl.monitor({ output = \"$LAPTOP\", mode = \"$HDMI_RES\", position = \"auto\", scale = 2 })"
-    hyprctl eval "hl.monitor({ output = \"$HDMI\", mode = \"preferred\", position = \"auto\", scale = \"auto\", mirror = \"$LAPTOP\" })"
-else
+monitors=$(hyprctl -j monitors all)
+if ! jq -e --arg output "$HDMI" 'any(.[]; .name == $output)' <<<"$monitors" >/dev/null; then
     notify-send "No HDMI monitor detected"
+    exit 0
+fi
+
+if jq -e --arg output "$HDMI" \
+    'any(.[]; .name == $output and .mirrorOf != null and .mirrorOf != "none")' \
+    <<<"$monitors" >/dev/null; then
+    target="$LAPTOP_PROFILE"
+else
+    target="$PROJECTOR_PROFILE"
+fi
+
+if ! hyprmoncfg apply "$target" --confirm-timeout 0; then
+    notify-send "Could not apply hyprmoncfg profile: $target"
+    exit 1
 fi
