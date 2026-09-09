@@ -35,7 +35,7 @@
     "group_size": 1,
     "monitor_order": ["samsung display corp.|atna40hq02-0"],
     "rules": [
-      {"workspace": "1", "output_key": "samsung display corp.|atna40hq02-0"},
+      {"workspace": "1", "output_key": "samsung display corp.|atna40hq02-0", "gaps_out": 3, "gaps_in": 1},
       {"workspace": "2", "output_key": "samsung display corp.|atna40hq02-0"},
       {"workspace": "3", "output_key": "samsung display corp.|atna40hq02-0"},
       {"workspace": "4", "output_key": "samsung display corp.|atna40hq02-0"},

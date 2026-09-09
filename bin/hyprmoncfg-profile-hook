@@ -3,13 +3,30 @@
 set -euo pipefail
 
 profile=${1:-}
+if [[ -z "$profile" ]]; then
+  # Give Hyprland a moment to finish disabling/activating outputs after reload.
+  sleep 1
+  monitors=$(hyprctl -j monitors all)
+  if jq -e 'any(.[]; .name == "DP-1" and .disabled == false)' <<<"$monitors" >/dev/null; then
+    profile=desk
+  else
+    profile=laptop-only
+  fi
+fi
+
 case "$profile" in
   desk)
-    hyprctl keyword general:gaps_out 10
-    hyprctl keyword general:gaps_in 5
+    gaps_out=10
+    gaps_in=5
     ;;
   laptop-only|projector)
-    hyprctl keyword general:gaps_out 3
-    hyprctl keyword general:gaps_in 1
+    gaps_out=3
+    gaps_in=1
     ;;
+  *)
+    exit 0
 esac
+
+for workspace in {1..10}; do
+  hyprctl eval "hl.workspace_rule({ workspace = \"$workspace\", gaps_out = $gaps_out, gaps_in = $gaps_in })"
+done
