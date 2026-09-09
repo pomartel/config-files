@@ -1,6 +1,0 @@
-[Unit]
-Description=Back up .config to S3 with restic
-
-[Service]
-Type=oneshot
-ExecStart=/home/po/bin/backup-config-to-s3
