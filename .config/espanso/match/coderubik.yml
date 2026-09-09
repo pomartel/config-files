@@ -7,7 +7,7 @@ global_vars:
   - name: name
     type: echo
     params:
-      echo: Pierre Oliver Martel
+      echo: Pierre Olivier Martel
 
   - name: signature_en
     type: echo
@@ -92,6 +92,18 @@ global_vars:
         spiel
 
 matches:
+  - trigger: ";livre"
+    replace: |-
+      Bonjour Mme Joannette,
+
+      Tout est en ligne pour la tenue de livre. Quelques précisions:
+
+      - $|$
+
+      Merci,
+
+      {{name}}
+
   - trigger: ";aide"
     replace: "{{aide}}"
 
