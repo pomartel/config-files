@@ -42,19 +42,15 @@
 - Rule:
     - Device: MX Master 4
     - Key: [Haptic, pressed]
-    - Execute: [/usr/bin/voxtype, record, start]
-- Rule:
-    - Device: MX Master 4
-    - Key: [Haptic, released]
-    - Execute: [/usr/bin/voxtype, record, stop]
+    - Execute: [/home/po/bin/solaar/cycle-active-workspace]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, pressed]
-    - Execute: [/home/po/bin/solaar/smart-shift, press]
+    - Execute: [/usr/bin/voxtype, record, start]
 - Rule:
     - Device: MX Master 4
     - Key: [Smart Shift, released]
-    - Execute: [/home/po/bin/solaar/smart-shift, release]
+    - Execute: [/usr/bin/voxtype, record, stop]
 - Rule:
     - Device: MX Master 3 Wireless Mouse
     - Key: [Smart Shift, pressed]
