@@ -27,15 +27,7 @@
       ],
       "right": [
         {
-          "id": "io.github.tyrichards.tray",
-          "widgets": [
-            {
-              "entry": {
-                "id": "jankeesvw.time-machine"
-              },
-              "listed": true
-            }
-          ]
+          "id": "omarchy.tray"
         },
         {
           "id": "omarchy-todoist"
@@ -43,12 +35,12 @@
         {
           "id": "qs-yadm"
         },
-    {
-      "id": "omarchy.agents"
-    },
-    {
-      "id": "jankeesvw.time-machine"
-    },
+        {
+          "id": "jankeesvw.time-machine"
+        },
+        {
+          "id": "omarchy.agents"
+        },
         {
           "id": "omarchy.dropbox"
         },
