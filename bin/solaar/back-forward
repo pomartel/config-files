@@ -7,11 +7,11 @@ window_class="$(hyprctl activewindow -j | jq -r '.class // ""' | tr '[:upper:]' 
 case "$button" in
   back)
     browser_key="Left"
-    other_key="Up"
+    terminal_key="Down"
     ;;
   forward)
     browser_key="Right"
-    other_key="Down"
+    terminal_key="Up"
     ;;
   *)
     echo "usage: $0 [back|forward]" >&2
@@ -20,10 +20,10 @@ case "$button" in
 esac
 
 case "$window_class" in
-  *brave* | *chromium* | *chrome* | *firefox* | *librewolf* | *zen* | *vivaldi* | *opera* | *microsoft-edge* | *thorium* | *qutebrowser*)
-    wtype -M alt -k "$browser_key" -m alt
+  *foot* | *ghostty* | *alacritty* | *kitty* | *wezterm* | *terminator* | *xterm* | *urxvt* | *konsole*)
+    wtype -M ctrl -k "$terminal_key" -m ctrl
     ;;
   *)
-    wtype -M ctrl -k "$other_key" -m ctrl
+    wtype -M alt -k "$browser_key" -m alt
     ;;
 esac
