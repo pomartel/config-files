@@ -99,7 +99,7 @@ window_title = "{hostname}: {workspace}"
 
 status_indicators = "symbols"
 [ui.toast]
-delivery = "terminal"
+delivery = "system"
 
 [ui.sound]
 enabled = false
