@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+button="${1:-back}"
+window_class="$(hyprctl activewindow -j | jq -r '.class // ""' | tr '[:upper:]' '[:lower:]')"
+
+case "$button" in
+  back)
+    browser_key="Left"
+    other_key="Up"
+    ;;
+  forward)
+    browser_key="Right"
+    other_key="Down"
+    ;;
+  *)
+    echo "usage: $0 [back|forward]" >&2
+    exit 2
+    ;;
+esac
+
+case "$window_class" in
+  *brave* | *chromium* | *chrome* | *firefox* | *librewolf* | *zen* | *vivaldi* | *opera* | *microsoft-edge* | *thorium* | *qutebrowser*)
+    wtype -M alt -k "$browser_key" -m alt
+    ;;
+  *)
+    wtype -M ctrl -k "$other_key" -m ctrl
+    ;;
+esac

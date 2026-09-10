@@ -41,6 +41,14 @@
     - KeyPress: [XF86_AudioPlay, click]
 - Rule:
     - Device: MX Master 4
+    - Key: [Back Button, pressed]
+    - Execute: [/home/po/bin/solaar/back-forward]
+- Rule:
+    - Device: MX Master 4
+    - Key: [Forward Button, pressed]
+    - Execute: [/home/po/bin/solaar/back-forward, forward]
+- Rule:
+    - Device: MX Master 4
     - Key: [Haptic, pressed]
     - Execute: [/home/po/bin/solaar/cycle-active-workspace]
 - Rule:
