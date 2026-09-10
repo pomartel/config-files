@@ -27,12 +27,15 @@
       ],
       "right": [
         {
-          "id": "omarchy.tray",
-          "pinned": [],
-          "hidden": []
-        },
-        {
-          "id": "jankeesvw.time-machine"
+          "id": "io.github.tyrichards.tray",
+          "widgets": [
+            {
+              "entry": {
+                "id": "jankeesvw.time-machine"
+              },
+              "listed": true
+            }
+          ]
         },
         {
           "id": "omarchy-todoist"
@@ -40,9 +43,12 @@
         {
           "id": "qs-yadm"
         },
-        {
-          "id": "omarchy.agents"
-        },
+    {
+      "id": "omarchy.agents"
+    },
+    {
+      "id": "jankeesvw.time-machine"
+    },
         {
           "id": "omarchy.dropbox"
         },
@@ -83,6 +89,9 @@
     },
     {
       "id": "omarchy.agents"
+    },
+    {
+      "id": "jankeesvw.time-machine"
     }
   ],
   "version": 1,
