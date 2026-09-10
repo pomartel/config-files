@@ -37,6 +37,9 @@ trust_level = "trusted"
 [projects."/home/po/Dropbox/Documents/Codex/2026-09-08/peu"]
 trust_level = "trusted"
 
+[projects."/home/po/Dropbox/Documents/Codex/2026-09-10/cr"]
+trust_level = "trusted"
+
 [tui]
 terminal_title = ["activity", "project-name", "thread-title"]
 
@@ -88,29 +91,148 @@ enabled = true
 hooks = true
 js_repl = false
 
+# Keep IAM guidance available; disable other AWS-specific skills to reduce the
+# skills catalogue shown at Codex startup. These skills remain installed.
+[[skills.config]]
+path = "/home/po/.agents/skills/amazon-bedrock/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-ai-ml/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-auth/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-billing-and-cost-management/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-blocks/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-cdk/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-cloudformation/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-compute/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-containers/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-database/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-deployment/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-messaging-and-streaming/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-networking/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-observability/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-sdk-js-v3-usage/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-sdk-python-usage/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-sdk-swift-usage/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-security/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-serverless/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/aws-storage/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/launch-with-aws/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.agents/skills/signing-in-to-aws/SKILL.md"
+enabled = false
+
+# Dropbox skills remain installed but are not included in the active catalogue.
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/clean-up-dropbox-content/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/collect-files-with-request/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/find-dropbox-content/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/inspect-dropbox-file/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/organize-dropbox-folder/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/po/.codex/plugins/cache/openai-curated-remote/app-69b31dc2110c8191b8b47dc98fe5a052/6.0.0/skills/share-dropbox-content/SKILL.md"
+enabled = false
+
 [mcp_servers.node_repl]
-args = []
 command = "/usr/lib/chatgpt/resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120
+startup_timeout_sec = 120.0
 
 [mcp_servers.node_repl.env]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.901.51231"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+CODEX_CLI_PATH = "/usr/lib/chatgpt/resources/codex"
+CODEX_HOME = "/home/po/.codex"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
 NODE_REPL_NODE_MODULE_DIRS = "/usr/lib/chatgpt/resources/cua_node/lib/node_modules"
 NODE_REPL_NODE_PATH = "/usr/lib/chatgpt/resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/home/po/.codex:/usr/lib/chatgpt/resources/cua_node/lib/node_modules"
-CODEX_HOME = "/home/po/.codex"
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_TINYSKY_ENABLED = "1"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.901.51231"
 NODE_REPL_TRUSTED_SERVICES = '{"browser":"/home/po/.codex/plugins/cache/openai-bundled/browser/26.901.51231/scripts/browser-service.mjs"}'
-CODEX_CLI_PATH = "/usr/lib/chatgpt/resources/codex"
 
 [mcp_servers.trainingpeaks]
 command = "/home/po/MCP/trainingpeaks-mcp/.venv/bin/tp-mcp"
 args = ["serve"]
+
+[mcp_servers.aws-mcp]
+command = "uvx"
+args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp", "--metadata", "INSTALL_SOURCE=aws-cli"]
+env = { AWS_MCP_PROXY_PROFILES = "Codex" }
 
 [hooks.state]
 
