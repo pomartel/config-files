@@ -10,17 +10,6 @@
           }
         ]
       }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "command": "bash '/home/po/.config/codex/herdr-codex-prompt-sync.sh'",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
     ]
   }
 }

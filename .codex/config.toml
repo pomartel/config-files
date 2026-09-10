@@ -123,8 +123,5 @@ trusted_hash = "sha256:dbbbd767447c902a67dab45d2cca82b9f8269baed31eb99f0c3e80c9d
 [hooks.state."/home/po/.codex/hooks.json:session_start:1:0"]
 trusted_hash = "sha256:fde18c8d8256dc63dc11cf558a575965598b014c51f2e6e360b8ca38c91f5cbb"
 
-[hooks.state."/home/po/.codex/hooks.json:user_prompt_submit:0:0"]
-trusted_hash = "sha256:db389d0e74b18bbb10251e3ddf52ae1884e91f36e15ef68de071a829ff30abba"
-
 [desktop]
 followUpQueueMode = "steer"
