@@ -2,7 +2,7 @@ approval_policy = "never"
 sandbox_mode = "danger-full-access"
 model = "gpt-5.6-terra"
 model_reasoning_effort = "medium"
-service_tier = "fast"
+service_tier = "default"
 
 [projects."/home/po"]
 trust_level = "trusted"
@@ -228,11 +228,6 @@ NODE_REPL_TRUSTED_SERVICES = '{"browser":"/home/po/.codex/plugins/cache/openai-b
 [mcp_servers.trainingpeaks]
 command = "/home/po/MCP/trainingpeaks-mcp/.venv/bin/tp-mcp"
 args = ["serve"]
-
-[mcp_servers.aws-mcp]
-command = "uvx"
-args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp", "--metadata", "INSTALL_SOURCE=aws-cli"]
-env = { AWS_MCP_PROXY_PROFILES = "Codex" }
 
 [hooks.state]
 
