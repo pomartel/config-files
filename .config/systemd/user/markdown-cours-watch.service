@@ -8,7 +8,7 @@ Type=simple
 Environment=PATH=/usr/share/omarchy/bin:/home/po/bin:/home/po/.local/share/mise/shims:/home/po/.local/bin:/usr/local/bin:/usr/bin:/bin
 Environment=XDG_RUNTIME_DIR=%t
 Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus
-ExecStart=/home/po/Projects/markdown/scripts/watch_cours
+ExecStart=/home/po/Projects/markdown-to-html/scripts/watch_cours
 Restart=on-failure
 RestartSec=5
 

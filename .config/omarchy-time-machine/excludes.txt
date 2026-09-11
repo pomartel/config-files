@@ -188,7 +188,7 @@
 /home/po/MCP/trainingpeaks-mcp/**
 /home/po/Projects/coderubik.com/**
 /home/po/Projects/icloud-reminders-keyboard-shortcuts/**
-/home/po/Projects/markdown/**
+/home/po/Projects/markdown-to-html/**
 /home/po/Projects/poll-app/**
 /home/po/Projects/poll-app.com/**
 /home/po/Projects/sudomarchy/**
